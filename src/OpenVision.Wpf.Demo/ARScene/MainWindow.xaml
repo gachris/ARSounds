@@ -1,0 +1,71 @@
+﻿<devtoolbox:WindowEx
+    x:Class="OpenVision.Wpf.Demo.ARScene.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:openVision="http://openVision/winfx/2021/xaml/presentation"
+    Title="MainWindow"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <devtoolbox:WindowEx.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/ARScene/ImageRecoView.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </devtoolbox:WindowEx.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" MinWidth="300" />
+        </Grid.ColumnDefinitions>
+        <openVision:ARCamera
+            x:Name="Camera"
+            Grid.Column="0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            BorderThickness="1"
+            TrackFound="Camera_TrackFound"
+            TrackLost="Camera_TrackLost" />
+        <Grid Grid.Column="1" Margin="5,0,5,5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ComboBox
+                x:Name="RecoTypeComboBox"
+                Grid.Row="0"
+                Margin="5,0,5,5"
+                Padding="4"
+                VerticalAlignment="Center"
+                devtoolbox:UIElementHelper.CornerRadius="2"
+                SelectedIndex="0">
+                <ComboBoxItem Content="Image Reco" />
+                <ComboBoxItem Content="Db Reco" />
+                <ComboBoxItem Content="Cloud Reco" />
+            </ComboBox>
+            <ContentControl
+                x:Name="ImageRecoView"
+                Grid.Row="1"
+                Content="{Binding}"
+                ContentTemplate="{StaticResource ImageRecoViewTemplate}" />
+            <Button
+                x:Name="StartRecoButton"
+                Grid.Row="2"
+                Margin="5"
+                Padding="4"
+                devtoolbox:UIElementHelper.CornerRadius="2"
+                Click="Start_Reco_Button_Click"
+                Content="Start Recognition" />
+            <StackPanel Grid.Row="3">
+                <TextBlock Text="Target ID:" />
+                <TextBlock Text="{Binding TargetId}" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</devtoolbox:WindowEx>

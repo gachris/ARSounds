@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ARSounds.UI.Targets.Views.TargetsListPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:ARSounds.MauiApp.Controls"
+    xmlns:fontIcons="clr-namespace:ARSounds.UI.FontIcons"
+    xmlns:handlers="clr-namespace:ARSounds.MauiApp.Handlers"
+    xmlns:loc="clr-namespace:ARSounds.UI.Localization"
+    xmlns:viewModels="clr-namespace:ARSounds.UI.Targets.ViewModels"
+    xmlns:views="clr-namespace:ARSounds.UI.Targets.Views"
+    x:DataType="{x:Type viewModels:TargetsListViewModel}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="SectionHeaderTextStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="{DynamicResource BaseTextColor}" />
+                <Setter Property="Margin" Value="0,0,0,5" />
+                <Setter Property="VerticalOptions" Value="End" />
+                <Setter Property="FontFamily" Value="AppFontFamily" />
+            </Style>
+            <Style x:Key="SectionSubheaderTextStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="FontFamily" Value="AppMediumFontFamily" />
+                <Setter Property="TextColor" Value="{DynamicResource BaseLightTextColor}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid>
+        <StackLayout Spacing="0">
+            <!--  SEARCH BAR  -->
+            <Border
+                Margin="20,12"
+                Padding="0"
+                Background="{DynamicResource EntryAndEditorsBackgroundColor}"
+                HorizontalOptions="FillAndExpand"
+                Stroke="{DynamicResource EntryAndEditorsBorderColor}"
+                StrokeShape="RoundRectangle 22"
+                StrokeThickness="1">
+                <StackLayout
+                    Margin="12,2"
+                    Orientation="Horizontal"
+                    VerticalOptions="CenterAndExpand">
+                    <Label
+                        FontFamily="MaterialDesign"
+                        FontSize="22"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        Text="{x:Static fontIcons:MaterialDesignIcons.Search}"
+                        TextColor="{DynamicResource BaseIconColor}"
+                        VerticalOptions="CenterAndExpand" />
+
+                    <handlers:BorderlessEntry
+                        Margin="8,0"
+                        HorizontalOptions="FillAndExpand"
+                        Placeholder="{loc:LocalizationResource StringSearch}"
+                        PlaceholderColor="{DynamicResource PlaceholderColor}"
+                        TextColor="{DynamicResource BaseTextColor}" />
+                </StackLayout>
+            </Border>
+            <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}">
+                <ScrollView VerticalOptions="FillAndExpand">
+                    <StackLayout Spacing="0">
+                        <!--  TARGETS SECTION  -->
+                        <StackLayout Margin="16,5,16,0">
+                            <Label Style="{StaticResource SectionSubheaderTextStyle}" Text="{loc:LocalizationResource LabelCategorySubheader}" />
+                            <Label Style="{StaticResource SectionHeaderTextStyle}" Text="{loc:LocalizationResource LabelCategorySection}" />
+                        </StackLayout>
+                        <CollectionView
+                            Margin="{OnIdiom Phone='20',
+                                             Tablet='30,20',
+                                             Desktop='100,20'}"
+                            ItemsSource="{Binding Targets}"
+                            SelectionMode="None"
+                            VerticalScrollBarVisibility="Never">
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout
+                                    HorizontalItemSpacing="10"
+                                    Orientation="Vertical"
+                                    Span="{OnIdiom Phone=1,
+                                                   Tablet=1,
+                                                   Desktop=1}"
+                                    VerticalItemSpacing="15" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <views:TargetListItemTemplate />
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+                </ScrollView>
+            </RefreshView>
+        </StackLayout>
+        <!--  Busy Indicator  -->
+        <controls:LoadingIndicator
+            HorizontalOptions="Center"
+            IsBusy="{Binding IsBusy, Mode=TwoWay}"
+            LoadingText="{Binding LoadingText, Mode=TwoWay}"
+            VerticalOptions="Center" />
+    </Grid>
+</ContentPage>

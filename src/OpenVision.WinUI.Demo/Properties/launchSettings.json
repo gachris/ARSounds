@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Vision.WinUI.Demo (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Vision.WinUI.Demo (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

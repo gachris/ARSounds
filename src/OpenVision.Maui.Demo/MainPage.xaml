@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="OpenVision.Maui.Demo.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Image Recognition App"
+    BackgroundColor="#F4F4F9">
+
+    <Grid>
+        <!--  Background and layout adjustment  -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--  Main Content Area  -->
+        <VerticalStackLayout
+            Grid.Row="0"
+            Margin="10"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+
+            <!--  First Button: Image Recognition  -->
+            <Button
+                Margin="10"
+                Clicked="Image_Reco_Button_Click"
+                FontAttributes="Bold"
+                FontSize="16"
+                HeightRequest="60"
+                Text="Match Image using Image Recognition (AR)"
+                WidthRequest="400" />
+
+            <!--  Second Button: Cloud-based ML Image Classification  -->
+            <Button
+                Margin="10"
+                Clicked="Image_Classification_Button_Click"
+                FontAttributes="Bold"
+                FontSize="16"
+                HeightRequest="60"
+                Text="Image Classification using ML and ONNX"
+                WidthRequest="400" />
+        </VerticalStackLayout>
+
+        <!--  Footer Section  -->
+        <Label
+            Grid.Row="1"
+            Margin="20"
+            FontAttributes="Italic"
+            FontSize="14"
+            HorizontalOptions="Center"
+            Text="Powered by Vision.Maui Demo"
+            TextColor="Gray" />
+    </Grid>
+
+</ContentPage>

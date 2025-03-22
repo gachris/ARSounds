@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" />
+		<PackageReference Include="IdentityServer4.AccessTokenValidation" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+		<PackageReference Include="Swashbuckle.AspNetCore" />
+		<PackageReference Include="OpenVision.Core" />
+		<PackageReference Include="OpenVision.Api.Target" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\ARSounds.Web.Core\ARSounds.Web.Core.csproj" />
+		<ProjectReference Include="..\ARSounds.Web.Api.EntityFramework.MySql\ARSounds.Web.Api.EntityFramework.MySql.csproj" />
+		<ProjectReference Include="..\ARSounds.Web.Api.EntityFramework.PostgreSQL\ARSounds.Web.Api.EntityFramework.PostgreSQL.csproj" />
+		<ProjectReference Include="..\ARSounds.Web.Api.EntityFramework.SqlServer\ARSounds.Web.Api.EntityFramework.SqlServer.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Properties\ErrorMessages.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ErrorMessages.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Update="Properties\ErrorMessages.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>ErrorMessages.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<PropertyGroup Label="Sign Assembly">
+		<SignAssembly>true</SignAssembly>
+	</PropertyGroup>
+
+</Project>
