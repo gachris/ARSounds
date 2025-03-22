@@ -9,7 +9,7 @@ using OpenVision.Wpf.Controls;
 using System.Windows;
 using System.Windows.Media.Media3D;
 
-namespace Vision.Wpf.Demo.ARScene;
+namespace OpenVision.Wpf.Demo.ARScene;
 
 /// <summary>
 /// Interaction logic for MainWindow.xaml
@@ -58,8 +58,8 @@ public partial class MainWindow2 : Window
     {
         var imageRecognition = new ImageRecognition();
 
-        var img1 = ImageData.Load("../../../img1.jpg");
-        var img2 = ImageData.Load("../../../img2.jpg");
+        var img1 = ImageData.Load("../Assets/img1.jpg");
+        var img2 = ImageData.Load("../Assets/img2.jpg");
         var imgs = new List<ImageData>() { img1, img2 };
 
         await imageRecognition.InitAsync(imgs);
