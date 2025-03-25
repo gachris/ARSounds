@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel;
 
-namespace ARSounds.MauiApp.Controls.Videos;
+namespace ARSounds.UI.Controls.Videos;
 
 public class VideoSourceConverter : TypeConverter, IExtendedTypeConverter
 {

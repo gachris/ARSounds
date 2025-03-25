@@ -1,58 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<ItemGroup>
-		<PackageVersion Include="Aspire.Hosting.AppHost" Version="8.2.1" />
-		<PackageVersion Include="Aspire.Hosting.MySql" Version="8.2.1" />
-		<PackageVersion Include="Aspire.Hosting.PostgreSQL" Version="8.2.1" />
-		<PackageVersion Include="Aspire.Hosting.SqlServer" Version="8.2.1" />
-		<PackageVersion Include="Aspire.Microsoft.Data.SqlClient" Version="8.2.1" />
-		<PackageVersion Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" Version="8.2.1" />
-		<PackageVersion Include="AutoMapper" Version="13.0.1" />
-		<PackageVersion Include="CommunityToolkit.Maui" Version="9.0.2" />
-		<PackageVersion Include="CommunityToolkit.Mvvm" Version="8.3.2" />
-		<PackageVersion Include="DevToolbox.Wpf" Version="1.0.0.9-alpha" />
-		<PackageVersion Include="IdentityModel.OidcClient" Version="6.0.0" />
-		<PackageVersion Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
-		<PackageVersion Include="MediatR" Version="12.3.0" />
-		<PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
-		<PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
-		<PackageVersion Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
-		<PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10" />
-		<PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
-		<PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10" />
-		<PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
-		<PackageVersion Include="Microsoft.Extensions.Localization" Version="8.0.7" />
-		<PackageVersion Include="Microsoft.Extensions.Localization.Abstractions" Version="8.0.7" />
-		<PackageVersion Include="Microsoft.ML" Version="3.0.1" />
-		<PackageVersion Include="Microsoft.ML.ImageAnalytics" Version="3.0.1" />
-		<PackageVersion Include="Microsoft.ML.OnnxRuntime" Version="1.19.2" />
-		<PackageVersion Include="Microsoft.ML.OnnxTransformer" Version="3.0.1" />
-		<PackageVersion Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageVersion Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
-		<PackageVersion Include="Microsoft.Maui.Dependencies" Version="6.0.553" />
-		<PackageVersion Include="Microsoft.Maui.Extensions" Version="6.0.553" />
-		<PackageVersion Include="Microsoft.Windows.Compatibility" Version="8.0.10" />
-		<PackageVersion Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
-		<PackageVersion Include="Microsoft.WindowsAppSDK" Version="1.5.240311000" />
-		<PackageVersion Include="MySql.EntityFrameworkCore" Version="8.0.5" />
-		<PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
-		<PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
-		<PackageVersion Include="OpenVision.Api.Target" Version="1.0.0.3-alpha" />
-		<PackageVersion Include="OpenVision.Client.Core" Version="1.0.0.3-alpha" />
-		<PackageVersion Include="OpenVision.Core" Version="1.0.0.3-alpha" />
-		<PackageVersion Include="OpenVision.Maui" Version="1.0.0.3-alpha" />
-		<PackageVersion Include="OpenVision.Server.Core" Version="1.0.0.3-alpha" />
-		<PackageVersion Include="OpenVision.Web.ServiceDefaults" Version="1.0.0.3-alpha" />
-		<PackageVersion Include="OpenVision.WinUI" Version="1.0.0.1-alpha" />
-		<PackageVersion Include="OpenVision.Wpf" Version="1.0.0.1-alpha" />
-		<PackageVersion Include="Plugin.Maui.Audio" Version="3.0.0" />
-		<PackageVersion Include="Serilog.AspNetCore" Version="8.0.3" />
-		<PackageVersion Include="SkiaSharp" Version="2.88.8" />
-		<PackageVersion Include="SkiaSharp.Views.Maui.Controls" Version="2.88.8" />
-		<PackageVersion Include="Swashbuckle.AspNetCore" Version="6.8.0" />
-		<PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="7.6.3" />
-	</ItemGroup>
-	<PropertyGroup>
-		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-	</PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="Aspire.Hosting.AppHost" Version="8.2.1" />
+    <PackageVersion Include="Aspire.Hosting.MySql" Version="8.2.1" />
+    <PackageVersion Include="Aspire.Hosting.PostgreSQL" Version="8.2.1" />
+    <PackageVersion Include="Aspire.Hosting.SqlServer" Version="8.2.1" />
+    <PackageVersion Include="Aspire.Microsoft.Data.SqlClient" Version="8.2.1" />
+    <PackageVersion Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" Version="8.2.1" />
+    <PackageVersion Include="AutoMapper" Version="13.0.1" />
+    <PackageVersion Include="CommunityToolkit.Maui" Version="9.0.2" />
+    <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+    <PackageVersion Include="DevToolbox.Wpf" Version="1.0.0.9-alpha" />
+    <PackageVersion Include="IdentityModel.OidcClient" Version="6.0.0" />
+    <PackageVersion Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
+    <PackageVersion Include="MediatR" Version="12.3.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
+    <PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10" />
+	<PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.2" />
+	<PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+	<PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Localization" Version="8.0.7" />
+    <PackageVersion Include="Microsoft.Extensions.Localization.Abstractions" Version="8.0.7" />
+	<PackageVersion Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+    <PackageVersion Include="Microsoft.ML" Version="3.0.1" />
+    <PackageVersion Include="Microsoft.ML.ImageAnalytics" Version="3.0.1" />
+    <PackageVersion Include="Microsoft.ML.OnnxRuntime" Version="1.19.2" />
+    <PackageVersion Include="Microsoft.ML.OnnxTransformer" Version="3.0.1" />
+    <PackageVersion Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+    <PackageVersion Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+    <PackageVersion Include="Microsoft.Maui.Dependencies" Version="6.0.553" />
+    <PackageVersion Include="Microsoft.Maui.Extensions" Version="6.0.553" />
+    <PackageVersion Include="Microsoft.Windows.Compatibility" Version="8.0.10" />
+    <PackageVersion Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
+    <PackageVersion Include="Microsoft.WindowsAppSDK" Version="1.5.240311000" />
+    <PackageVersion Include="MySql.EntityFrameworkCore" Version="8.0.5" />
+    <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
+    <PackageVersion Include="OpenVision.Api.Target" Version="1.0.0.5-alpha" />
+    <PackageVersion Include="OpenVision.Client.Core" Version="1.0.0.5-alpha" />
+    <PackageVersion Include="OpenVision.Core" Version="1.0.0.5-alpha" />
+    <PackageVersion Include="OpenVision.Maui" Version="1.0.0.5-alpha" />
+    <PackageVersion Include="OpenVision.Server.Core" Version="1.0.0.5-alpha" />
+    <PackageVersion Include="OpenVision.Web.ServiceDefaults" Version="1.0.0.5-alpha" />
+    <PackageVersion Include="OpenVision.WinUI" Version="1.0.0.5-alpha" />
+    <PackageVersion Include="OpenVision.Wpf" Version="1.0.0.5-alpha" />
+    <PackageVersion Include="Plugin.Maui.Audio" Version="3.0.0" />
+    <PackageVersion Include="Serilog.AspNetCore" Version="8.0.3" />
+    <PackageVersion Include="SkiaSharp" Version="2.88.8" />
+    <PackageVersion Include="SkiaSharp.Views.Maui.Controls" Version="2.88.8" />
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.8.0" />
+    <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="7.6.3" />
+  </ItemGroup>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
 </Project>

@@ -1,5 +1,5 @@
 ﻿
-using ARSounds.MauiApp.Controls.Videos;
+using ARSounds.UI.Controls.Videos;
 using Microsoft.Maui.ApplicationModel;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -8,7 +8,7 @@ using Windows.Media.Playback;
 using Windows.Storage;
 using Grid = Microsoft.UI.Xaml.Controls.Grid;
 
-namespace ARSounds.MauiApp.Platforms.Windows;
+namespace ARSounds.UI.Platforms.Windows;
 
 public class MauiVideoPlayer : Grid, IDisposable
 {

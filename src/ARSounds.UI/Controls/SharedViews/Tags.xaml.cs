@@ -2,7 +2,7 @@ using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using System;
 
-namespace ARSounds.MauiApp.Controls;
+namespace ARSounds.UI.Controls;
 public partial class Tag : ContentView
 {
     public Tag()

@@ -6,7 +6,7 @@ using System.IO;
 using Debug = System.Diagnostics.Debug;
 using Uri = Android.Net.Uri;
 
-namespace ARSounds.MauiApp.Platforms.Android;
+namespace ARSounds.UI.Platforms.Android;
 
 [ContentProvider(new string[] { "com.pixelprodigy.arsounds" })]
 public class VideoProvider : ContentProvider

@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ColorPickerModule } from 'ngx-color-picker';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-//import { NgWaveformModule } from 'ng-waveform';
+import { NgWaveformModule } from '../../lib/ng-waveform.module';
 import { TargetsRoutingModule } from './targets-routing.module';
 
 import { TargetsComponent } from './targets/targets.component';
@@ -18,14 +18,13 @@ import { TargetEditComponent } from './target-edit/target-edit.component';
 import { TargetEditModalContainerComponent } from './target-edit/target-edit-modal-container.component';
 import { ScrollTrackerDirective } from '../../core/scroll-tracker.directive';
 import { FileInputValueAccessor } from '../../core/file-input.accessor';
-import { TargetFiltersComponent } from './target-filters/target-filters.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     TargetsRoutingModule,
-    //NgWaveformModule,
+    NgWaveformModule,
     ColorPickerModule,
     NgbModule
   ],
@@ -40,8 +39,7 @@ import { TargetFiltersComponent } from './target-filters/target-filters.componen
     TargetEditComponent,
     TargetEditModalContainerComponent,
     ScrollTrackerDirective,
-    FileInputValueAccessor,
-    TargetFiltersComponent
+    FileInputValueAccessor
   ]
 })
 export class TargetsModule { }

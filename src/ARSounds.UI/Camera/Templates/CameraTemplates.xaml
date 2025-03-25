@@ -66,7 +66,7 @@
                             <toolkit:EventToCommandBehavior Command="{Binding TrackLostCommand}" EventName="TrackLost" />
                         </openVision:ARCamera.Behaviors>
                     </openVision:ARCamera>
-                    <viewModels:PolygonImageView
+                    <!--<viewModels:PolygonImageView
                         x:Name="cameraViewImage"
                         HorizontalOptions="FillAndExpand"
                         VerticalOptions="FillAndExpand">
@@ -76,143 +76,33 @@
                                 CommandParameter="{Binding Source={x:Reference cameraViewImage}}"
                                 EventName="Loaded" />
                         </viewModels:PolygonImageView.Behaviors>
-                    </viewModels:PolygonImageView>
+                    </viewModels:PolygonImageView>-->
                 </Grid>
             </Border>
-            <Grid
+            <StackLayout
                 Grid.Row="1"
                 Grid.Column="2"
                 HorizontalOptions="Center"
+                MinimumWidthRequest="100"
                 VerticalOptions="Center">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
                 <Border
-                    Grid.Row="0"
-                    Margin="0,50,0,6"
                     BackgroundColor="Transparent"
                     HorizontalOptions="Center"
-                    StrokeShape="RoundRectangle 4">
+                    StrokeShape="RoundRectangle 50">
                     <ImageButton
-                        Command="{Binding PrevCommand}"
-                        MinimumHeightRequest="39"
-                        MinimumWidthRequest="39">
+                        BackgroundColor="#FFFFFF"
+                        HeightRequest="64"
+                        HorizontalOptions="Center"
+                        WidthRequest="64">
                         <ImageButton.Source>
                             <FontImageSource
-                                FontFamily="MaterialDesign"
-                                Glyph="{x:Static fontIcons:MaterialDesignIcons.ArrowDropUp}"
+                                FontFamily="IonIcons"
                                 Size="18"
-                                Color="{DynamicResource White}" />
+                                Color="{DynamicResource Black}" />
                         </ImageButton.Source>
                     </ImageButton>
                 </Border>
-                <CarouselView
-                    x:Name="carousel"
-                    Grid.Row="1"
-                    Margin="0,0"
-                    BackgroundColor="Transparent"
-                    CurrentItemChangedCommand="{Binding CurrentItemChangedCommand}"
-                    CurrentItemChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=CurrentItem}"
-                    HeightRequest="160"
-                    HorizontalOptions="FillAndExpand"
-                    IsScrollAnimated="True"
-                    IsScrolling="True"
-                    IsSwipeEnabled="True"
-                    ItemsSource="{Binding Buttons}"
-                    Loop="False"
-                    PeekAreaInsets="0,39,0,39"
-                    Position="{Binding Position, Mode=TwoWay}"
-                    VerticalOptions="Center"
-                    VerticalScrollBarVisibility="Always"
-                    WidthRequest="100">
-                    <CarouselView.ItemsLayout>
-                        <LinearItemsLayout
-                            ItemSpacing="10"
-                            Orientation="Vertical"
-                            SnapPointsAlignment="Center"
-                            SnapPointsType="MandatorySingle" />
-                    </CarouselView.ItemsLayout>
-                    <CarouselView.ItemTemplate>
-                        <DataTemplate x:DataType="{x:Type viewModels:CameraButton}">
-                            <StackLayout MinimumWidthRequest="100">
-                                <Border BackgroundColor="Transparent" HorizontalOptions="Center">
-                                    <ImageButton HorizontalOptions="Center">
-                                        <ImageButton.Source>
-                                            <FontImageSource
-                                                FontFamily="IonIcons"
-                                                Size="18"
-                                                Color="{DynamicResource White}" />
-                                            <!--  Glyph="{Binding Icon}"  -->
-                                        </ImageButton.Source>
-                                        <ImageButton.Triggers>
-                                            <DataTrigger
-                                                Binding="{Binding IsCurrent, Mode=TwoWay}"
-                                                TargetType="ImageButton"
-                                                Value="True">
-                                                <Setter Property="WidthRequest" Value="64" />
-                                                <Setter Property="HeightRequest" Value="64" />
-                                                <Setter Property="BackgroundColor" Value="#FFFFFF" />
-                                                <Setter Property="Source">
-                                                    <Setter.Value>
-                                                        <FontImageSource
-                                                            x:Name="fontImageSource"
-                                                            FontFamily="IonIcons"
-                                                            Size="18"
-                                                            Color="{DynamicResource Black}" />
-                                                        <!--  Glyph="{Binding Icon}"  -->
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </DataTrigger>
-                                            <DataTrigger
-                                                Binding="{Binding IsCurrent, Mode=TwoWay}"
-                                                TargetType="ImageButton"
-                                                Value="False">
-                                                <Setter Property="WidthRequest" Value="39" />
-                                                <Setter Property="HeightRequest" Value="39" />
-                                            </DataTrigger>
-                                        </ImageButton.Triggers>
-                                    </ImageButton>
-                                    <Border.Triggers>
-                                        <DataTrigger
-                                            Binding="{Binding IsCurrent, Mode=TwoWay}"
-                                            TargetType="Border"
-                                            Value="True">
-                                            <Setter Property="StrokeShape" Value="RoundRectangle 50" />
-                                        </DataTrigger>
-                                        <DataTrigger
-                                            Binding="{Binding IsCurrent, Mode=TwoWay}"
-                                            TargetType="Border"
-                                            Value="False">
-                                            <Setter Property="StrokeShape" Value="RoundRectangle 6" />
-                                        </DataTrigger>
-                                    </Border.Triggers>
-                                </Border>
-                            </StackLayout>
-                        </DataTemplate>
-                    </CarouselView.ItemTemplate>
-                </CarouselView>
-                <Border
-                    Grid.Row="2"
-                    Margin="0,6,0,0"
-                    BackgroundColor="Transparent"
-                    HorizontalOptions="Center"
-                    StrokeShape="RoundRectangle 4">
-                    <ImageButton
-                        Command="{Binding NextCommand}"
-                        MinimumHeightRequest="39"
-                        MinimumWidthRequest="39">
-                        <ImageButton.Source>
-                            <FontImageSource
-                                FontFamily="MaterialDesign"
-                                Glyph="{x:Static fontIcons:MaterialDesignIcons.ArrowDropDown}"
-                                Size="18"
-                                Color="{DynamicResource White}" />
-                        </ImageButton.Source>
-                    </ImageButton>
-                </Border>
-            </Grid>
+            </StackLayout>
             <Border
                 Grid.Row="2"
                 Grid.Column="2"

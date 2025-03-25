@@ -1,11 +1,11 @@
-using ARSounds.MauiApp.Enums;
+using ARSounds.UI.Enums;
 using ARSounds.UI.Helpers;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using System;
 using System.Globalization;
 
-namespace ARSounds.MauiApp.Converters;
+namespace ARSounds.UI.Converters;
 
 public class AvatarWithStatusColorConverter : IValueConverter
 {

@@ -46,11 +46,13 @@ public partial class ProfileViewModel : ViewModelBase
 
     public override async Task InitializeAsync(object initParams)
     {
-        await Task.Run(() =>
+        MainThread.BeginInvokeOnMainThread(() =>
         {
             PopulateData();
             CommandInit();
         });
+
+        await Task.CompletedTask;
     }
 
     #region Methods

@@ -1,6 +1,6 @@
 using Microsoft.Maui.Controls;
 
-namespace ARSounds.MauiApp.Controls.SharedViews;
+namespace ARSounds.UI.Controls.SharedViews;
 
 public partial class CloseButtonIcon : ContentView
 {

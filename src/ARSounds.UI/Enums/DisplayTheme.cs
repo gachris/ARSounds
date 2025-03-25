@@ -1,4 +1,4 @@
-﻿namespace ARSounds.MauiApp.Enums;
+﻿namespace ARSounds.UI.Enums;
 
 public enum DisplayTheme
 {

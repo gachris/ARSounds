@@ -1,10 +1,10 @@
 ﻿#nullable enable
 using Microsoft.Maui.Handlers;
-using ARSounds.MauiApp.Platforms.Android;
-using ARSounds.MauiApp.Controls.Videos;
+using ARSounds.UI.Platforms.Android;
+using ARSounds.UI.Controls.Videos;
 using System;
 
-namespace ARSounds.MauiApp.Handlers
+namespace ARSounds.UI.Handlers
 {
     public partial class VideoHandler : ViewHandler<Video, MauiVideoPlayer>
     {

@@ -28,12 +28,4 @@ export class TargetDetailComponent implements OnInit {
   targetChangedCallback(target: any) {
     this.target = target;
   }
-
-  //gotoHeroes(hero: Hero) {
-  //  const heroId = hero ? hero.id : null;
-  //  // Pass along the hero id if available
-  //  // so that the HeroList component can select that hero.
-  //  // Include a junk 'foo' property for fun.
-  //  this.router.navigate(['/superheroes', { id: heroId, foo: 'foo' }]);
-  //}
 }

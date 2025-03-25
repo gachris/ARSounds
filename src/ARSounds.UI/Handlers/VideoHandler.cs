@@ -1,18 +1,18 @@
 ﻿#if IOS || MACCATALYST
-using PlatformView = ARSounds.MauiApp.Platforms.MaciOS.MauiVideoPlayer;
+using PlatformView = ARSounds.UI.Platforms.MaciOS.MauiVideoPlayer;
 #elif ANDROID
-using PlatformView = ARSounds.MauiApp.Platforms.Android.MauiVideoPlayer;
+using PlatformView = ARSounds.UI.Platforms.Android.MauiVideoPlayer;
 #elif WINDOWS
-using PlatformView = ARSounds.MauiApp.Platforms.Windows.MauiVideoPlayer;
+using PlatformView = ARSounds.UI.Platforms.Windows.MauiVideoPlayer;
 #elif (NETSTANDARD || !PLATFORM) || (NET6_0_OR_GREATER && !IOS && !ANDROID)
 using PlatformView = System.Object;
 #endif
 
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui;
-using ARSounds.MauiApp.Controls.Videos;
+using ARSounds.UI.Controls.Videos;
 
-namespace ARSounds.MauiApp.Handlers;
+namespace ARSounds.UI.Handlers;
 
 public partial class VideoHandler
 {

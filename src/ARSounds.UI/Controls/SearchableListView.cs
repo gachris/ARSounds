@@ -1,7 +1,7 @@
 ﻿using Microsoft.Maui.Controls;
 using System;
 
-namespace ARSounds.MauiApp.Controls;
+namespace ARSounds.UI.Controls;
 
 /// <summary>
 /// This class extends the behavior of the ListView control to filter the ListViewItem based on text.

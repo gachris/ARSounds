@@ -22,7 +22,7 @@
       <div class="col col-xl-4 order-xl-2 col-lg-4 order-lg-2 col-md-4 order-md-4 col-sm-2 col-4 p-0">
         <div class="text-right m-1 font-weight-bold">
           <label class="text-primary-3 text-nowrap">
-            {{ target.created }}
+            {{ target.created | date: 'medium' }}
           </label>
         </div>
       </div>
@@ -56,22 +56,16 @@
         </div>
       </div>
       <div class="form-group m-0">
-        <label class="text-primary-3">Status: </label>
+        <label class="text-primary-3">Status:</label>
+        <label class="text-body">
+          {{ target.is_trackable ? 'Active' : 'Inactive' }}
+        </label>
       </div>
       <div class="form-group m-0">
-        <label class="text-primary-3">Rating: </label>
-        <!--@Html.LabelFor(m => m.Rating, new { @class = "text-primary-3" }):
-        @for (int i = 1; i <= 5; i++)
-        {
-        if (Model.Rating >= i)
-        {
-        <span class="fa fa-star text-primary-2"></span>
-        }
-        else
-        {
-        <span class="fa fa-star"></span>
-        }
-        }-->
+        <label class="text-primary-3">Rating:</label>
+        <span *ngFor="let star of [1,2,3,4,5]">
+          <i class="fa fa-star" [ngClass]="star <= target.rate ? 'text-primary-2' : ''"></i>
+        </span>
       </div>
     </div>
     <div class="text-right" id="inner_div">

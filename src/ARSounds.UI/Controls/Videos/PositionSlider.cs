@@ -1,7 +1,7 @@
 ﻿using Microsoft.Maui.Controls;
 using System;
 
-namespace ARSounds.MauiApp.Controls.Videos;
+namespace ARSounds.UI.Controls.Videos;
 
 public class PositionSlider : Slider
 {

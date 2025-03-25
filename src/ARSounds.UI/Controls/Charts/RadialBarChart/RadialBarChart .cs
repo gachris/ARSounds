@@ -2,7 +2,7 @@
 using Microsoft.Maui.Graphics;
 using System.Collections.Generic;
 
-namespace ARSounds.MauiApp.Controls.Charts;
+namespace ARSounds.UI.Controls.Charts;
 
 public class RadialBarChart : GraphicsView
 {

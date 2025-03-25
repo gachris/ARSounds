@@ -2,7 +2,7 @@ using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using System;
 
-namespace ARSounds.MauiApp.Controls;
+namespace ARSounds.UI.Controls;
 
 public partial class ImagePreviewPage : ContentPage
 {

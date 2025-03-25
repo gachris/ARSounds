@@ -1,7 +1,7 @@
 using Microsoft.Maui.Controls;
 using System;
 
-namespace ARSounds.MauiApp.Controls;
+namespace ARSounds.UI.Controls;
 
 public partial class GalleryImage : ContentView
 {

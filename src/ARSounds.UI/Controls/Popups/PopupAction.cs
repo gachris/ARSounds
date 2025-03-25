@@ -1,9 +1,9 @@
-﻿using ARSounds.MauiApp.Controls;
+﻿using ARSounds.UI.Controls;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ARSounds.MauiApp;
+namespace ARSounds.UI;
 
 // All the code in this file is included in all platforms.
 public class PopupAction

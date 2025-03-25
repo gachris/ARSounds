@@ -1,6 +1,4 @@
-﻿using Microsoft.Maui.Graphics;
-
-namespace ARSounds.MauiApp.Controls.Charts;
+﻿namespace ARSounds.UI.Controls.Charts;
 
 public struct ChartEntry
 {

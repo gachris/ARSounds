@@ -2,7 +2,7 @@
 using System;
 using System.Reflection;
 
-namespace ARSounds.MauiApp.Controls;
+namespace ARSounds.UI.Controls;
 
 internal class EnumPicker : Picker
 {

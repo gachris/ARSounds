@@ -1,7 +1,7 @@
 ﻿using Microsoft.Maui.Controls;
 using System.ComponentModel;
 
-namespace ARSounds.MauiApp.Controls.Videos;
+namespace ARSounds.UI.Controls.Videos;
 
 [TypeConverter(typeof(VideoSourceConverter))]
 public abstract class VideoSource : Element

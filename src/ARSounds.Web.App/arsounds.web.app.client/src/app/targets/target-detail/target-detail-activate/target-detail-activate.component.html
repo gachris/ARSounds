@@ -22,7 +22,7 @@
       <div class="col col-xl-4 order-xl-2 col-lg-4 order-lg-2 col-md-4 order-md-4 col-sm-2 col-4 p-0">
         <div class="text-right m-1 font-weight-bold">
           <label class="text-primary-3 text-nowrap">
-            {{ target.created }}
+            {{ target.created | date: 'medium' }}
           </label>
         </div>
       </div>
@@ -75,7 +75,9 @@
 <div class="p-0 m-0 bg-primary-alt border-top border-primary-1 section-bottom-sticky">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="custom-audio-size" #waveformMedia></div>
+      <div class="custom-audio-size">
+        <audio #audioElement controls preload="auto"></audio>
+      </div>
     </div>
   </div>
 </div>

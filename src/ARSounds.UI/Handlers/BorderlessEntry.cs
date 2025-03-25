@@ -1,6 +1,6 @@
 ﻿using Microsoft.Maui.Controls;
 
-namespace ARSounds.MauiApp.Handlers;
+namespace ARSounds.UI.Handlers;
 
 public class BorderlessEntry : Entry
 {

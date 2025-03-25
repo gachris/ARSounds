@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TargetService } from '../../../../services/targets/target.service';
 import { NotificationService } from '../../../../services/targets/notification.service';
 import { Alert } from '../../../notification/notification.component';
-import * as wavesurferjs from 'wavesurfer.js';
+import WaveSurfer, * as wavesurferjs from 'wavesurfer.js';
 
 @Component({
   selector: 'app-target-detail-activate',
@@ -16,13 +16,13 @@ import * as wavesurferjs from 'wavesurfer.js';
 export class TargetDetailActivateComponent implements AfterViewInit {
   @Input() target: TargetModel;
   @Output() targetChanged = new EventEmitter();
+  @ViewChild('audioElement', { static: false }) audioElementRef: ElementRef;
   @ViewChild('barWidthInput', { static: false }) barWidthInputRef: ElementRef;
   @ViewChild('heightInput', { static: false }) heightInputRef: ElementRef;
   @ViewChild('widthInput', { static: false }) widthInputRef: ElementRef;
-  @ViewChild('waveformMedia', { static: false }) waveformMediaRef: ElementRef;
   @ViewChild('wavesurfer', { static: false }) wavesurferRef: ElementRef;
   audioElement: HTMLAudioElement;
-  wavesurfer: any = null;
+  wavesurfer: WaveSurfer = null;
   progress = 0;
   playing = false;
   target$: Observable<TargetResponse>;
@@ -42,7 +42,7 @@ export class TargetDetailActivateComponent implements AfterViewInit {
       progressColor: '#000',
       cursorColor: '#000',
       backend: 'MediaElement',
-      mediaControls: true,
+      mediaControls: false,
       barWidth: 0,
       fillParent: false,
       hideScrollbar: true,
@@ -73,25 +73,24 @@ export class TargetDetailActivateComponent implements AfterViewInit {
       this.SetDefaultsHeight();
       this.SetDefaultWidth();
 
-      this.audioElement = this.wavesurferRef.nativeElement.querySelector("audio");
-      this.renderer.removeChild(this.wavesurferRef.nativeElement, this.audioElement);
-      this.renderer.appendChild(this.waveformMediaRef.nativeElement, this.audioElement);
+      this.audioElement = this.audioElementRef.nativeElement;
+      this.audioElement.src = this.target.audio_base64;
       this.audioElement.setAttribute('class', 'm-audio');
     });
   }
 
   playPause() {
-    if (this.wavesurfer && this.wavesurfer.isReady) {
+    if (this.wavesurfer) {
       this.wavesurfer.playPause();
     }
   }
 
-  activate() {
-    if (this.wavesurfer && this.wavesurfer.isReady) {
+  async activate() {
+    if (this.wavesurfer) {
       var id = this.route.snapshot.paramMap.get("id");
       var model = new TargetActivateRequest();
-      model.image_base64 = this.wavesurfer.exportImage();
-      model.hex_color = this.wavesurfer.params.waveColor;
+      model.image_base64 = (await this.wavesurfer.exportImage("image/png", 1, "dataURL"))[0];
+      model.hex_color = this.wavesurfer.options.waveColor;
       this.service.activate(id, model).subscribe(_ => {
         this.target$ = this.service.get(id);
         this.target$.subscribe(item => {
@@ -115,8 +114,7 @@ export class TargetDetailActivateComponent implements AfterViewInit {
   }
 
   UpdateBarWidth() {
-    this.wavesurfer.params.barWidth = parseInt(this.barWidthInputRef.nativeElement.value);
-    this.wavesurfer.drawBuffer();
+    this.wavesurfer.setOptions({ barWidth: parseInt(this.barWidthInputRef.nativeElement.value) });
   }
 
   SetDefaultsHeight() {
@@ -124,15 +122,11 @@ export class TargetDetailActivateComponent implements AfterViewInit {
     this.heightInputRef.nativeElement.min = 300;
     this.heightInputRef.nativeElement.value = 600;
     this.heightInputRef.nativeElement.addEventListener('input', this.UpdateHeight.bind(this));
-    this.wavesurfer.params.height = 600;
-    this.wavesurfer.drawer.setHeight(600);
-    this.wavesurfer.drawBuffer();
+    this.wavesurfer.setOptions({ height: 600 });
   }
 
   UpdateHeight() {
-    //this.wavesurfer.drawer.setHeight(parseFloat(this.heightInput.nativeElement.value));
-    this.wavesurfer.params.height = parseFloat(this.heightInputRef.nativeElement.value);
-    this.wavesurfer.drawBuffer();
+    this.wavesurfer.setOptions({ height: parseFloat(this.heightInputRef.nativeElement.value) });
   }
 
   SetDefaultWidth() {
@@ -143,10 +137,8 @@ export class TargetDetailActivateComponent implements AfterViewInit {
     this.widthInputRef.nativeElement.max = max;
     this.widthInputRef.nativeElement.min = min;
     this.widthInputRef.nativeElement.value = max;
-
     this.widthInputRef.nativeElement.addEventListener('input', this.UpdateWidth.bind(this));
-
-    this.wavesurfer.params.minPxPerSec = max;
+    this.wavesurfer.setOptions({ minPxPerSec: max });
   }
 
   UpdateWidth() {
@@ -156,9 +148,7 @@ export class TargetDetailActivateComponent implements AfterViewInit {
     let min = 300 / audioDuration;
     this.widthInputRef.nativeElement.max = max;
     this.widthInputRef.nativeElement.min = min;
-
-    this.wavesurfer.params.minPxPerSec = parseFloat(this.widthInputRef.nativeElement.value);
-    this.wavesurfer.drawBuffer();
+    this.wavesurfer.setOptions({ minPxPerSec: parseFloat(this.widthInputRef.nativeElement.value) });
   }
 
   onResize(event) {
@@ -169,85 +159,6 @@ export class TargetDetailActivateComponent implements AfterViewInit {
     this.widthInputRef.nativeElement.max = max;
     this.widthInputRef.nativeElement.min = min;
     this.widthInputRef.nativeElement.value = max;
-
-    this.wavesurfer.params.minPxPerSec = max;
-    this.wavesurfer.drawBuffer();
+    this.wavesurfer.setOptions({ minPxPerSec: max });
   }
 }
-
-
-//function RenderMasterWaveform(containerId, audio) {
-//  if (containerId != null && containerId != undefined && containerId != '' &&
-//    audio != null && audio != undefined) {
-//    var wavesurfer = WaveSurfer.create({
-//      container: '#' + containerId,
-//      waveColor: '#000',
-//      width: 110,
-//      progressColor: '#000',
-//      cursorWidth: 0,
-//      hideScrollbar: true,
-//      responsive: true,
-//      height: 220,
-//      pixelRatio: 1,
-//      minPxPerSec: 1
-//    });
-
-//    wavesurfer.load(audio);
-
-//    return wavesurfer;
-//  }
-//  else {
-//    return null;
-//  }
-//}
-
-
-//if (timelineId != null && timelineId != undefined && timelineId != '') {
-//  wavesurfer.addPlugin(
-//    WaveSurfer.timeline.create({
-//      container: '#' + timelineId,
-//      primaryColor: "#fd11ff",
-//      secondaryColor: "#000",
-//      primaryFontColor: "#fd11ff",
-//      secondaryFontColor: "#000"
-//    })
-//  ).initPlugin('timeline');
-//}
-
-//wavesurfer.addPlugin(
-//  WaveSurfer.regions.create({
-//    //dragSelection: {
-//    //    slop: 5
-//    //}
-//  })
-//).initPlugin('regions');
-
-////wavesurfer.addRegion({
-////    start: 0,
-////    end: 10,
-////    loop: false,
-////    drag: false,
-////    color: 'hsla(400, 100%, 30%, 0.5)'
-////});
-
-////wavesurfer.addRegion({
-////    start: 24,
-////    end: 27,
-////    loop: false,
-////    drag: true,
-////    color: 'hsla(200, 50%, 70%, 0.4)'
-////});
-
-////wavesurfer.addPlugin(
-////    WaveSurfer.cursor.create({
-////        showTime: true,
-////        opacity: 1,
-////        height:600,
-////        customShowTimeStyle: {
-////            'background-color': '#000',
-////            color: '#fff',
-////            padding: '2px',
-////            'font-size': '10px'
-////        }
-////    })
-////).initPlugin('cursor');

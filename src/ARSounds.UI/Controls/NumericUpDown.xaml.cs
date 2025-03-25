@@ -4,7 +4,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
-namespace ARSounds.MauiApp.Controls;
+namespace ARSounds.UI.Controls;
 
 public partial class NumericUpDown : ContentView
 {

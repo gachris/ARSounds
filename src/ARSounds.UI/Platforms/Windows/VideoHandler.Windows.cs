@@ -1,10 +1,10 @@
 ﻿#nullable enable
-using ARSounds.MauiApp.Controls.Videos;
-using ARSounds.MauiApp.Platforms.Windows;
+using ARSounds.UI.Controls.Videos;
+using ARSounds.UI.Platforms.Windows;
 using Microsoft.Maui.Handlers;
 using System;
 
-namespace ARSounds.MauiApp.Handlers;
+namespace ARSounds.UI.Handlers;
 
 public partial class VideoHandler : ViewHandler<Video, MauiVideoPlayer>
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Maui.Controls;
 using System;
 
-namespace ARSounds.MauiApp.Converters;
+namespace ARSounds.UI.Converters;
 
 public class IsNotEmptyStringConverter : IValueConverter
 {

@@ -1,4 +1,4 @@
-﻿using ARSounds.MauiApp.Enums;
+﻿using ARSounds.UI.Enums;
 using ARSounds.UI.Helpers;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
@@ -6,7 +6,7 @@ using Microsoft.Maui.Graphics;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ARSounds.MauiApp.Controls;
+namespace ARSounds.UI.Controls;
 
 public partial class BottomSheet : ContentView
 {
@@ -134,7 +134,7 @@ public partial class BottomSheet : ContentView
         UpdateTheme();
 
         //Set Close Icon from Local Resource
-        //CloseBottomSheetButton.Source = ImageSource.FromResource($"ARSounds.MauiApp.Resources.Images.icnmenuclose.png");
+        //CloseBottomSheetButton.Source = ImageSource.FromResource($"ARSounds.UI.Resources.Images.icnmenuclose.png");
         CloseBottomSheetButton.Source = ResourceHelper.FindResource<ImageSource>("ic_login.png");
     }
 

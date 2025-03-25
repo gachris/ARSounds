@@ -5,7 +5,7 @@ using Microsoft.Maui.Graphics;
 using System;
 using System.Collections.Generic;
 
-namespace ARSounds.MauiApp.Controls;
+namespace ARSounds.UI.Controls;
 
 /// <summary>
 /// Provides a grid-style layout panel where each tile/cell can be variable size based on content.

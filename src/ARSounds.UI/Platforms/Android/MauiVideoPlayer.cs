@@ -3,12 +3,12 @@ using Android.Media;
 using Android.Views;
 using Android.Widget;
 using AndroidX.CoordinatorLayout.Widget;
-using ARSounds.MauiApp.Controls.Videos;
+using ARSounds.UI.Controls.Videos;
 using System;
 using Color = Android.Graphics.Color;
 using Uri = Android.Net.Uri;
 
-namespace ARSounds.MauiApp.Platforms.Android;
+namespace ARSounds.UI.Platforms.Android;
 
 public class MauiVideoPlayer : CoordinatorLayout, MediaPlayer.IOnPreparedListener
 {

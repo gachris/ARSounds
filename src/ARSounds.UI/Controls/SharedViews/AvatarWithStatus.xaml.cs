@@ -1,8 +1,8 @@
-using ARSounds.MauiApp.Enums;
+using ARSounds.UI.Enums;
 using Microsoft.Maui.Controls;
 using System;
 
-namespace ARSounds.MauiApp.Controls;
+namespace ARSounds.UI.Controls;
 
 public partial class AvatarWithStatus : ContentView
 {

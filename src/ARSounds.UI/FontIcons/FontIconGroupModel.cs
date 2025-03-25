@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ARSounds.MauiApp.Models;
+namespace ARSounds.UI.Models;
 
 public class FontIconGroupModel : List<FontIconModel>
 {

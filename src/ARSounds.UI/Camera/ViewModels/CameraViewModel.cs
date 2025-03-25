@@ -21,7 +21,7 @@ public partial class CameraViewModel : ViewModelBase
 {
     #region Fields/Consts
 
-    private readonly string _apiKey = "XoBG/NS7luN18oH0e00nstWDuB+1EfseV797abz6mHE=";
+    private readonly string _apiKey = "Dq6moD7K0U7S0JRp570QnZRRWc4nykBBcPIF736ZMWg=";
     private readonly ITargetsService _targetsService;
     private readonly INavigationService _navigationService;
     private readonly IAudioManager _audioManager;

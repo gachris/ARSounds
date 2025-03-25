@@ -8,12 +8,12 @@
               {{ target.description }}
             </h5>
             <small class="m-1">
-              <span class="text-muted text-nowrap"> {{ target.created }} ago</span>
+              <span class="text-muted text-nowrap"> {{ target.created | date : 'medium' }} ago</span>
             </small>
           </div>
         </div>
-        <!--<div *ngIf="target.is_active; then image_template else waveform_template"></div>-->
-        <!--<ng-template #image_template>
+        <div *ngIf="target.is_active; then image_template else waveform_template"></div>
+        <ng-template #image_template>
           <img height="220" src="{{ target.image_base64 }}" />
         </ng-template>
         <ng-template #waveform_template>
@@ -22,7 +22,7 @@
                        [height]="220"
                        waveColor="#000000">
           </ng-waveform>
-        </ng-template>-->
+        </ng-template>
       </a>
     </div>
   </div>

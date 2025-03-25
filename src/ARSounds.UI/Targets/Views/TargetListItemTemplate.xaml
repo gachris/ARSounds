@@ -3,7 +3,7 @@
     x:Class="ARSounds.UI.Targets.Views.TargetListItemTemplate"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:controls="clr-namespace:ARSounds.MauiApp.Controls"
+    xmlns:controls="clr-namespace:ARSounds.UI.Controls"
     xmlns:viewModels="clr-namespace:ARSounds.UI.Targets.ViewModels"
     x:DataType="{x:Type viewModels:TargetViewModel}">
     <Border

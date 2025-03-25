@@ -50,7 +50,8 @@ public class TargetsService : ITargetsService
         _service = new TargetService(new BaseClientService.Initializer()
         {
             ApplicationName = apiConfiguration.ApiName,
-            HttpClientInitializer = new UserCredential(key)
+            HttpClientInitializer = new UserCredential(key),
+            ServerUrl = "https://localhost:44320"
         });
 
         _resource = new TargetListResource(_service);

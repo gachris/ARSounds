@@ -4,7 +4,7 @@ using System.Linq;
 using Color = Microsoft.Maui.Graphics.Color;
 using Font = Microsoft.Maui.Graphics.Font;
 
-namespace ARSounds.MauiApp.Controls.Charts;
+namespace ARSounds.UI.Controls.Charts;
 
 public class RadialBarChartDrawable : IDrawable
 {

@@ -3,7 +3,7 @@
     x:Class="ARSounds.UI.Common.Views.HomePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:controls="clr-namespace:ARSounds.MauiApp.Controls"
+    xmlns:controls="clr-namespace:ARSounds.UI.Controls"
     xmlns:fontIcons="clr-namespace:ARSounds.UI.FontIcons"
     xmlns:loc="clr-namespace:ARSounds.UI.Localization"
     xmlns:targetsViewModels="clr-namespace:ARSounds.UI.Targets.ViewModels"

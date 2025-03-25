@@ -3,7 +3,7 @@ using Microsoft.Maui.Dispatching;
 using System;
 using System.ComponentModel;
 
-namespace ARSounds.MauiApp.Controls.Videos;
+namespace ARSounds.UI.Controls.Videos;
 
 public class Video : View, IVideoController
 {

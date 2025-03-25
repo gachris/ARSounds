@@ -1,5 +1,5 @@
 ﻿
-namespace ARSounds.MauiApp.Controls.Videos;
+namespace ARSounds.UI.Controls.Videos;
 
 public enum VideoStatus
 {

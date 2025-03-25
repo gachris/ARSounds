@@ -1,6 +1,6 @@
 ﻿using Microsoft.Maui.Controls;
 
-namespace ARSounds.MauiApp.Controls.Videos;
+namespace ARSounds.UI.Controls.Videos;
 
 public class UriVideoSource : VideoSource
 {

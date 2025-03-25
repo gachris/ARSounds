@@ -5,7 +5,7 @@ using Microsoft.Maui.Graphics;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace ARSounds.MauiApp.Controls;
+namespace ARSounds.UI.Controls;
 
 public partial class BasePopupPage : ContentPage
 {

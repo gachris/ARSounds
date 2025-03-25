@@ -1,7 +1,7 @@
-﻿using ARSounds.MauiApp.Models;
+﻿using ARSounds.UI.Models;
 using Microsoft.Maui.Controls;
 
-namespace ARSounds.MauiApp.Selectors;
+namespace ARSounds.UI.Selectors;
 
 public class FontIconsTemplateSelector : DataTemplateSelector
 {

@@ -2,7 +2,7 @@ using ARSounds.UI.FontIcons;
 using Microsoft.Maui.Controls;
 using System;
 
-namespace ARSounds.MauiApp.Controls;
+namespace ARSounds.UI.Controls;
 
 public partial class Rating : ContentView
 {

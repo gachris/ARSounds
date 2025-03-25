@@ -3,7 +3,7 @@
     x:Class="ARSounds.UI.Styles.Styles"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:views="clr-namespace:ARSounds.MauiApp.Views">
+    xmlns:views="clr-namespace:ARSounds.UI.Views">
 
     <Shadow
         x:Key="CommonShadow"

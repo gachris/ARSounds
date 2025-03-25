@@ -6,7 +6,7 @@
 		<FileVersion>$(AssemblyVersion)</FileVersion>
 		<LangVersion>latest</LangVersion>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>disable</Nullable>
+		<Nullable>enable</Nullable>
 		<NeutralLanguage>en-150</NeutralLanguage>
 	</PropertyGroup>
 
