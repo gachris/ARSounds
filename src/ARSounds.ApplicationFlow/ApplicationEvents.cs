@@ -1,44 +1,53 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
-using System.Diagnostics;
+﻿using CommonServiceLocator;
 
-namespace ARSounds.Core;
+namespace ARSounds.ApplicationFlow;
 
 public class ApplicationEvents : IApplicationEvents
 {
     #region Fields/Consts
 
-    private readonly IServiceProvider _serviceProvider;
+    private readonly IServiceLocator _serviceLocator;
     private readonly SynchronizationContext _context;
-    private readonly Dictionary<Type, List<Delegate>> _handlers = new();
+    private readonly Dictionary<Type, List<Delegate>> _handlers = [];
 
     #endregion
 
-    public ApplicationEvents(IServiceProvider serviceProvider, SynchronizationContext context)
+    public ApplicationEvents(IServiceLocator serviceLocator, SynchronizationContext context)
     {
-        _serviceProvider = serviceProvider;
+        _serviceLocator = serviceLocator;
         _context = context;
     }
 
     #region IApplicationEvents Implementation
 
-    public void Raise<T>(T domainEvent) where T : ApplicationEvent => _context.Post(state => RaiseInternal(domainEvent), null);
+    public void Raise<T>(T domainEvent) where T : ApplicationEvent
+    {
+        _context.Post(state => RaiseInternal(domainEvent), null);
+    }
 
     public void Register<T>(Action<T> eventHandler) where T : ApplicationEvent
     {
         var type = typeof(T);
-        if (!_handlers.ContainsKey(type)) _handlers[type] = new List<Delegate>();
+
+        if (!_handlers.ContainsKey(type))
+        {
+            _handlers[type] = [];
+        }
+
         _handlers[type].Add(eventHandler);
     }
 
     public void UnRegister<T>(Action<T> eventHandler) where T : ApplicationEvent
     {
         var type = typeof(T);
-        if (!_handlers.ContainsKey(type) && _handlers[type].Contains(eventHandler))
+        if (_handlers.ContainsKey(type) && _handlers[type].Contains(eventHandler))
         {
             _handlers[type].Remove(eventHandler);
 
-            if (!_handlers[type].Any()) _handlers.Remove(type);
+            if (!_handlers[type].Any())
+            {
+                _handlers.Remove(type);
+            }
         }
     }
 
@@ -61,28 +70,20 @@ public class ApplicationEvents : IApplicationEvents
     {
         var domainEventType = domainEvent.GetType();
 
-        Debug.WriteLine($"EVENT => {domainEventType.Name} {JsonConvert.SerializeObject(domainEvent)}");
-
         if (_handlers.ContainsKey(domainEventType))
         {
             foreach (var handler in _handlers[domainEventType])
             {
-                Debug.WriteLine($"HANDLER => For {domainEventType.Name} on {handler.Target?.ToString()?.Split('.').Last()}");
                 handler.DynamicInvoke(domainEvent);
             }
         }
 
         var type = typeof(IApplicationEventHandler<>).MakeGenericType(domainEventType);
-        var handlers = _serviceProvider.GetServices(type).ToList<dynamic>();
+        var handlers = _serviceLocator.GetAllInstances(type).ToList<dynamic?>();
         handlers.ForEach(e =>
         {
-            if (e is not null)
-            {
-                Debug.WriteLine($"HANDLER => For {domainEventType.Name} on {e.GetType().Name}");
-                e.Handle((dynamic)domainEvent);
-            }
+            e?.Handle((dynamic)domainEvent);
         });
-
     }
 
     #endregion

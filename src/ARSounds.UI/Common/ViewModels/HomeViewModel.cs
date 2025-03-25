@@ -1,5 +1,5 @@
 ﻿using ARSounds.Application.Targets.Queries;
-using ARSounds.Core;
+using ARSounds.ApplicationFlow;
 using ARSounds.Core.Targets.Events;
 using ARSounds.UI.Camera.ViewModels;
 using ARSounds.UI.Extensions;

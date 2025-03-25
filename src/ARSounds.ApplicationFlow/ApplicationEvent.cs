@@ -1,4 +1,4 @@
-﻿namespace ARSounds.Core;
+﻿namespace ARSounds.ApplicationFlow;
 
 public class ApplicationEvent
 {
@@ -14,5 +14,9 @@ public class ApplicationEvent
 
     #endregion
 
+    #region Methods
+
     private static long GetNextIndex() => Interlocked.Increment(ref _index);
+
+    #endregion
 }

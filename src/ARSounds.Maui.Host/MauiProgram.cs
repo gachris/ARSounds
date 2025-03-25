@@ -2,6 +2,7 @@
 using ARSounds.Core;
 using ARSounds.Core.Configuration;
 using ARSounds.UI;
+using CommonServiceLocator;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
@@ -10,9 +11,9 @@ namespace ARSounds.Maui.Host;
 
 public static class MauiProgram
 {
-    public static Microsoft.Maui.Hosting.MauiApp CreateMauiApp()
+    public static MauiApp CreateMauiApp()
     {
-        var builder = Microsoft.Maui.Hosting.MauiApp.CreateBuilder();
+        var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
@@ -29,6 +30,7 @@ public static class MauiProgram
         builder.Services.AddSingleton(appConfiguration);
         builder.Services.AddSingleton(oidcConfiguration);
         builder.Services.AddSingleton(Connectivity.Current);
+        builder.Services.AddSingleton(t => ServiceLocator.Current);
 
         builder.Services.AddLocalization();
         builder.Services.AddSynchronizationContext();
@@ -37,6 +39,10 @@ public static class MauiProgram
         builder.Services.AddApplication();
         builder.Services.AddUI();
 
-        return builder.Build();
+        var mauiApp = builder.Build();
+
+        ServiceLocator.SetLocatorProvider(() => new AppServiceLocator(mauiApp.Services));
+
+        return mauiApp;
     }
 }

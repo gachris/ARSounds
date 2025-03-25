@@ -1,5 +1,5 @@
 ﻿using ARSounds.Application.Store;
-using ARSounds.Core;
+using ARSounds.ApplicationFlow;
 using ARSounds.Core.Auth;
 using ARSounds.Core.Auth.Events;
 using ARSounds.Core.Configuration;
@@ -8,6 +8,7 @@ using IdentityModel.OidcClient.Browser;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+
 #if WINDOWS
 using System.IO;
 using System.Net;

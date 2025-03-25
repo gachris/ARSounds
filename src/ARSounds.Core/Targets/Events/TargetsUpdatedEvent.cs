@@ -1,4 +1,6 @@
-﻿namespace ARSounds.Core.Targets.Events;
+﻿using ARSounds.ApplicationFlow;
+
+namespace ARSounds.Core.Targets.Events;
 
 public class TargetsUpdatedEvent : ApplicationEvent
 {

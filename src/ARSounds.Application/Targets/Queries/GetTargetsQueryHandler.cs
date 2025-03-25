@@ -1,5 +1,5 @@
 ﻿using ARSounds.Application.ImageRecognition;
-using ARSounds.Core;
+using ARSounds.ApplicationFlow;
 using ARSounds.Core.App;
 using ARSounds.Core.Auth.Events;
 using ARSounds.Core.Targets;

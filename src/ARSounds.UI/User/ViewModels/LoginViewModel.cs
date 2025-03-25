@@ -1,5 +1,5 @@
 ﻿using ARSounds.Application.Auth.Commands;
-using ARSounds.Core;
+using ARSounds.ApplicationFlow;
 using ARSounds.Core.Auth.Events;
 using ARSounds.UI.Common.ViewModels;
 using ARSounds.UI.Common.Views;

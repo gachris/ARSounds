@@ -1,4 +1,6 @@
-﻿namespace ARSounds.Application;
+﻿using CommonServiceLocator;
+
+namespace ARSounds.Application;
 
 public abstract class ResultDto : BaseResultDto
 {

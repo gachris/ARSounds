@@ -3,11 +3,6 @@ using ARSounds.Application.ImageRecognition.Response;
 using ARSounds.Core.Configuration;
 using ARSounds.Core.Targets;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace ARSounds.Application.ImageRecognition;
 

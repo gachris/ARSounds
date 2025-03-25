@@ -1,4 +1,4 @@
-﻿namespace ARSounds.Core;
+﻿namespace ARSounds.ApplicationFlow;
 
 public abstract class AggregateRoot
 {

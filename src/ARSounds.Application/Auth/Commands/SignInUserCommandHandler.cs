@@ -1,4 +1,4 @@
-﻿using ARSounds.Core;
+﻿using ARSounds.ApplicationFlow;
 using ARSounds.Core.Auth.Events;
 using MediatR;
 using System;
