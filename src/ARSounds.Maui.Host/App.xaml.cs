@@ -1,9 +1,9 @@
 ﻿using ARSounds.Application.Auth;
 using ARSounds.Application.Auth.Commands;
-using ARSounds.UI.Handlers;
-using ARSounds.UI.Common.Views;
-using ARSounds.UI.Helpers;
-using ARSounds.UI.User.Views;
+using ARSounds.UI.Maui.Handlers;
+using ARSounds.UI.Maui.Common.Views;
+using ARSounds.UI.Maui.Helpers;
+using ARSounds.UI.Maui.User.Views;
 using MediatR;
 using OpenVision.Core.Configuration;
 

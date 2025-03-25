@@ -1,5 +1,5 @@
-﻿using ARSounds.UI.Controls.Videos;
-using ARSounds.UI.Handlers;
+﻿using ARSounds.UI.Maui.Controls.Videos;
+using ARSounds.UI.Maui.Handlers;
 using Microsoft.Extensions.Configuration;
 using OpenVision.Maui.Controls;
 using SkiaSharp.Views.Maui.Controls;

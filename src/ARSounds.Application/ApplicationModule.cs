@@ -1,5 +1,4 @@
-﻿using ARSounds.Application.Auth;
-using ARSounds.Application.ImageRecognition;
+﻿using ARSounds.Application.ImageRecognition;
 using MediatR;
 using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,7 +18,6 @@ public static class ApplicationModule
 
         services.AddTransient(typeof(IRequestPostProcessor<,>), typeof(RequestPostProcessor<,>));
 
-        services.AddSingleton<IAuthService, AuthService>();
         services.AddSingleton<ITargetsService, TargetsService>();
     }
 

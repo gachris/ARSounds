@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ARSounds.UI.Maui.User.Views.ProfilePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:common="clr-namespace:ARSounds.UI.Maui.Common"
+    xmlns:fontIcons="clr-namespace:ARSounds.UI.Maui.FontIcons"
+    xmlns:loc="clr-namespace:ARSounds.UI.Maui.Localization"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewModels="clr-namespace:ARSounds.UI.Maui.User.ViewModels"
+    x:DataType="{x:Type viewModels:ProfileViewModel}"
+    BackgroundColor="{DynamicResource BasePageColor}">
+    <Grid RowDefinitions="Auto,Auto,Auto">
+        <StackLayout Margin="20,15,20,0">
+            <!--<toolkit:AvatarView
+                Padding="1"
+                BackgroundColor="Transparent"
+                BorderWidth="0"
+                CornerRadius="60"
+                HeightRequest="120"
+                ImageSource="{Binding ImageUrl}"
+                WidthRequest="120">
+                <toolkit:AvatarView.Shadow>
+                    <Shadow Opacity="0.1" />
+                </toolkit:AvatarView.Shadow>
+            </toolkit:AvatarView>-->
+            <Border
+                Grid.Column="0"
+                Background="Transparent"
+                HorizontalOptions="Center"
+                Stroke="{DynamicResource PrimaryColor}"
+                StrokeShape="RoundRectangle 40"
+                StrokeThickness="0">
+                <Image
+                    Aspect="AspectFit"
+                    HeightRequest="80"
+                    Source="{Binding ImageUrl}"
+                    WidthRequest="80" />
+            </Border>
+
+            <StackLayout Margin="20,10">
+                <Label
+                    FontSize="20"
+                    HorizontalOptions="Center"
+                    Style="{StaticResource Title2}"
+                    Text="{Binding Name}"
+                    VerticalTextAlignment="Center" />
+                <Label
+                    FontSize="16"
+                    HorizontalOptions="Center"
+                    Text="{Binding Email}"
+                    TextColor="{DynamicResource PrimaryColor}"
+                    VerticalTextAlignment="Center" />
+            </StackLayout>
+        </StackLayout>
+
+        <!--  OPTIONS  -->
+        <ListView
+            Grid.Row="1"
+            Margin="20"
+            CachingStrategy="RecycleElement"
+            HasUnevenRows="False"
+            ItemsSource="{Binding MenuItems}"
+            VerticalScrollBarVisibility="Never">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type common:MenuItems}">
+                    <ViewCell>
+                        <Grid Padding="0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="40" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="40" />
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                FontFamily="IonIcons"
+                                FontSize="22"
+                                HorizontalOptions="Start"
+                                Text="{Binding Icon}"
+                                TextColor="{DynamicResource PrimaryColor}"
+                                VerticalOptions="Center" />
+
+                            <Label
+                                Grid.Column="1"
+                                FontAttributes="Bold"
+                                FontSize="15"
+                                HorizontalOptions="Start"
+                                Text="{Binding Title}"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+
+                            <Label
+                                Grid.Column="2"
+                                FontFamily="IonIcons"
+                                FontSize="15"
+                                HorizontalOptions="End"
+                                HorizontalTextAlignment="Center"
+                                Text="{x:Static fontIcons:IonIcons.ChevronRight}"
+                                TextColor="{DynamicResource BaseIconColor}"
+                                VerticalOptions="CenterAndExpand" />
+
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.TapCommand}" CommandParameter="{Binding .}" />
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!--  SETTINGS  -->
+        <StackLayout Grid.Row="2" Padding="20,0">
+            <Label
+                FontSize="17"
+                HorizontalOptions="Start"
+                Style="{StaticResource Title2}"
+                Text="{loc:LocalizationResource LabelAppSettings}"
+                VerticalOptions="Center"
+                VerticalTextAlignment="Center" />
+
+            <Grid ColumnDefinitions="*,Auto">
+                <Label
+                    FontSize="15"
+                    HorizontalOptions="Start"
+                    Text="{loc:LocalizationResource LabelFaceIdLogin}"
+                    VerticalOptions="Center"
+                    VerticalTextAlignment="Center" />
+                <Switch
+                    Grid.Column="1"
+                    HorizontalOptions="End"
+                    IsToggled="True" />
+            </Grid>
+
+            <Rectangle Fill="{DynamicResource BaseSeparatorColor}" HeightRequest="1" />
+
+            <Grid ColumnDefinitions="*,Auto">
+                <Label
+                    FontSize="15"
+                    HorizontalOptions="Start"
+                    Text="{loc:LocalizationResource LabelEnableLocation}"
+                    VerticalOptions="Center"
+                    VerticalTextAlignment="Center" />
+                <Switch Grid.Column="1" HorizontalOptions="End" />
+            </Grid>
+
+            <Rectangle Fill="{DynamicResource BaseSeparatorColor}" HeightRequest="1" />
+
+            <Grid
+                Margin="30"
+                ColumnDefinitions="Auto, *"
+                HorizontalOptions="Center">
+                <Label
+                    FontFamily="MaterialDesign"
+                    FontSize="25"
+                    HorizontalOptions="Center"
+                    Text="{x:Static fontIcons:MaterialDesignIcons.ExitToApp}"
+                    TextColor="{DynamicResource Red}"
+                    VerticalOptions="Center" />
+
+                <Button
+                    Grid.Column="1"
+                    Margin="12,0"
+                    Command="{Binding SignOutCommand}"
+                    FontSize="15"
+                    HorizontalOptions="Start"
+                    Style="{StaticResource PrimaryActionButtonStyle}"
+                    Text="{loc:LocalizationResource LabelLogOut}"
+                    VerticalOptions="Center" />
+            </Grid>
+        </StackLayout>
+
+    </Grid>
+
+</ContentPage>

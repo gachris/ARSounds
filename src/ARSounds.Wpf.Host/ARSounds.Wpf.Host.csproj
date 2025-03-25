@@ -4,17 +4,21 @@
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net9.0-windows</TargetFramework>
 		<UseWPF>true</UseWPF>
+		<AssemblyName>ARSounds</AssemblyName>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Mvvm" />
-		<PackageReference Include="DevToolbox.Wpf" />
-		<PackageReference Include="Microsoft.ML" />
-		<PackageReference Include="Microsoft.ML.OnnxRuntime" />
-		<PackageReference Include="Microsoft.ML.ImageAnalytics" />
-		<PackageReference Include="Microsoft.ML.OnnxTransformer" />
-		<PackageReference Include="Microsoft.Windows.Compatibility" />
-		<PackageReference Include="OpenVision.Wpf" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="appsettings.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\ARSounds.UI.Wpf\ARSounds.UI.Wpf.csproj" />
 	</ItemGroup>
 	
 </Project>

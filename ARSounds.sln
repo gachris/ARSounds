@@ -16,8 +16,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.Core", "src\ARSoun
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.Localization", "src\ARSounds.Localization\ARSounds.Localization.csproj", "{5A103F4D-9607-4AFE-8CC4-8A2CE927A2D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.UI", "src\ARSounds.UI\ARSounds.UI.csproj", "{BDDC9F07-AF27-49C5-ABC5-DFCAD11DCE8D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.Wpf.Host", "src\ARSounds.Wpf.Host\ARSounds.Wpf.Host.csproj", "{BF7828A8-A21F-4F68-A724-546C4F133207}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.WinUI.Host", "src\ARSounds.WinUI.Host\ARSounds.WinUI.Host.csproj", "{B4B34C9E-E23C-4916-B85B-18A9DE09B3DA}"
@@ -25,6 +23,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.Maui.Host", "src\ARSounds.Maui.Host\ARSounds.Maui.Host.csproj", "{A2208E1D-2F63-4316-8414-45D812254D9C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.ApplicationFlow", "src\ARSounds.ApplicationFlow\ARSounds.ApplicationFlow.csproj", "{A53D32AF-F963-465A-86A3-4A63DF747131}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.UI.Maui", "src\ARSounds.UI.Maui\ARSounds.UI.Maui.csproj", "{EE0533AE-84FA-4FB6-B257-0A0EF05F1915}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.UI.Wpf", "src\ARSounds.UI.Wpf\ARSounds.UI.Wpf.csproj", "{652338F2-18DF-46B1-B5C0-4D8B47434780}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,10 +46,6 @@ Global
 		{5A103F4D-9607-4AFE-8CC4-8A2CE927A2D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A103F4D-9607-4AFE-8CC4-8A2CE927A2D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A103F4D-9607-4AFE-8CC4-8A2CE927A2D0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BDDC9F07-AF27-49C5-ABC5-DFCAD11DCE8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BDDC9F07-AF27-49C5-ABC5-DFCAD11DCE8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BDDC9F07-AF27-49C5-ABC5-DFCAD11DCE8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BDDC9F07-AF27-49C5-ABC5-DFCAD11DCE8D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BF7828A8-A21F-4F68-A724-546C4F133207}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BF7828A8-A21F-4F68-A724-546C4F133207}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF7828A8-A21F-4F68-A724-546C4F133207}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -68,6 +66,14 @@ Global
 		{A53D32AF-F963-465A-86A3-4A63DF747131}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A53D32AF-F963-465A-86A3-4A63DF747131}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A53D32AF-F963-465A-86A3-4A63DF747131}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE0533AE-84FA-4FB6-B257-0A0EF05F1915}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE0533AE-84FA-4FB6-B257-0A0EF05F1915}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE0533AE-84FA-4FB6-B257-0A0EF05F1915}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE0533AE-84FA-4FB6-B257-0A0EF05F1915}.Release|Any CPU.Build.0 = Release|Any CPU
+		{652338F2-18DF-46B1-B5C0-4D8B47434780}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{652338F2-18DF-46B1-B5C0-4D8B47434780}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{652338F2-18DF-46B1-B5C0-4D8B47434780}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{652338F2-18DF-46B1-B5C0-4D8B47434780}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

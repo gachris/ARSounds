@@ -8,13 +8,13 @@
     <Application.Resources>
         <ResourceDictionary>
 
-            <ResourceDictionary Source="Themes/LightTheme.xaml;assembly=ARSounds.UI" />
+            <ResourceDictionary Source="Themes/LightTheme.xaml;assembly=ARSounds.UI.Maui" />
 
-            <ResourceDictionary Source="Styles/Buttons.xaml;assembly=ARSounds.UI" />
-            <ResourceDictionary Source="Styles/Icons.xaml;assembly=ARSounds.UI" />
-            <ResourceDictionary Source="Styles/Colors.xaml;assembly=ARSounds.UI" />
-            <ResourceDictionary Source="Styles/Labels.xaml;assembly=ARSounds.UI" />
-            <ResourceDictionary Source="Styles/Controls.xaml;assembly=ARSounds.UI" />
+            <ResourceDictionary Source="Styles/Buttons.xaml;assembly=ARSounds.UI.Maui" />
+            <ResourceDictionary Source="Styles/Icons.xaml;assembly=ARSounds.UI.Maui" />
+            <ResourceDictionary Source="Styles/Colors.xaml;assembly=ARSounds.UI.Maui" />
+            <ResourceDictionary Source="Styles/Labels.xaml;assembly=ARSounds.UI.Maui" />
+            <ResourceDictionary Source="Styles/Controls.xaml;assembly=ARSounds.UI.Maui" />
 
             <!--  UNITS  -->
             <x:Double x:Key="BaseFontSize">14</x:Double>

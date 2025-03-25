@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="ARSounds.UI.Maui.Controls.CurvedMask"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="Transparent"
+    HeightRequest="41"
+    VerticalOptions="End">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style x:Key="MaskImageStyle" TargetType="Image">
+                <Setter Property="Aspect" Value="Fill" />
+                <Setter Property="Image.Source" Value="curved_mask.svg" />
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <ContentView.Content>
+        <Grid x:Name="root" RowSpacing="0" />
+    </ContentView.Content>
+</ContentView>

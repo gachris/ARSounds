@@ -51,7 +51,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\ARSounds.UI\ARSounds.UI.csproj" />
+	  <ProjectReference Include="..\ARSounds.UI.Maui\ARSounds.UI.Maui.csproj" />
 	</ItemGroup>
 
 </Project>

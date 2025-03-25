@@ -1,7 +1,9 @@
 ﻿using ARSounds.Application;
+using ARSounds.Application.Store;
 using ARSounds.Core;
 using ARSounds.Core.Configuration;
-using ARSounds.UI;
+using ARSounds.UI.Maui;
+using ARSounds.UI.Maui.Store;
 using CommonServiceLocator;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Configuration;
@@ -24,11 +26,14 @@ public static class MauiProgram
         builder.Configuration
             .AddJsonFromPackageFile("appsettings.json");
 
-        var appConfiguration = builder.Configuration.GetRequiredSection(nameof(AppConfiguration)).Get<AppConfiguration>();
-        var oidcConfiguration = builder.Configuration.GetRequiredSection(nameof(OidcConfiguration)).Get<OidcConfiguration>();
+        var appConfiguration = builder.Configuration.GetRequiredSection(nameof(AppConfiguration)).Get<AppConfiguration>()!;
+        var oidcConfiguration = builder.Configuration.GetRequiredSection(nameof(OidcConfiguration)).Get<OidcConfiguration>()!;
 
         builder.Services.AddSingleton(appConfiguration);
         builder.Services.AddSingleton(oidcConfiguration);
+
+        builder.Services.AddSingleton<IDataStore, FileDataStore>(t => new FileDataStore(appConfiguration.ApplicationName));
+
         builder.Services.AddSingleton(Connectivity.Current);
         builder.Services.AddSingleton(t => ServiceLocator.Current);
 

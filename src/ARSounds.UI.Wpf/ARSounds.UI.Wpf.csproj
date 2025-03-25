@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" />
+		<PackageReference Include="DevToolbox.Wpf" />
+		<PackageReference Include="Microsoft.Windows.Compatibility" />
+		<PackageReference Include="NAudio" />
+		<PackageReference Include="OpenVision.Wpf" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\ARSounds.Application\ARSounds.Application.csproj" />
+		<ProjectReference Include="..\ARSounds.Localization\ARSounds.Localization.csproj" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<Folder Include="Targets\" />
+	</ItemGroup>
+
+</Project>
