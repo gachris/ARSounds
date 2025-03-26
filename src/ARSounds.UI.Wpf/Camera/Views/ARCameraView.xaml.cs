@@ -2,22 +2,18 @@
 using ARSounds.Core.Targets;
 using CommonServiceLocator;
 using Emgu.CV;
+using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
-using Emgu.CV.Util;
 using NAudio.Wave;
+using OpenVision.Core.DataTypes;
 using OpenVision.Core.Reco;
 using OpenVision.Wpf.Controls;
-using System.Diagnostics;
+using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
-using System.Windows.Media;
-using System.Windows.Media.Media3D;
-using Emgu.CV.CvEnum;
-using System.Drawing;
-using OpenVision.Core.Reco.DataTypes;
 
 namespace ARSounds.UI.Wpf.Camera.Views;
 
@@ -46,6 +42,21 @@ public partial class ARCameraView : UserControl
 
     private async void Camera_Loaded(object sender, RoutedEventArgs e)
     {
+        // Create a new ImageRequestBuilder instance with specific configurations
+        var newBuilder = new ImageRequestBuilder()
+            .WithGrayscale()
+            .WithGaussianBlur(new System.Drawing.Size(5, 5), 0)
+            .WithLowResolution(320);
+
+        // Get the type of the camera object
+        var type = Camera.GetType();
+
+        // Get the FieldInfo for the private readonly field '_imageRequestBuilder'
+        var fieldInfo = type.GetField("_imageRequestBuilder", BindingFlags.NonPublic | BindingFlags.Instance);
+
+        // Set the value of the private readonly field using reflection
+        fieldInfo?.SetValue(Camera, newBuilder);
+
         var responseMessage = await _targetsService.GetAsync();
 
         _targets = responseMessage.Response.Result;
@@ -180,35 +191,5 @@ public partial class ARCameraView : UserControl
 
         _waveOut = null;
         _waveStream = null;
-    }
-
-    private static double CalculatePolygonAngle(System.Drawing.PointF[] points)
-    {
-        double totalAngle = 0;
-
-        for (int i = 0; i < points.Length; i++)
-        {
-            System.Drawing.PointF currentPoint = points[i];
-            System.Drawing.PointF prevPoint = i == 0 ? points[points.Length - 1] : points[i - 1];
-            System.Drawing.PointF nextPoint = i == points.Length - 1 ? points[0] : points[i + 1];
-
-            double angle = CalculateAngle(prevPoint, currentPoint, nextPoint);
-            totalAngle += angle;
-        }
-
-        return totalAngle;
-    }
-
-    private static double CalculateAngle(System.Drawing.PointF a, System.Drawing.PointF b, System.Drawing.PointF c)
-    {
-        double angleRad = Math.Atan2(c.Y - b.Y, c.X - b.X) - Math.Atan2(a.Y - b.Y, a.X - b.X);
-        double angleDeg = angleRad * (180 / Math.PI);
-
-        if (angleDeg < 0)
-        {
-            angleDeg += 360;
-        }
-
-        return angleDeg;
     }
 }
