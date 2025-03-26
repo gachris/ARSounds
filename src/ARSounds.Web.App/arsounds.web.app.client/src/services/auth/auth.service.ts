@@ -83,7 +83,7 @@ export function getClientSettings(): UserManagerSettings {
     silent_redirect_uri: environment.silent_redirect_uri,
     post_logout_redirect_uri: environment.post_logout_redirect_uri,
     response_type: "code",
-    scope: "openid profile email roles arsounds.read arsounds.write",
+    scope: "openid profile email roles offline_access arsounds.read arsounds.write",
     filterProtocolClaims: true,
     loadUserInfo: true,
     automaticSilentRenew: true,

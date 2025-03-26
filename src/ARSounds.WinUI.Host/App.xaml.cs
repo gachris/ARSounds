@@ -6,7 +6,7 @@ namespace ARSounds.WinUI.Host;
 /// <summary>
 /// Provides application-specific behavior to supplement the default Application class.
 /// </summary>
-public partial class App : Application
+public partial class App : Microsoft.UI.Xaml.Application
 {
     /// <summary>
     /// Initializes the singleton application object.  This is the first line of authored code
@@ -14,7 +14,13 @@ public partial class App : Application
     /// </summary>
     public App()
     {
+        VisionSystemConfig.ImageRequestBuilder = new OpenVision.Core.DataTypes.ImageRequestBuilder()
+            .WithGrayscale()
+            .WithGaussianBlur(new System.Drawing.Size(5, 5), 0)
+            .WithLowResolution(320);
+
         VisionSystemConfig.WebSocketUrl = "wss://localhost:44320/ws";
+        IocConfiguration.Setup();
 
         InitializeComponent();
     }

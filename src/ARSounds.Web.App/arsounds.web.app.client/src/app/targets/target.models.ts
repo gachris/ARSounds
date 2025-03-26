@@ -33,7 +33,7 @@ export class UpdateTargetRequest {
 }
 
 export class TargetActivateRequest {
-  image_base64: string;
+  png_base64: string;
   hex_color: string;
 }
 

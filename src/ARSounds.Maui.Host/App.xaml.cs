@@ -13,6 +13,11 @@ public partial class App : Microsoft.Maui.Controls.Application
 {
     public App()
     {
+        VisionSystemConfig.ImageRequestBuilder = new OpenVision.Core.DataTypes.ImageRequestBuilder()
+            .WithGrayscale()
+            .WithGaussianBlur(new System.Drawing.Size(5, 5), 0)
+            .WithLowResolution(320);
+
         VisionSystemConfig.WebSocketUrl = "wss://localhost:44320/ws";
 
         InitializeComponent();

@@ -2,15 +2,15 @@
 using ARSounds.Application.Store;
 using ARSounds.Core;
 using ARSounds.Core.Configuration;
-using ARSounds.UI.Wpf.Store;
-using ARSounds.UI.Wpf;
+using ARSounds.UI.WinUI.Store;
 using CommonServiceLocator;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using ARSounds.UI.WinUI;
 
-namespace ARSounds.Wpf.Host;
+namespace ARSounds.WinUI.Host;
 
 public static class IocConfiguration
 {

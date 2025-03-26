@@ -89,7 +89,7 @@ export class TargetDetailActivateComponent implements AfterViewInit {
     if (this.wavesurfer) {
       var id = this.route.snapshot.paramMap.get("id");
       var model = new TargetActivateRequest();
-      model.image_base64 = (await this.wavesurfer.exportImage("image/png", 1, "dataURL"))[0];
+      model.png_base64 = (await this.wavesurfer.exportImage("image/png", 1, "dataURL"))[0];
       model.hex_color = this.wavesurfer.options.waveColor;
       this.service.activate(id, model).subscribe(_ => {
         this.target$ = this.service.get(id);

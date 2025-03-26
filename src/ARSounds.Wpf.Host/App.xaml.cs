@@ -11,13 +11,18 @@ public partial class App : System.Windows.Application
 {
     public App()
     {
+        VisionSystemConfig.ImageRequestBuilder = new OpenVision.Core.DataTypes.ImageRequestBuilder()
+            .WithGrayscale()
+            .WithGaussianBlur(new System.Drawing.Size(5, 5), 0)
+            .WithLowResolution(320);
+
+        VisionSystemConfig.WebSocketUrl = "wss://localhost:44320/ws";
+
         IocConfiguration.Setup();
     }
 
     protected override void OnStartup(StartupEventArgs e)
     {
-        VisionSystemConfig.WebSocketUrl = "wss://localhost:44320/ws";
-
         base.OnStartup(e);
 
         ThemeManager.RequestedTheme = ElementTheme.WindowsDefault;

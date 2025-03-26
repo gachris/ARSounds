@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	
+	<PropertyGroup>
+		<TargetFramework>net9.0-windows10.0.19041.0</TargetFramework>
+		<TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+		<RootNamespace>ARSounds.UI.WinUI</RootNamespace>
+		<RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+		<UseWinUI>true</UseWinUI>
+	</PropertyGroup>
+	
+	<ItemGroup>
+	  <None Remove="Camera\Views\ARCameraView.xaml" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="NAudio" />
+		<PackageReference Include="OpenVision.WinUI" />
+		<PackageReference Include="CommunityToolkit.Mvvm" />
+		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" />
+		<PackageReference Include="Microsoft.WindowsAppSDK" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\ARSounds.Application\ARSounds.Application.csproj" />
+		<ProjectReference Include="..\ARSounds.Localization\ARSounds.Localization.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Page Update="Camera\Views\ARCameraView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+
+</Project>

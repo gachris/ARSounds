@@ -1,22 +1,19 @@
-﻿using ARSounds.Application.Auth;
+using ARSounds.Application.Auth;
 using ARSounds.Application.ImageRecognition;
 using ARSounds.Core.Targets;
 using CommonServiceLocator;
-using Emgu.CV.Structure;
 using Emgu.CV;
+using Emgu.CV.Structure;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using NAudio.Wave;
+using OpenVision.Core.DataTypes;
 using OpenVision.Core.Reco;
-using OpenVision.Wpf.Controls;
-using System.IO;
+using OpenVision.WinUI.Controls;
 using System.Text.RegularExpressions;
-using System.Windows;
-using System.Windows.Controls;
 
-namespace ARSounds.UI.Wpf.Camera.Views;
+namespace ARSounds.UI.WinUI.Camera.Views;
 
-/// <summary>
-/// Interaction logic for ARSoundsCamera.xaml
-/// </summary>
 public partial class ARCameraView : UserControl
 {
     private readonly string _apiKey = "Dq6moD7K0U7S0JRp570QnZRRWc4nykBBcPIF736ZMWg=";

@@ -39,14 +39,14 @@
     <PackageVersion Include="NAudio" Version="2.2.1" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
-    <PackageVersion Include="OpenVision.Api.Target" Version="1.0.0.5-alpha" />
-    <PackageVersion Include="OpenVision.Client.Core" Version="1.0.0.5-alpha" />
-    <PackageVersion Include="OpenVision.Core" Version="1.0.0.5-alpha" />
-    <PackageVersion Include="OpenVision.Maui" Version="1.0.0.5-alpha" />
-    <PackageVersion Include="OpenVision.Server.Core" Version="1.0.0.5-alpha" />
-    <PackageVersion Include="OpenVision.Web.ServiceDefaults" Version="1.0.0.5-alpha" />
-    <PackageVersion Include="OpenVision.WinUI" Version="1.0.0.5-alpha" />
-    <PackageVersion Include="OpenVision.Wpf" Version="1.0.0.5-alpha" />
+    <PackageVersion Include="OpenVision.Api.Target" Version="1.0.0.6-alpha" />
+    <PackageVersion Include="OpenVision.Client.Core" Version="1.0.0.6-alpha" />
+    <PackageVersion Include="OpenVision.Core" Version="1.0.0.6-alpha" />
+    <PackageVersion Include="OpenVision.Maui" Version="1.0.0.6-alpha" />
+    <PackageVersion Include="OpenVision.Server.Core" Version="1.0.0.6-alpha" />
+    <PackageVersion Include="OpenVision.Web.ServiceDefaults" Version="1.0.0.6-alpha" />
+    <PackageVersion Include="OpenVision.WinUI" Version="1.0.0.6-alpha" />
+    <PackageVersion Include="OpenVision.Wpf" Version="1.0.0.6-alpha" />
     <PackageVersion Include="Plugin.Maui.Audio" Version="3.0.0" />
     <PackageVersion Include="Serilog.AspNetCore" Version="8.0.3" />
     <PackageVersion Include="SkiaSharp" Version="2.88.8" />

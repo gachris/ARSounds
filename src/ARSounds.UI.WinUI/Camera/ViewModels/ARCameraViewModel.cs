@@ -1,9 +1,9 @@
 ﻿using ARSounds.Application.ImageRecognition;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using OpenVision.Wpf.Controls;
+using OpenVision.WinUI.Controls;
 
-namespace ARSounds.UI.Wpf.Camera.ViewModels;
+namespace ARSounds.UI.WinUI.Camera.ViewModels;
 
 public partial class ARCameraViewModel : ObservableObject
 {
@@ -32,7 +32,7 @@ public partial class ARCameraViewModel : ObservableObject
     #region Relay Commands
 
     [RelayCommand]
-    private void CameraLoaded(ARCamera cameraView)
+    private async Task CameraLoaded(ARCamera cameraView)
     {
         //var responseMessage = await _targetsService.GetAsync();
 

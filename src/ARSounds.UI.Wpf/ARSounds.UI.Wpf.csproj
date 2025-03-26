@@ -19,9 +19,5 @@
 		<ProjectReference Include="..\ARSounds.Application\ARSounds.Application.csproj" />
 		<ProjectReference Include="..\ARSounds.Localization\ARSounds.Localization.csproj" />
 	</ItemGroup>
-	
-	<ItemGroup>
-		<Folder Include="Targets\" />
-	</ItemGroup>
 
 </Project>

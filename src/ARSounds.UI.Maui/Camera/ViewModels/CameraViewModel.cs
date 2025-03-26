@@ -1,19 +1,19 @@
-﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
-using ARSounds.Application.ImageRecognition;
+﻿using ARSounds.Application.ImageRecognition;
 using ARSounds.Core.Targets;
 using ARSounds.UI.Maui.Common.ViewModels;
-using ARSounds.UI.Maui.FontIcons;
 using ARSounds.UI.Maui.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Plugin.Maui.Audio;
-using SkiaSharp;
-using SkiaSharp.Views.Maui;
-using SkiaSharp.Views.Maui.Controls;
-using OpenVision.Maui.Controls;
+#if WINDOWS
+using Emgu.CV;
+#else
+using OpenCV.Core;
+#endif
 using OpenVision.Core.Reco;
+using OpenVision.Maui.Controls;
+using Plugin.Maui.Audio;
+using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace ARSounds.UI.Maui.Camera.ViewModels;
 
@@ -30,18 +30,16 @@ public partial class CameraViewModel : ViewModelBase
     private Target? _target;
     private string? _lastTargetId;
     private IAudioPlayer? _audioPlayer;
-    private IEnumerable<Target> _targets;
-    private CameraButton _currentButton;
-    private PolygonImageView _image;
+    private IEnumerable<Target>? _targets;
+
+    private Mat? _waveformImage;
 
     [ObservableProperty]
-    private int _position = 1;
+    private string? _targetIdElementText;
 
     #endregion
 
     #region Properties
-
-    public ObservableCollection<CameraButton> Buttons { get; } = new ObservableCollection<CameraButton>();
 
     #endregion
 
@@ -58,47 +56,9 @@ public partial class CameraViewModel : ViewModelBase
     #region Relay Commands
 
     [RelayCommand]
-    private void CurrentItemChanged(CameraButton cameraButton)
-    {
-        if (_currentButton is not null)
-        {
-            _currentButton.IsCurrent = false;
-        }
-
-        if (cameraButton is not null)
-        {
-            cameraButton.IsCurrent = true;
-        }
-
-        _currentButton = cameraButton;
-    }
-
-    [RelayCommand]
     private void CameraLoaded(ARCamera cameraView)
     {
         cameraView.SetRecoService(_cloudRecognition);
-    }
-
-    [RelayCommand]
-    private void ImageLoaded(PolygonImageView image)
-    {
-        _image = image;
-    }
-
-    [RelayCommand]
-    private void Prev()
-    {
-        if (Position < 1) return;
-
-        Position--;
-    }
-
-    [RelayCommand]
-    private void Next()
-    {
-        if (Position > 1) return;
-
-        Position++;
     }
 
     [RelayCommand]
@@ -119,74 +79,60 @@ public partial class CameraViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void TrackFound(TargetMatchingResult targetMatchingResult)
+    private void TrackFound(TargetMatchingEventArgs e)
     {
-        try
+        if (e.TargetMatchResults == null || e.TargetMatchResults.Count == 0)
         {
-            Debug.WriteLine($"id: {targetMatchingResult.Id}");
-            Debug.WriteLine($"CenterX: {targetMatchingResult.CenterX}");
-            Debug.WriteLine($"CenterY: {targetMatchingResult.CenterY}");
-            Debug.WriteLine($"Angle: {targetMatchingResult.Angle}");
-            Debug.WriteLine($"Projected region: {string.Join(", ", targetMatchingResult.ProjectedRegion.Select(point => $"X: {point.X}, Y: {point.Y}"))}");
-            Debug.WriteLine($"Size: Width: {targetMatchingResult.Size.Width}, Height: {targetMatchingResult.Size.Height}");
-
-            if (!targetMatchingResult.Id.Equals(_lastTargetId))
-            {
-                _lastTargetId = targetMatchingResult.Id;
-                _target = _targets.FirstOrDefault(x => x.VisionTargetId?.ToString() == targetMatchingResult.Id);
-
-                var audioBase64 = Regex.Replace(_target.AudioBase64, "^data:audio/[^;]+;base64,", "");
-                var audioBytes = Convert.FromBase64String(audioBase64);
-
-                _audioPlayer?.Stop();
-                _audioPlayer?.Dispose();
-
-                _audioPlayer = _audioManager.CreatePlayer(new MemoryStream(audioBytes));
-
-                var imageBase64 = Regex.Replace(_target.ImageBase64, "^data:image/[^;]+;base64,", "");
-                var imageBytes = Convert.FromBase64String(imageBase64);
-
-                _image.Buffer = imageBytes;
-
-                _audioPlayer?.Play();
-            }
-
-            _image.Points = targetMatchingResult.ProjectedRegion;
-            _image.InvalidateSurface();
-
-            var projectedRegion = targetMatchingResult.ProjectedRegion;
-            var size = targetMatchingResult.Size;
-            var centerX = targetMatchingResult.CenterX;
-            var centerY = targetMatchingResult.CenterY;
-            var angle = targetMatchingResult.Angle;
-
+            return;
         }
-        catch (Exception)
+
+        var targetMatchResult = e.TargetMatchResults.First();
+
+        _target = _targets?.FirstOrDefault(x => x.VisionTargetId?.ToString() == targetMatchResult.Id);
+
+        if (_target == null)
         {
+            return;
         }
+
+        if (!targetMatchResult.Id.Equals(_lastTargetId))
+        {
+            TargetIdElementText = targetMatchResult.Id;
+            _lastTargetId = targetMatchResult.Id;
+
+            var audioBase64 = Regex.Replace(_target.AudioBase64, "^data:audio/[^;]+;base64,", "");
+            var audioBytes = Convert.FromBase64String(audioBase64);
+            PlayAudio(audioBytes);
+
+            _waveformImage = ARCameraHelper.DecodeBase64(_target.ImageBase64);
+        }
+
+        // Compute audio playback progress (0.0 to 1.0)
+        var audioProgress = 0d;
+        if (_audioPlayer != null && _audioPlayer.Duration > 0)
+        {
+            audioProgress = _audioPlayer.CurrentPosition;
+            audioProgress = Math.Max(0, Math.Min(audioProgress, 1)); // Clamp between 0 and 1
+        }
+
+        ARCameraHelper.UpdateOverlayImage(
+            _waveformImage!,
+            e.Frame,
+            targetMatchResult,
+            audioProgress,
+            _target.HexColor);
     }
 
     [RelayCommand]
     private void TrackLost()
     {
-        try
-        {
-            _target = null;
-            _lastTargetId = null;
+        _waveformImage = null;
+        TargetIdElementText = null;
 
-            _image.Buffer = null;
+        _target = null;
+        _lastTargetId = null;
 
-            if (_audioPlayer.IsPlaying)
-            {
-                _audioPlayer.Stop();
-            }
-
-            _audioPlayer.Dispose();
-            _audioPlayer = null;
-        }
-        catch (Exception)
-        {
-        }
+        StopAudio();
     }
 
     #endregion
@@ -200,49 +146,26 @@ public partial class CameraViewModel : ViewModelBase
         _targets = responseMessage.Response.Result;
 
         await _cloudRecognition.InitAsync(_apiKey);
+    }
 
-        await Task.Run(() =>
+    private void PlayAudio(byte[] audioBytes)
+    {
+        StopAudio();
+
+        _audioPlayer = _audioManager.CreatePlayer(new MemoryStream(audioBytes));
+        _audioPlayer.Play();
+    }
+
+    private void StopAudio()
+    {
+        if (_audioPlayer is { IsPlaying: true })
         {
-            Buttons.Add(new CameraButton() { Icon = IonIcons.Camera, Text = "Camera" });
-            Buttons.Add(new CameraButton() { Icon = IonIcons.Videocamera, Text = "Video" });
-            Buttons.Add(new CameraButton() { Icon = IonIcons.IosBarcode, Text = "Barcode" });
-        });
+            _audioPlayer.Stop();
+            _audioPlayer.Dispose();
+        }
+
+        _audioPlayer = null;
     }
 
     #endregion
-}
-
-public class PolygonImageView : SKCanvasView
-{
-    public System.Drawing.PointF[] Points { get; set; }
-
-    public byte[]? Buffer { get; set; }
-
-    protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)
-    {
-        base.OnPaintSurface(e);
-
-        var canvas = e.Surface.Canvas;
-        canvas.Clear(SKColors.Transparent);
-
-        if (Buffer is null) return;
-
-        SKBitmap bitmap;
-        using (var stream = new MemoryStream(Buffer))
-        {
-            bitmap = SKBitmap.Decode(stream);
-        }
-
-        SK3dView view = new SK3dView();
-
-        SKPath path = new SKPath();
-
-        path.AddPoly(Points.Select(x => new SKPoint(x.X, x.Y)).ToArray());
-
-        canvas.ClipPath(path, SKClipOperation.Intersect, true);
-        canvas.DrawBitmap(bitmap, new SKRect(0, 0, bitmap.Width, bitmap.Height));
-
-        canvas.Dispose();
-        bitmap.Dispose();
-    }
 }

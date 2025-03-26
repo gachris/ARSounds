@@ -219,7 +219,7 @@ public class TargetsService : ITargetsService
 
     public async Task<IResponseMessage> Activate(Guid id, ActivateTargetRequest bindingModel, CancellationToken cancellationToken)
     {
-        var userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userId = _httpContextAccessor.HttpContext!.User.FindFirstValue(ClaimTypes.NameIdentifier);
         userId.ThrowIfNullOrEmpty(ResultCode.InvalidRequest, ErrorMessages.UserNotFound);
 
         var target = await _applicationContext.Target.Where(x => x.Id == id && x.UserId == userId).SingleOrDefaultAsync(cancellationToken);
@@ -237,36 +237,60 @@ public class TargetsService : ITargetsService
             Updated = DateTime.Now
         };
 
-        var imageBytes = bindingModel.ImageBase64.Base64ImgToByteArray(ImagetType.Png);
+        var imageBytes = bindingModel.PngBase64!.Base64ImgToByteArray(ImagetType.Png);
 
+        // Decode the original PNG with alpha
         var matImage = new Mat();
         CvInvoke.Imdecode(imageBytes, ImreadModes.Unchanged, matImage);
 
-        // Create a white image with the same size as the original image
+        // ----------- JPG and PNG without alpha ------------
         var matModelImage = new Mat(matImage.Size, DepthType.Cv8U, 3);
         matModelImage.SetTo(new MCvScalar(255, 255, 255));
 
-        // Get the alpha channel from the original image
+        // Get alpha channel
         var alpha = new Mat();
         CvInvoke.ExtractChannel(matImage, alpha, 3);
 
-        // Create a mask using the alpha channel
+        // Create binary mask from alpha
         var mask = new Mat();
         CvInvoke.Threshold(alpha, mask, 0, 255, ThresholdType.Binary);
 
-        // Apply the mask to the white image
+        // Apply black background on the masked area
         matModelImage.SetTo(new MCvScalar(0, 0, 0), mask);
 
-        target.Image.Buffer = imageBytes;
+        // JPG output (no alpha)
+        var bufferWithoutAlphaPng = CvInvoke.Imencode(".png", matModelImage);
+        var pngBase64WithoutAlpha = Convert.ToBase64String(bufferWithoutAlphaPng);
 
-        var bufferWithoutAlpha = CvInvoke.Imencode(".jpg", matModelImage);
-        var base64ImgWithoutAlpha = Convert.ToBase64String(bufferWithoutAlpha);
+        // Decode the JPEG into a Mat (3 channels, no alpha)
+        var matJpeg = new Mat();
+        CvInvoke.Imdecode(bufferWithoutAlphaPng, ImreadModes.Color, matJpeg); // color only
 
-        var base64Description = string.Concat(target.Description, DateTime.Now.ToString("yyyyMMddHHmmssfff")).Base64Encode();
-        var base64Metadata = string.Concat(base64Description, "|", DateTime.Now.ToString()).Base64Encode();
+        // Create mask: detect near-white pixels (tweak the threshold if needed)
+        var lowerWhite = new ScalarArray(new MCvScalar(240, 240, 240));
+        var upperWhite = new ScalarArray(new MCvScalar(255, 255, 255));
+        var whiteMask = new Mat();
+        CvInvoke.InRange(matJpeg, lowerWhite, upperWhite, whiteMask);
 
-        target.Metadata = base64Metadata;
-        target.HexColor = bindingModel.HexColor;
+        // Invert mask to get non-white as opaque
+        var alphaMask = new Mat();
+        CvInvoke.BitwiseNot(whiteMask, alphaMask);
+
+        // Add alpha channel to original JPEG Mat
+        var matWithAlpha = new Mat();
+        CvInvoke.CvtColor(matJpeg, matWithAlpha, ColorConversion.Bgr2Bgra);
+
+        // Replace alpha channel with our generated mask
+        CvInvoke.InsertChannel(alphaMask, matWithAlpha, 3); // 3 = alpha channel index
+
+        // Encode to PNG with new alpha
+        var bufferPngWithAlpha = CvInvoke.Imencode(".png", matWithAlpha);
+        var descriptionBase64 = string.Concat(target.Description, DateTime.Now.ToString("yyyyMMddHHmmssfff")).Base64Encode();
+        var metadataBase64 = string.Concat(descriptionBase64, "|", DateTime.Now.ToString()).Base64Encode();
+
+        target.Image.Buffer = bufferPngWithAlpha; // With alpha
+        target.Metadata = metadataBase64;
+        target.HexColor = bindingModel.HexColor!;
 
         await _applicationContext.Image.AddAsync(target.Image, cancellationToken);
 
@@ -275,11 +299,11 @@ public class TargetsService : ITargetsService
 
         var postTrackableRequest = new PostTrackableRequest
         {
-            Name = base64Description,
-            Image = base64ImgWithoutAlpha,
+            Name = descriptionBase64,
+            Image = pngBase64WithoutAlpha,
             Width = 1,
             ActiveFlag = target.IsTrackable ? ActiveFlag.True : ActiveFlag.False,
-            Metadata = base64Metadata
+            Metadata = metadataBase64
         };
 
         var vuforiaPostResponse = await _resource.Insert(postTrackableRequest).ExecuteAsync(cancellationToken);

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using OpenVision.Core.Configuration;
 using OpenVision.Server.Core.Configuration;
 using OpenVision.Web.Core.Helpers;
 using Serilog;
@@ -10,6 +11,10 @@ var configuration = StartupHelper.GetConfiguration<Program>(args);
 Log.Logger = new LoggerConfiguration()
             .ReadFrom.Configuration(configuration)
             .CreateLogger();
+
+VisionSystemConfig.ImageRequestBuilder = new OpenVision.Core.DataTypes.ImageRequestBuilder()
+    .WithGrayscale()
+    .WithGaussianBlur(new System.Drawing.Size(5, 5), 0);
 
 try
 {

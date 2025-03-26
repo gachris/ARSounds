@@ -1,8 +1,8 @@
 ﻿using ARSounds.Application.Auth;
-using ARSounds.UI.Wpf.Auth;
+using ARSounds.UI.WinUI.Auth;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ARSounds.UI.Wpf;
+namespace ARSounds.UI.WinUI;
 
 public static class UIModule
 {
