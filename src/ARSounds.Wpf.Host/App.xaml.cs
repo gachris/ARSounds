@@ -17,13 +17,13 @@ public partial class App : System.Windows.Application
             .WithLowResolution(320);
 
         VisionSystemConfig.WebSocketUrl = "wss://localhost:44320/ws";
-
-        IocConfiguration.Setup();
     }
 
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
+
+        IocConfiguration.Setup();
 
         ThemeManager.RequestedTheme = ElementTheme.WindowsDefault;
     }

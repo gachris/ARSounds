@@ -212,9 +212,9 @@ public static class Extensions
                     {
                         builder.AllowAnyOrigin();
                     }
-                    else
+                    else if (apiConfiguration.CorsOrigins != null && apiConfiguration.CorsOrigins.Length > 0)
                     {
-                        builder.WithOrigins(apiConfiguration.CorsAllowOrigins);
+                        builder.WithOrigins(apiConfiguration.CorsOrigins);
                     }
 
                     builder.AllowAnyHeader();

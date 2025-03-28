@@ -42,7 +42,10 @@ public static class IocConfiguration
 
                    services.AddSingleton(t => ServiceLocator.Current);
 
-                   services.AddSingleton(t => SynchronizationContext.Current);
+                   if (SynchronizationContext.Current is not null)
+                   {
+                       services.AddSingleton(t => SynchronizationContext.Current);
+                   }
 
                    services.AddCore();
                    services.AddApplication();
