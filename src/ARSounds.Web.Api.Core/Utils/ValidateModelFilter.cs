@@ -47,7 +47,7 @@ public class ValidateModelFilter : ActionFilterAttribute
         var propertyName = state.Key;
         var errorMessages = string.Join(Environment.NewLine, state.Value.Errors.Select(error => error.ErrorMessage));
 
-        string message = errorMessages.IsNullOrEmpty() ? "invalid body." : $"{errorMessages}";
+        string message = string.IsNullOrEmpty(errorMessages) ? "invalid body." : $"{errorMessages}";
 
         return new Error(ResultCode.ValidationError, message);
     }

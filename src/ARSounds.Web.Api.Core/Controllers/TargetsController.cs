@@ -42,7 +42,7 @@ public class TargetsController : ControllerBase
         var responseMessage = await _targetsService.Create(body, CancellationToken.None);
 
         // Create the location URI for the new resource
-        var locationUri = new Uri(Url.Action("Get", new { id = responseMessage.Response.Result }), UriKind.Relative);
+        var locationUri = new Uri(Url.Action("Get", new { id = responseMessage.Response.Result })!, UriKind.Relative);
 
         // Return the CreatedResult with the location URI
         return new CreatedResult(locationUri, responseMessage);

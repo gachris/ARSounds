@@ -2,7 +2,6 @@
 using System.Data;
 using System.Security.Claims;
 using ARSounds.Web.Api.Core.Configuration;
-using ARSounds.Web.Api.Core.Converters;
 using ARSounds.Web.Api.Core.Enums;
 using ARSounds.Web.Api.Core.Properties;
 using ARSounds.Web.Api.Core.Utils;
@@ -10,6 +9,7 @@ using ARSounds.Web.Api.EntityFramework.DbContexts;
 using ARSounds.Web.Api.EntityFramework.Entities;
 using ARSounds.Web.Core.Filters;
 using ARSounds.Web.Core.Requests;
+using AutoMapper;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
@@ -31,26 +31,27 @@ namespace ARSounds.Web.Api.Core.Services;
 public class TargetsService : ITargetsService
 {
     private readonly ApplicationDbContext _applicationContext;
-    private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IUriService _uriService;
+    private readonly IMapper _mapper;
+    private readonly HttpContext _httpContext;
     private readonly TargetService _service;
     private readonly TargetListResource _resource;
 
     public TargetsService(ApiConfiguration apiConfiguration,
                           ApplicationDbContext applicationContext,
                           IHttpContextAccessor httpContextAccessor,
-                          IUriService uriService)
+                          IUriService uriService,
+                          IMapper mapper)
     {
         _applicationContext = applicationContext;
-        _httpContextAccessor = httpContextAccessor;
+        _httpContext = httpContextAccessor.HttpContext ?? throw new ArgumentNullException(nameof(httpContextAccessor));
         _uriService = uriService;
-
-        var key = new DatabaseApiKey(apiConfiguration.VisionApiKey);
+        _mapper = mapper;
 
         _service = new TargetService(new BaseClientService.Initializer()
         {
             ApplicationName = apiConfiguration.ApiName,
-            HttpClientInitializer = new UserCredential(key),
+            HttpClientInitializer = new UserCredential(new DatabaseApiKey(apiConfiguration.VisionApiKey)),
             ServerUrl = "https://localhost:44320"
         });
 
@@ -59,24 +60,26 @@ public class TargetsService : ITargetsService
 
     public async Task<IPagedResponse<IEnumerable<TargetResponse>>> GetAsync(TargetBrowserQuery query, CancellationToken cancellationToken)
     {
-        var userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userId = _httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         userId.ThrowIfNullOrEmpty(ResultCode.InvalidRequest, ErrorMessages.UserNotFound);
-        var route = _httpContextAccessor.HttpContext.Request.Path.Value;
+
+        var route = _httpContext.Request.Path.Value;
+        route.ThrowIfNullOrEmpty(ResultCode.InvalidRequest, ErrorMessages.RouteNotFound);
 
         var validFilter = new PaginationFilter(query.Page, query.Size);
         var take = validFilter.Size;
         var skip = validFilter.Page - 1;
 
         var targets = await _applicationContext.Target.Where(x => x.UserId == userId)
-                                                      .Include(a => a.Audio)
-                                                      .Include(a => a.Image)
-                                                      .OrderBy(x => x.Created)
-                                                      .Skip(skip * take)
-                                                      .Take(take)
-                                                      .ToListAsync(cancellationToken);
+            .Include(a => a.Audio)
+            .Include(a => a.Image)
+            .OrderBy(x => x.Created)
+            .Skip(skip * take)
+            .Take(take)
+            .ToListAsync(cancellationToken);
 
         var totalRecords = await _applicationContext.Target.CountAsync(cancellationToken);
-        var result = targets.ConvertAllToResponse();
+        var result = targets.Select(_mapper.Map<TargetResponse>);
 
         var totalPages = totalRecords / (double)validFilter.Size;
         var roundedTotalPages = Convert.ToInt32(Math.Ceiling(totalPages));
@@ -91,25 +94,26 @@ public class TargetsService : ITargetsService
         var firstPage = _uriService.GetPageUri(new PaginationFilter(1, validFilter.Size), route);
         var lastPage = _uriService.GetPageUri(new PaginationFilter(roundedTotalPages, validFilter.Size), route);
 
-        var respose = new PagedResponse<IEnumerable<TargetResponse>>(validFilter.Page,
-                                                                     validFilter.Size,
-                                                                     firstPage,
-                                                                     lastPage,
-                                                                     roundedTotalPages,
-                                                                     totalRecords,
-                                                                     nextPage,
-                                                                     previousPage,
-                                                                     new ResponseDoc<IEnumerable<TargetResponse>>(result),
-                                                                     Guid.NewGuid(),
-                                                                     StatusCode.Success,
-                                                                     new ReadOnlyCollection<Error>(new List<Error>()));
+        var response = new PagedResponse<IEnumerable<TargetResponse>>(
+            validFilter.Page,
+            validFilter.Size,
+            firstPage,
+            lastPage,
+            roundedTotalPages,
+            totalRecords,
+            nextPage,
+            previousPage,
+            new ResponseDoc<IEnumerable<TargetResponse>>(result),
+            Guid.NewGuid(),
+            StatusCode.Success,
+            new ReadOnlyCollection<Error>([]));
 
-        return respose;
+        return response;
     }
 
     public async Task<IResponseMessage<TargetResponse>> Get(Guid id, CancellationToken cancellationToken)
     {
-        var userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userId = _httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         userId.ThrowIfNullOrEmpty(ResultCode.InvalidRequest, ErrorMessages.UserNotFound);
 
         var target = await _applicationContext.Target.Where(x => x.Id == id && x.UserId == userId)
@@ -127,24 +131,24 @@ public class TargetsService : ITargetsService
                                  .Reference(x => x.Image)
                                  .LoadAsync(cancellationToken);
 
-        var targetResponse = target.ConvertToResponse();
+        var targetResponse = _mapper.Map<TargetResponse>(target);
 
         return Success(targetResponse);
     }
 
-    public async Task<IResponseMessage<Guid>> Create(CreateTargetRequest model, CancellationToken cancellationToken)
+    public async Task<IResponseMessage<Guid>> Create(CreateTargetRequest body, CancellationToken cancellationToken)
     {
         var audioId = Guid.NewGuid();
         var targetId = Guid.NewGuid();
 
-        var route = _httpContextAccessor.HttpContext.Request.Path.Value;
-        var userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var route = _httpContext.Request.Path.Value;
+        var userId = _httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         userId.ThrowIfNullOrEmpty(ResultCode.InvalidRequest, ErrorMessages.UserNotFound);
 
         var target = new Target
         {
             Id = targetId,
-            Description = model.Description,
+            Description = body.Description,
             UserId = userId,
             HexColor = "#000000",
             Metadata = "",
@@ -156,15 +160,15 @@ public class TargetsService : ITargetsService
         var audio = new Audio
         {
             Id = audioId,
-            Filename = model.Filename,
-            AudioType = model.AudioType,
-            FileExtension = Path.GetExtension(model.Filename),
+            Filename = body.Filename,
+            AudioType = body.AudioType,
+            FileExtension = Path.GetExtension(body.Filename),
             Created = DateTime.Now,
             Updated = DateTime.Now,
         };
 
-        var audioBase64 = model.AudioBase64;
-        if (audioBase64.Contains(',')) audioBase64 = audioBase64[(model.AudioBase64.IndexOf(",") + 1)..];
+        var audioBase64 = body.AudioBase64;
+        if (audioBase64.Contains(',')) audioBase64 = audioBase64[(body.AudioBase64.IndexOf(",") + 1)..];
         audio.AudioBytes = Convert.FromBase64String(audioBase64);
         target.Audio = audio;
 
@@ -174,9 +178,9 @@ public class TargetsService : ITargetsService
         return Success(targetId);
     }
 
-    public async Task<IResponseMessage> Edit(Guid id, UpdateTargetRequest bindingModel, CancellationToken cancellationToken)
+    public async Task<IResponseMessage> Edit(Guid id, UpdateTargetRequest body, CancellationToken cancellationToken)
     {
-        var userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userId = _httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         userId.ThrowIfNullOrEmpty(ResultCode.InvalidRequest, ErrorMessages.UserNotFound);
 
         var target = await _applicationContext.Target.Where(x => x.Id == id && x.UserId == userId)
@@ -190,21 +194,23 @@ public class TargetsService : ITargetsService
 
         target.Image.ThrowIfNull(ResultCode.RecordNotFound, ErrorMessages.ImageNotFound);
 
-        var route = _httpContextAccessor.HttpContext.Request.Path.Value;
+        var route = _httpContext.Request.Path.Value;
 
-        target.Description = bindingModel.Description;
-        target.HexColor = bindingModel.HexColor;
+        target.Description = body.Description ?? target.Description;
+        target.HexColor = body.HexColor ?? target.HexColor;
 
-        if (target.IsActive && target.IsTrackable != bindingModel.IsTrackable)
+        if (target.IsActive && target.IsTrackable != body.IsTrackable)
         {
-            target.IsTrackable = bindingModel.IsTrackable ?? false;
+            target.IsTrackable = body.IsTrackable ?? false;
 
             var updateTrackableRequest = new UpdateTrackableRequest
             {
                 ActiveFlag = target.IsTrackable ? ActiveFlag.True : ActiveFlag.False,
             };
 
-            var updateTrackableResponse = await _resource.Update(updateTrackableRequest, target.Image.VisionTargetId.ToString()).ExecuteAsync(cancellationToken);
+            target.Image.VisionTargetId.ThrowIfNull(ResultCode.RecordNotFound, ErrorMessages.ImageNotFound);
+
+            var updateTrackableResponse = await _resource.Update(updateTrackableRequest, target.Image.VisionTargetId.ToString()!).ExecuteAsync(cancellationToken);
 
             if (updateTrackableResponse.StatusCode is StatusCode.Failed)
             {
@@ -217,9 +223,9 @@ public class TargetsService : ITargetsService
         return Success();
     }
 
-    public async Task<IResponseMessage> Activate(Guid id, ActivateTargetRequest bindingModel, CancellationToken cancellationToken)
+    public async Task<IResponseMessage> Activate(Guid id, ActivateTargetRequest body, CancellationToken cancellationToken)
     {
-        var userId = _httpContextAccessor.HttpContext!.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userId = _httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         userId.ThrowIfNullOrEmpty(ResultCode.InvalidRequest, ErrorMessages.UserNotFound);
 
         var target = await _applicationContext.Target.Where(x => x.Id == id && x.UserId == userId).SingleOrDefaultAsync(cancellationToken);
@@ -227,7 +233,7 @@ public class TargetsService : ITargetsService
         target.IsActive.ThrowIfTrue(ResultCode.InvalidRequest, ErrorMessages.TargetAlreadyActive);
 
         var imageId = Guid.NewGuid();
-        var route = _httpContextAccessor.HttpContext.Request.Path.Value;
+        var route = _httpContext.Request.Path.Value;
 
         target.ImageId = imageId;
         target.Image = new Image()
@@ -237,7 +243,7 @@ public class TargetsService : ITargetsService
             Updated = DateTime.Now
         };
 
-        var imageBytes = bindingModel.PngBase64!.Base64ImgToByteArray(ImagetType.Png);
+        var imageBytes = body.PngBase64!.Base64ImgToByteArray(ImagetType.Png);
 
         // Decode the original PNG with alpha
         var matImage = new Mat();
@@ -290,7 +296,7 @@ public class TargetsService : ITargetsService
 
         target.Image.Buffer = bufferPngWithAlpha; // With alpha
         target.Metadata = metadataBase64;
-        target.HexColor = bindingModel.HexColor!;
+        target.HexColor = body.HexColor!;
 
         await _applicationContext.Image.AddAsync(target.Image, cancellationToken);
 
@@ -306,14 +312,14 @@ public class TargetsService : ITargetsService
             Metadata = metadataBase64
         };
 
-        var vuforiaPostResponse = await _resource.Insert(postTrackableRequest).ExecuteAsync(cancellationToken);
+        var visionPostResponse = await _resource.Insert(postTrackableRequest).ExecuteAsync(cancellationToken);
 
-        if (vuforiaPostResponse.StatusCode is StatusCode.Failed)
+        if (visionPostResponse.StatusCode is StatusCode.Failed)
         {
-            return new ResponseMessage(Guid.NewGuid(), StatusCode.Failed, vuforiaPostResponse.Errors);
+            return new ResponseMessage(Guid.NewGuid(), StatusCode.Failed, visionPostResponse.Errors);
         }
 
-        target.Image.VisionTargetId = vuforiaPostResponse.Response.Result;
+        target.Image.VisionTargetId = visionPostResponse.Response.Result;
 
         await _applicationContext.SaveChangesAsync(cancellationToken);
 
@@ -322,7 +328,7 @@ public class TargetsService : ITargetsService
 
     public async Task<IResponseMessage> Deactivate(Guid id, CancellationToken cancellationToken)
     {
-        var userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userId = _httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         userId.ThrowIfNullOrEmpty(ResultCode.InvalidRequest, ErrorMessages.UserNotFound);
 
         var target = await _applicationContext.Target.Where(x => x.Id == id && x.UserId == userId).SingleOrDefaultAsync(cancellationToken);
@@ -332,12 +338,14 @@ public class TargetsService : ITargetsService
         await _applicationContext.Entry(target).Reference(x => x.Image).LoadAsync(cancellationToken);
         target.Image.ThrowIfNull(ResultCode.RecordNotFound, ErrorMessages.ImageNotFound);
 
-        var route = _httpContextAccessor.HttpContext.Request.Path.Value;
+        var route = _httpContext.Request.Path.Value;
 
         target.IsTrackable = false;
         target.IsActive = false;
 
-        var deleteResponse = await _resource.Delete(target.Image.VisionTargetId.ToString()).ExecuteAsync(cancellationToken);
+        target.Image.VisionTargetId.ThrowIfNull(ResultCode.RecordNotFound, ErrorMessages.ImageNotFound);
+
+        var deleteResponse = await _resource.Delete(target.Image.VisionTargetId.ToString()!).ExecuteAsync(cancellationToken);
 
         if (deleteResponse.StatusCode is StatusCode.Failed)
         {
@@ -352,7 +360,7 @@ public class TargetsService : ITargetsService
 
     public async Task<IResponseMessage> Delete(Guid id, CancellationToken cancellationToken)
     {
-        var userId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userId = _httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         userId.ThrowIfNullOrEmpty(ResultCode.InvalidRequest, ErrorMessages.UserNotFound);
 
         var target = await _applicationContext.Target.Where(x => x.Id == id && x.UserId == userId)
@@ -368,12 +376,15 @@ public class TargetsService : ITargetsService
 
         if (target.IsActive)
         {
+            target.Image.ThrowIfNull(ResultCode.RecordNotFound, ErrorMessages.ImageNotFound);
+            target.Image.VisionTargetId.ThrowIfNull(ResultCode.RecordNotFound, ErrorMessages.ImageNotFound);
+
             await _applicationContext.Entry(target)
                                      .Reference(x => x.Image)
                                      .LoadAsync(cancellationToken);
 
-            var deleteResponse = await _resource.Delete(target.Image.VisionTargetId.ToString())
-                                                .ExecuteAsync(cancellationToken);
+            var deleteResponse = await _resource.Delete(target.Image.VisionTargetId.ToString()!)
+                .ExecuteAsync(cancellationToken);
 
             if (deleteResponse.StatusCode is StatusCode.Failed)
             {

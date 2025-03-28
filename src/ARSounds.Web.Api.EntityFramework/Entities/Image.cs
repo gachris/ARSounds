@@ -8,11 +8,11 @@ public class Image
 
     public int? Rate { get; set; }
 
-    public byte[] Buffer { get; set; }
+    public byte[] Buffer { get; set; } = null!;
 
     public DateTime Created { get; set; }
 
     public DateTime Updated { get; set; }
 
-    public virtual Target Target { get; set; }
+    public virtual Target Target { get; set; } = null!;
 }

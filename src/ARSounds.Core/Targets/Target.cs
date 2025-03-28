@@ -20,7 +20,7 @@ public class Target
     public string AudioBase64 { get; set; }
 
     [JsonProperty("image_base64")]
-    public string ImageBase64 { get; set; }
+    public string? ImageBase64 { get; set; }
 
     [JsonProperty("vision_target_id")]
     public Guid? VisionTargetId { get; set; }
@@ -32,7 +32,7 @@ public class Target
     public bool IsTrackable { get; set; }
 
     [JsonProperty("hex_color")]
-    public string HexColor { get; set; }
+    public string? HexColor { get; set; }
 
     [JsonProperty("rate")]
     public int? Rate { get; set; }

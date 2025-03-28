@@ -126,6 +126,9 @@
   <data name="ImageNotFound" xml:space="preserve">
     <value>Image not found.</value>
   </data>
+  <data name="RouteNotFound" xml:space="preserve">
+    <value>Route not found.</value>
+  </data>
   <data name="TargetAlreadyActive" xml:space="preserve">
     <value>The Target is already active.</value>
   </data>

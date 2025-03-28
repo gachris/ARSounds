@@ -20,5 +20,10 @@ public class ResponseMessage : IResponseMessage
 public class ResponseMessage<TResult> : ResponseMessage, IResponseMessage, IResponseMessage<TResult>
 {
     [JsonProperty("response")]
-    public ResponseDoc<TResult> Response { get; set; }
+    public ResponseDoc<TResult> Response { get; }
+
+    public ResponseMessage(ResponseDoc<TResult> response)
+    {
+        Response = response;
+    }
 }

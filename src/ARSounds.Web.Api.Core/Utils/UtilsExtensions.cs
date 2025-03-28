@@ -1,7 +1,6 @@
 ﻿using ARSounds.Web.Api.Core.Attributes;
 using ARSounds.Web.Api.Core.Enums;
 using System.ComponentModel;
-using System.Drawing;
 using System.Text;
 
 namespace ARSounds.Web.Api.Core.Utils;
@@ -15,7 +14,7 @@ public static class UtilsExtensions
     /// <param name="value">The enum value</param>
     /// <returns>The attribute of type T that exists on the enum value</returns>
     /// <example>string desc = myEnumVariable.GetAttributeOfType<DescriptionAttribute>().Description;</example>
-    public static T GetAttributeOfType<T>(this Enum value) where T : Attribute
+    public static T? GetAttributeOfType<T>(this Enum value) where T : Attribute
     {
         if (value != null)
         {
@@ -25,16 +24,6 @@ public static class UtilsExtensions
             return attributes.Length > 0 ? (T)attributes[0] : null;
         }
         else return null;
-    }
-
-    public static bool IsNotNullOrEmpty(this string text)
-    {
-        return !string.IsNullOrEmpty(text);
-    }
-
-    public static bool IsNullOrEmpty(this string text)
-    {
-        return string.IsNullOrEmpty(text);
     }
 
     public static string Base64Decode(this string text)
@@ -51,18 +40,18 @@ public static class UtilsExtensions
 
     public static AudioType? ToAudioType(this string audioType)
     {
-        return audioType.IsNotNullOrEmpty()
+        return !string.IsNullOrEmpty(audioType)
             ? Enum.GetValues(typeof(AudioType)).Cast<AudioType>().
-                Where(x => x.GetAttributeOfType<DescriptionAttribute>().Description == audioType)?.FirstOrDefault() ?? null
+                Where(x => x.GetAttributeOfType<DescriptionAttribute>()?.Description == audioType)?.FirstOrDefault() ?? null
             : null;
     }
 
-    public static byte[] Base64ImgToByteArray(this string img, ImagetType imagetType)
+    public static byte[] Base64ImgToByteArray(this string img, ImagetType imageType)
     {
-        if (img.IsNullOrEmpty()) throw new ArgumentNullException(nameof(img));
+        if (string.IsNullOrEmpty(img)) throw new ArgumentNullException(nameof(img));
 
-        string prefix = imagetType.GetAttributeOfType<Base64PrefixAttribute>()?.Description;
-        if (img.Contains(prefix)) img = img.Replace(prefix, string.Empty);
+        var prefix = imageType.GetAttributeOfType<Base64PrefixAttribute>()?.Description;
+        if (!string.IsNullOrEmpty(prefix) && img.Contains(prefix)) img = img.Replace(prefix, string.Empty);
         return Convert.FromBase64String(img);
     }
 
@@ -73,23 +62,23 @@ public static class UtilsExtensions
         var base64Audio = Convert.ToBase64String(audio);
         var prefixAudio = audioType.GetAttributeOfType<Base64PrefixAttribute>()?.Description;
 
-        if (usePrefix && !base64Audio.Contains(prefixAudio))
+        if (usePrefix && !string.IsNullOrEmpty(prefixAudio) && !base64Audio.Contains(prefixAudio))
             base64Audio = string.Concat(prefixAudio, base64Audio);
-        else if (prefixAudio.IsNotNullOrEmpty() && base64Audio.Contains(prefixAudio))
+        else if (!string.IsNullOrEmpty(prefixAudio) && base64Audio.Contains(prefixAudio))
             base64Audio = base64Audio.Replace(prefixAudio, string.Empty);
         return base64Audio;
     }
 
-    public static string GetImageAsBase64(this byte[] img, ImagetType imagetType, bool usePrefix)
+    public static string GetImageAsBase64(this byte[] img, ImagetType imageType, bool usePrefix)
     {
         if (img == null) throw new ArgumentNullException(nameof(img));
 
         var base64Img = Convert.ToBase64String(img);
-        var prefixImg = imagetType.GetAttributeOfType<Base64PrefixAttribute>()?.Description;
+        var prefixImg = imageType.GetAttributeOfType<Base64PrefixAttribute>()?.Description;
 
-        if (usePrefix && !base64Img.Contains(prefixImg))
+        if (usePrefix && !string.IsNullOrEmpty(prefixImg) && !base64Img.Contains(prefixImg))
             base64Img = string.Concat(prefixImg, base64Img);
-        else if (prefixImg.IsNotNullOrEmpty() && base64Img.Contains(prefixImg))
+        else if (!string.IsNullOrEmpty(prefixImg) && base64Img.Contains(prefixImg))
             base64Img = base64Img.Replace(prefixImg, string.Empty);
         return base64Img;
     }

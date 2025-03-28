@@ -88,6 +88,15 @@ namespace ARSounds.Web.Api.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Route not found..
+        /// </summary>
+        internal static string RouteNotFound {
+            get {
+                return ResourceManager.GetString("RouteNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The Target is already active..
         /// </summary>
         internal static string TargetAlreadyActive {

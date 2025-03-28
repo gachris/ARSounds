@@ -11,6 +11,6 @@ namespace ARSounds.Application.ImageRecognition.Response
 
     public interface IResponseMessage<TResult> : IResponseMessage
     {
-        ResponseDoc<TResult> Response { get; set; }
+        ResponseDoc<TResult> Response { get; }
     }
 }

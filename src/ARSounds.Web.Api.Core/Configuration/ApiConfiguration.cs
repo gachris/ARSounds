@@ -1,28 +1,15 @@
 ﻿namespace ARSounds.Web.Api.Core.Configuration;
 
-public class ApiConfiguration
-{
-    public string ApiName { get; set; }
-
-    public string VisionApiKey { get; set; }
-
-    public string ApiVersion { get; set; }
-
-    public string Authority { get; set; }
-
-    public string ApiBaseUrl { get; set; }
-
-    public string Audience { get; set; }
-
-    public string OidcSwaggerUIClientId { get; set; }
-
-    public string AdministrationRole { get; set; }
-
-    public bool RequireHttpsMetadata { get; set; }
-
-    public bool CorsAllowAnyOrigin { get; set; }
-
-    public string[] CorsAllowOrigins { get; set; }
-
-    public string[] Scopes { get; set; }
-}
+public record ApiConfiguration(
+    string ApiName,
+    string VisionApiKey,
+    string ApiVersion,
+    string Authority,
+    string ApiBaseUrl,
+    string Audience,
+    string OidcSwaggerUIClientId,
+    string AdministrationRole,
+    bool RequireHttpsMetadata,
+    bool CorsAllowAnyOrigin,
+    string[] CorsAllowOrigins,
+    string[] Scopes);

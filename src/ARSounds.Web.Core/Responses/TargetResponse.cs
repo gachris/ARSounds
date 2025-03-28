@@ -20,7 +20,7 @@ public class TargetResponse
     public string AudioBase64 { get; }
 
     [JsonPropertyName("image_base64")]
-    public string ImageBase64 { get; }
+    public string? ImageBase64 { get; }
 
     [JsonPropertyName("vision_target_id")]
     public Guid? VisionTargetId { get; }
@@ -32,7 +32,7 @@ public class TargetResponse
     public bool IsTrackable { get; }
 
     [JsonPropertyName("hex_color")]
-    public string HexColor { get; }
+    public string? HexColor { get; }
 
     [JsonPropertyName("rate")]
     public int? Rate { get; }
@@ -48,11 +48,11 @@ public class TargetResponse
                           string title,
                           string audioType,
                           string audioBase64,
-                          string imageBase64,
+                          string? imageBase64,
                           Guid? visionTargetId,
                           bool isActive,
                           bool isTrackable,
-                          string hexColor,
+                          string? hexColor,
                           int? rate,
                           DateTime created,
                           DateTime updated)
