@@ -17,7 +17,7 @@ namespace ARSounds.Web.Api.EntityFramework.SqlServer.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("ProductVersion", "9.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -99,7 +99,6 @@ namespace ARSounds.Web.Api.EntityFramework.SqlServer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HexColor")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("ImageId")
@@ -112,7 +111,6 @@ namespace ARSounds.Web.Api.EntityFramework.SqlServer.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Metadata")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Updated")

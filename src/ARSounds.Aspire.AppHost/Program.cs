@@ -9,7 +9,7 @@ IResourceBuilder<IResourceWithConnectionString> arsoundsResourceBuilder;
 if (databaseProvider == "SqlServer")
 {
     var resource = builder.AddSqlServer("sqlserver")
-        .WithDataVolume();
+        .WithDataVolume("ARSounds.Aspire.AppHost-sqlserver-data");
 
     visionResourceBuilder = resource.AddDatabase("vision");
     arsoundsResourceBuilder = resource.AddDatabase("arsounds");
@@ -18,15 +18,15 @@ if (databaseProvider == "SqlServer")
 else if (databaseProvider == "MySql")
 {
     var resource = builder.AddMySql("mysql")
-        .WithDataVolume();
+        .WithDataVolume("ARSounds.Aspire.AppHost-mysql-data");
 
     visionResourceBuilder = resource.AddDatabase("vision");
     arsoundsResourceBuilder = resource.AddDatabase("arsounds");
 }
 else
 {
-    var resource = builder.AddPostgres("postgres")
-        .WithDataVolume();
+    var resource = builder.AddPostgres("postgresql")
+        .WithDataVolume("ARSounds.Aspire.AppHost-postgresql-data");
 
     visionResourceBuilder = resource.AddDatabase("vision");
     arsoundsResourceBuilder = resource.AddDatabase("arsounds");

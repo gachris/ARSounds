@@ -14,4 +14,8 @@
 	  <ProjectReference Include="..\ARSounds.ApplicationFlow\ARSounds.ApplicationFlow.csproj" />
 	</ItemGroup>
 
+	<PropertyGroup Label="Sign Assembly">
+		<SignAssembly>true</SignAssembly>
+	</PropertyGroup>
+
 </Project>

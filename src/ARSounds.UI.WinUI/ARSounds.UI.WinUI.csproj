@@ -10,7 +10,6 @@
 	
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.WinUI.UI.Controls" />
-		<PackageReference Include="Microsoft.Web.WebView2" />
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" />
 		<PackageReference Include="Microsoft.WindowsAppSDK" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" />
@@ -21,5 +20,9 @@
 	<ItemGroup>
 		<ProjectReference Include="..\ARSounds.UI.Common\ARSounds.UI.Common.csproj" />
 	</ItemGroup>
+
+	<PropertyGroup Label="Sign Assembly">
+		<SignAssembly>true</SignAssembly>
+	</PropertyGroup>
 
 </Project>

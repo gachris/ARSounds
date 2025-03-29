@@ -8,4 +8,8 @@
 		<PackageReference Include="CommonServiceLocator" />
 	</ItemGroup>
 
+	<PropertyGroup Label="Sign Assembly">
+		<SignAssembly>true</SignAssembly>
+	</PropertyGroup>
+
 </Project>

@@ -15,4 +15,8 @@
 		<ProjectReference Include="..\ARSounds.Localization\ARSounds.Localization.csproj" />
 	</ItemGroup>
 
+	<PropertyGroup Label="Sign Assembly">
+		<SignAssembly>true</SignAssembly>
+	</PropertyGroup>
+
 </Project>

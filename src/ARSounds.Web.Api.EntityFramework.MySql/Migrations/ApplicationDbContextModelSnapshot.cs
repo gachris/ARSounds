@@ -16,7 +16,7 @@ namespace ARSounds.Web.Api.EntityFramework.MySql.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("ProductVersion", "9.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("ARSounds.Web.Api.EntityFramework.Entities.Audio", b =>
@@ -96,7 +96,6 @@ namespace ARSounds.Web.Api.EntityFramework.MySql.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("HexColor")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<Guid?>("ImageId")
@@ -109,7 +108,6 @@ namespace ARSounds.Web.Api.EntityFramework.MySql.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Metadata")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<DateTime>("Updated")

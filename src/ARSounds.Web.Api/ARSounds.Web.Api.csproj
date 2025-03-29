@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net9.0</TargetFramework>
 		<AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
-		<UserSecretsId>25CEE559-41A2-42F9-8015-76A425343453</UserSecretsId>
+		<UserSecretsId>25cee559-41a2-42f9-8015-76a425343453</UserSecretsId>
 		<DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 		<DockerfileContext>..\..</DockerfileContext>
@@ -26,9 +26,5 @@
 		<ProjectReference Include="..\ARSounds.Web.Api.Core\ARSounds.Web.Api.Core.csproj" />
 		<ProjectReference Include="..\ARSounds.Web.ServiceDefaults\ARSounds.Web.ServiceDefaults.csproj" />
 	</ItemGroup>
-
-	<PropertyGroup Label="Sign Assembly">
-		<SignAssembly>true</SignAssembly>
-	</PropertyGroup>
 
 </Project>
