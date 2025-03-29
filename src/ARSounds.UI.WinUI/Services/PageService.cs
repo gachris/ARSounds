@@ -1,4 +1,5 @@
-﻿using ARSounds.UI.WinUI.Views;
+﻿using ARSounds.UI.WinUI.Contracts;
+using ARSounds.UI.WinUI.Views;
 using Microsoft.UI.Xaml.Controls;
 
 namespace ARSounds.UI.WinUI.Services;

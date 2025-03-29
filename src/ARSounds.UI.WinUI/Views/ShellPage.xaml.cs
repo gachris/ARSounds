@@ -1,5 +1,5 @@
-﻿using ARSounds.UI.WinUI.Helpers;
-using ARSounds.UI.WinUI.Services;
+﻿using ARSounds.UI.WinUI.Contracts;
+using ARSounds.UI.WinUI.Helpers;
 using ARSounds.UI.WinUI.ViewModels;
 using CommonServiceLocator;
 using Microsoft.Extensions.DependencyInjection;

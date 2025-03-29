@@ -1,7 +1,7 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 
-namespace ARSounds.UI.WinUI.Services;
+namespace ARSounds.UI.WinUI.Contracts;
 
 public interface INavigationService
 {

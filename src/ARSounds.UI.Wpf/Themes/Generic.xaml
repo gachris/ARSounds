@@ -20,7 +20,6 @@
                     ThemeName="Light" />
             </devtoolbox:ThemePartResourceDictionary.Key>
         </devtoolbox:ThemePartResourceDictionary>
-
         <ResourceDictionary Source="pack://application:,,,/ARSounds.UI.Wpf;component/Themes/Styles/Frame.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ARSounds.UI.Wpf;component/Themes/Styles/Page.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ARSounds.UI.Wpf;component/Themes/Styles/Separator.xaml" />
@@ -29,10 +28,13 @@
 
     <ui:ViewModelLocator x:Key="ViewModelLocator" />
 
+    <devtoolbox:EnumBooleanConverter x:Key="EnumBooleanConverter" />
+
     <devtoolbox:BoolToVisibilityConverter
         x:Key="BoolToVisibilityConverter"
         FalseValue="Collapsed"
         TrueValue="Visible" />
+
     <devtoolbox:BoolToVisibilityConverter
         x:Key="FlipBoolToVisibilityConverter"
         FalseValue="Visible"

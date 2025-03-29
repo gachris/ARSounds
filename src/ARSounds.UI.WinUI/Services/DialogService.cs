@@ -1,5 +1,6 @@
 ﻿using ARSounds.Localization.Properties;
 using ARSounds.UI.Common.Windows;
+using ARSounds.UI.WinUI.Contracts;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 

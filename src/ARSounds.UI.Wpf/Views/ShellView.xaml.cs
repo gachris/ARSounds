@@ -27,8 +27,11 @@ public partial class ShellView : UserControl
 
     #region Events Subscriptions
 
-    private void ShellView_Loaded(object sender, RoutedEventArgs e)
+    private async void ShellView_Loaded(object sender, RoutedEventArgs e)
     {
+        var viewModel = (ShellViewModel)DataContext;
+        await viewModel.InitializeAsync();
+
         var window = Window.GetWindow(this);
         window.Closed += (sender, e) => _navigationService.UnregisterFrame(NavigationFrameKeys.Shell);
     }

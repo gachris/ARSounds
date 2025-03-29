@@ -1,15 +1,15 @@
 ﻿using System.Reflection;
 using ARSounds.UI.Common.Helpers;
+using ARSounds.UI.Common.ViewModels;
+using ARSounds.UI.WinUI.Contracts;
 using ARSounds.UI.WinUI.Helpers;
-using ARSounds.UI.WinUI.Services;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Windows.ApplicationModel;
 
 namespace ARSounds.UI.WinUI.ViewModels;
 
-public partial class SettingsViewModel : ObservableObject
+public partial class SettingsViewModel : BaseSettingsViewModel
 {
     #region Fields/Consts
 
@@ -21,8 +21,6 @@ public partial class SettingsViewModel : ObservableObject
 
     #region Properties
 
-    public string VersionDescription { get; }
-
     public ElementTheme ElementTheme
     {
         get => _elementTheme;
@@ -31,17 +29,15 @@ public partial class SettingsViewModel : ObservableObject
 
     #endregion
 
-    public SettingsViewModel(IThemeSelectorService themeSelectorService)
+    public SettingsViewModel(IThemeSelectorService themeSelectorService) : base()
     {
         _themeSelectorService = themeSelectorService;
         _elementTheme = _themeSelectorService.Theme;
-
-        VersionDescription = GetVersionDescription();
     }
 
     #region Methods
 
-    private static string GetVersionDescription()
+    protected override string GetVersionDescription()
     {
         Version version;
 

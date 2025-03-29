@@ -1,4 +1,5 @@
-﻿using WinUIEx;
+﻿using ARSounds.UI.WinUI.Contracts;
+using WinUIEx;
 
 namespace ARSounds.UI.WinUI.Services;
 

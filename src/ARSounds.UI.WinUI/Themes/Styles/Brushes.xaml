@@ -3,52 +3,8 @@
 
         <ResourceDictionary x:Key="Default">
 
-            <Color x:Key="ListViewItemBackgroundColor">#252423</Color>
-            <Color x:Key="ListViewItemBackgroundPointerOverColor">#323130</Color>
-            <Color x:Key="ListViewItemBackgroundSelectedColor">#3B3A39</Color>
-            <Color x:Key="ListViewItemBackgroundSelectedPointerOverColor">#3B3A39</Color>
-            <Color x:Key="ListViewItemBackgroundPressedColor">#3B3A39</Color>
-
-            <Color x:Key="TextControlBackgroundColor">#252423"</Color>
-            <Color x:Key="TextControlBackgroundPointerOverColor">#323130"</Color>
-            <Color x:Key="TextControlBackgroundFocusedColor">#323130"</Color>
-            <Color x:Key="TextControlPlaceholderForegroundPointerOverColor">#78BAFD"</Color>
-            <Color x:Key="TextControlPlaceholderForegroundFocusedColor">#797775"</Color>
-
-            <SolidColorBrush x:Key="CustomButtonPrimaryForegroundBrush" Color="#78BAFD" />
-
             <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />
             <SolidColorBrush x:Key="NavigationViewContentBorderBrush" Color="#3D3D3D" />
-
-            <SolidColorBrush x:Key="TwoPaneViewBackground" Color="#292929" />
-            <SolidColorBrush x:Key="TwoPaneViewBorderBrush" Color="#3D3D3D" />
-
-            <SolidColorBrush x:Key="PropertyCollectionViewSeparator" Color="#3D3D3D" />
-
-            <SolidColorBrush x:Key="ListBoxItemBackgroundSelected">#3B3A39</SolidColorBrush>
-            <SolidColorBrush x:Key="ListBoxItemBackgroundSelectedPointerOver">#3B3A39</SolidColorBrush>
-            <SolidColorBrush x:Key="ListBoxItemBackgroundPressed">#3B3A39</SolidColorBrush>
-            <SolidColorBrush x:Key="ListBoxItemBackgroundSelectedPressed">#3B3A39</SolidColorBrush>
-
-            <ImageSource x:Key="AppleMainLogoImageSource">
-                /iCloud.UI.WinUI/Assets/apple-main-white-logo.png
-            </ImageSource>
-
-            <Color x:Key="SignInView.TextControlBorderBrush">#252525</Color>
-            <Color x:Key="SignInView.TextControlBorderBrushFocused">#949494</Color>
-            <Color x:Key="SignInView.TextControlBorderBrushPointerOver">#949494</Color>
-
-            <StaticResource x:Key="CardBackgroundBrush" ResourceKey="SubtleFillColorSecondaryBrush" />
-            <SolidColorBrush x:Key="CardBorderBrush" Color="#171D2C" />
-
-            <SolidColorBrush x:Key="CalendarsComponentViewPaneBackgroundBrush" Color="#252423" />
-            <SolidColorBrush x:Key="CalendarsComponentViewBackgroundBrush" Color="#11100F" />
-
-            <SolidColorBrush x:Key="RemindersComponentViewPaneBackgroundBrush" Color="#252423" />
-            <SolidColorBrush x:Key="RemindersComponentViewBackgroundBrush" Color="#11100F" />
-
-            <SolidColorBrush x:Key="RemindersViewPaneBackgroundBrush" Color="#201F1E" />
-            <SolidColorBrush x:Key="RemindersViewBackgroundBrush" Color="#11100F" />
 
         </ResourceDictionary>
 
@@ -61,47 +17,8 @@
 
         <ResourceDictionary x:Key="Light">
 
-            <Color x:Key="ListViewItemBackgroundColor">#FFFFFF</Color>
-            <Color x:Key="ListViewItemBackgroundPointerOverColor">#F5F5F5</Color>
-            <Color x:Key="ListViewItemBackgroundSelectedColor">#EFF6FC</Color>
-            <Color x:Key="ListViewItemBackgroundSelectedPointerOverColor">#EFF6FC</Color>
-            <Color x:Key="ListViewItemBackgroundPressedColor">#EFF6FC</Color>
-
-            <Color x:Key="TextControlBackgroundColor">#FFFFFF"</Color>
-            <Color x:Key="TextControlBackgroundPointerOverColor">#F5F5F5"</Color>
-            <Color x:Key="TextControlBackgroundFocusedColor">#F5F5F5"</Color>
-            <Color x:Key="TextControlPlaceholderForegroundPointerOverColor">#2564CF"</Color>
-            <Color x:Key="TextControlPlaceholderForegroundFocusedColor">#797775"</Color>
-
-            <SolidColorBrush x:Key="CustomButtonPrimaryForegroundBrush" Color="#2564CF" />
-
             <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />
             <SolidColorBrush x:Key="NavigationViewContentBorderBrush" Color="#F0F0F0" />
-
-            <SolidColorBrush x:Key="TwoPaneViewBackground" Color="#FFFFFF" />
-            <SolidColorBrush x:Key="TwoPaneViewBorderBrush" Color="#F0F0F0" />
-
-            <SolidColorBrush x:Key="PropertyCollectionViewSeparator" Color="#F0F0F0" />
-
-            <ImageSource x:Key="AppleMainLogoImageSource">
-                /iCloud.UI.WinUI/Assets/apple-main-black-logo.png
-            </ImageSource>
-
-            <Color x:Key="SignInView.TextControlBorderBrush">#868686</Color>
-            <Color x:Key="SignInView.TextControlBorderBrushFocused">#B7B7B7</Color>
-            <Color x:Key="SignInView.TextControlBorderBrushPointerOver">#848484</Color>
-
-            <SolidColorBrush x:Key="CardBackgroundBrush" Color="#FBFBFD" />
-            <SolidColorBrush x:Key="CardBorderBrush" Color="#E2E5EA" />
-
-            <SolidColorBrush x:Key="CalendarsComponentViewPaneBackgroundBrush" Color="#FFFFFF" />
-            <SolidColorBrush x:Key="CalendarsComponentViewBackgroundBrush" Color="#FAF9F8" />
-
-            <SolidColorBrush x:Key="RemindersComponentViewPaneBackgroundBrush" Color="#FFFFFF" />
-            <SolidColorBrush x:Key="RemindersComponentViewBackgroundBrush" Color="#FAF9F8" />
-
-            <SolidColorBrush x:Key="RemindersViewPaneBackgroundBrush" Color="#FAF9F8" />
-            <SolidColorBrush x:Key="RemindersViewBackgroundBrush" Color="#FAF9F8" />
 
         </ResourceDictionary>
 

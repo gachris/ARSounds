@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using ARSounds.UI.Common.Contracts;
+using ARSounds.UI.WinUI.Contracts;
 using ARSounds.UI.WinUI.Helpers;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;

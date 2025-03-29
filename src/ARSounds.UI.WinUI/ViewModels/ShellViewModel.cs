@@ -1,34 +1,25 @@
-﻿using ARSounds.Application.Commands;
-using ARSounds.UI.WinUI.Services;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using ARSounds.UI.Common.ViewModels;
+using ARSounds.UI.WinUI.Contracts;
 using MediatR;
 
 namespace ARSounds.UI.WinUI.ViewModels;
 
-public partial class ShellViewModel : ObservableObject
+public partial class ShellViewModel : BaseShellViewModel
 {
     #region Fields/Consts
 
-    private readonly IMediator _mediator;
     private readonly INavigationService _navigationService;
 
-    private bool _isSettingsSelected;
     private string _selectedViewItem = PageKeys.CameraPage;
 
     #endregion
 
     #region Properties
 
-    public bool IsSettingsSelected
-    {
-        get => _isSettingsSelected;
-        private set => SetProperty(ref _isSettingsSelected, value);
-    }
-
     public string SelectedViewItem
     {
         get => _selectedViewItem;
-        private set
+        set
         {
             SetProperty(ref _selectedViewItem, value);
             OnSelectedViewItemChanged();
@@ -37,20 +28,10 @@ public partial class ShellViewModel : ObservableObject
 
     #endregion
 
-    public ShellViewModel(IMediator mediator, INavigationService navigationService)
+    public ShellViewModel(IMediator mediator, INavigationService navigationService) : base(mediator)
     {
-        _mediator = mediator;
         _navigationService = navigationService;
     }
-
-    internal async Task InitializeAsync()
-    {
-        await _mediator.Send(new SignInSilentCommand());
-    }
-
-    #region Methods Overrides
-
-    #endregion
 
     #region Methods
 
@@ -58,10 +39,6 @@ public partial class ShellViewModel : ObservableObject
     {
         _navigationService.NavigateTo(SelectedViewItem);
     }
-
-    #endregion
-
-    #region Application Events
 
     #endregion
 }

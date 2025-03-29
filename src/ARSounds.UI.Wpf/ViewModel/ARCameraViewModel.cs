@@ -1,45 +1,22 @@
-﻿using System.IO;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using ARSounds.Application.Services;
 using ARSounds.ApplicationFlow;
-using ARSounds.Core.Auth.Events;
 using ARSounds.Core.Targets;
 using ARSounds.UI.Common.Camera;
-using ARSounds.UI.Wpf.Contracts;
-using CommunityToolkit.Mvvm.ComponentModel;
+using ARSounds.UI.Common.ViewModels;
 using CommunityToolkit.Mvvm.Input;
-using Emgu.CV;
-using Emgu.CV.Structure;
 using NAudio.Wave;
 using OpenVision.Core.Reco;
 using OpenVision.Wpf.Controls;
 
 namespace ARSounds.UI.Wpf.ViewModels;
 
-public partial class ARCameraViewModel : ObservableObject, IViewModelAware
+public partial class ARCameraViewModel : BaseARCameraViewModel
 {
-    #region Fields/Consts
-
-    private readonly string _apiKey = "Dq6moD7K0U7S0JRp570QnZRRWc4nykBBcPIF736ZMWg=";
-    private readonly ITargetsService _targetsService;
-
-    private Target? _target;
-    private string? _lastTargetId;
-    private IEnumerable<Target>? _targets;
-
-    private WaveOutEvent? _waveOut;
-    private WaveStream? _waveStream;
-    private Image<Bgra, byte>? _waveformImage;
-
-    #endregion
-
     public ARCameraViewModel(
         ITargetsService targetsService,
-        IApplicationEvents applicationEvents)
+        IApplicationEvents applicationEvents) : base(targetsService, applicationEvents)
     {
-        _targetsService = targetsService;
-
-        applicationEvents.Register<SignedInEvent>(OnSignedIn);
     }
 
     #region Relay Commands
@@ -48,7 +25,7 @@ public partial class ARCameraViewModel : ObservableObject, IViewModelAware
     private async Task CameraLoaded(ARCamera cameraView)
     {
         var cloudRecognition = new CloudRecognition();
-        await cloudRecognition.InitAsync(_apiKey);
+        await cloudRecognition.InitAsync(ApiKey);
 
         cameraView.SetRecoService(cloudRecognition);
     }
@@ -63,86 +40,38 @@ public partial class ARCameraViewModel : ObservableObject, IViewModelAware
 
         var targetMatchResult = e.TargetMatchResults.First();
 
-        _target = _targets?.FirstOrDefault(x => x.VisionTargetId?.ToString() == targetMatchResult.Id);
+        Target = Targets?.FirstOrDefault(x => x.VisionTargetId?.ToString() == targetMatchResult.Id);
 
-        if (_target == null)
+        if (Target == null)
         {
             return;
         }
 
-        if (!targetMatchResult.Id.Equals(_lastTargetId))
+        if (!targetMatchResult.Id.Equals(LastTargetId))
         {
-            _lastTargetId = targetMatchResult.Id;
+            LastTargetId = targetMatchResult.Id;
 
-            var audioBase64 = Regex.Replace(_target.AudioBase64, "^data:audio/[^;]+;base64,", "");
+            var audioBase64 = Regex.Replace(Target.AudioBase64, "^data:audio/[^;]+;base64,", "");
             var audioBytes = Convert.FromBase64String(audioBase64);
             PlayAudio(audioBytes);
 
-            _waveformImage = ARCameraHelper.DecodeBase64(_target.ImageBase64!);
+            WaveformImage = ARCameraHelper.DecodeBase64(Target.ImageBase64!);
         }
 
         var audioProgress = 0d;
-        if (_waveStream != null && _waveStream.TotalTime.TotalMilliseconds > 0)
+        if (WaveStream != null && WaveStream.TotalTime.TotalMilliseconds > 0)
         {
-            audioProgress = _waveStream.CurrentTime.TotalMilliseconds / _waveStream.TotalTime.TotalMilliseconds;
+            audioProgress = WaveStream.CurrentTime.TotalMilliseconds / WaveStream.TotalTime.TotalMilliseconds;
             audioProgress = Math.Max(0, Math.Min(audioProgress, 1));
         }
 
         ARCameraHelper.UpdateOverlayImage(
-            _waveformImage!,
+            WaveformImage!,
             e.Frame,
             targetMatchResult,
             audioProgress,
-            _target.HexColor!);
-    }
-
-    [RelayCommand]
-    private void TrackLost()
-    {
-        _target = null;
-        _lastTargetId = null;
-        _waveformImage = null;
-
-        StopAudio();
+            Target.HexColor!);
     }
 
     #endregion
-
-    #region Methods
-
-    public void OnNavigated(object? parameter)
-    {
-    }
-
-    public void OnNavigatedAway()
-    {
-    }
-
-    private void PlayAudio(byte[] audioBytes)
-    {
-        StopAudio();
-
-        _waveStream = new Mp3FileReader(new MemoryStream(audioBytes));
-        _waveOut = new WaveOutEvent();
-        _waveOut.Init(_waveStream);
-        _waveOut.Play();
-    }
-
-    private void StopAudio()
-    {
-        _waveOut?.Stop();
-        _waveOut?.Dispose();
-        _waveStream?.Dispose();
-
-        _waveOut = null;
-        _waveStream = null;
-    }
-
-    #endregion
-
-    private async void OnSignedIn(SignedInEvent obj)
-    {
-        var responseMessage = await _targetsService.GetAsync();
-        _targets = responseMessage.Response.Result;
-    }
 }

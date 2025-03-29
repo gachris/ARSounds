@@ -1,29 +1,28 @@
 ﻿using System.Reflection;
 using ARSounds.Localization.Properties;
+using ARSounds.UI.Common.ViewModels;
 using ARSounds.UI.Wpf.Contracts;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DevToolbox.Wpf.Media;
 
 namespace ARSounds.UI.Wpf.ViewModels;
 
-public partial class SettingsViewModel : ObservableObject
+public partial class SettingsViewModel : BaseSettingsViewModel
 {
     #region Fields/Conts
 
-    private ElementTheme _theme;
     private readonly IAppUISettings _appUISettings;
+
+    private ElementTheme _elementTheme;
 
     #endregion
 
     #region Properties
 
-    public string ApplicationVersion { get; }
-
-    public ElementTheme Theme
+    public ElementTheme ElementTheme
     {
-        get => _theme;
-        private set => SetProperty(ref _theme, value, nameof(Theme));
+        get => _elementTheme;
+        private set => SetProperty(ref _elementTheme, value, nameof(ElementTheme));
     }
 
     #endregion
@@ -34,14 +33,12 @@ public partial class SettingsViewModel : ObservableObject
 
         ThemeManager.RequestedThemeChanged += ThemeManager_RequestedThemeChanged;
 
-        ApplicationVersion = GetApplicationVersion();
-
-        Theme = _appUISettings.Theme;
+        ElementTheme = _appUISettings.Theme;
     }
 
     #region Methods
 
-    private static string GetApplicationVersion()
+    protected override string GetVersionDescription()
     {
         var version = Assembly.GetExecutingAssembly().GetName().Version!;
         return $"{Resources.Application_title} - {version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
@@ -52,7 +49,7 @@ public partial class SettingsViewModel : ObservableObject
     #region Relay Commands
 
     [RelayCommand]
-    private async Task ChangeTheme(ElementTheme theme)
+    private async Task SwitchTheme(ElementTheme theme)
     {
         await _appUISettings.SetThemeAsync(theme);
     }
@@ -63,7 +60,7 @@ public partial class SettingsViewModel : ObservableObject
 
     private void ThemeManager_RequestedThemeChanged(object? sender, EventArgs e)
     {
-        Theme = _appUISettings.Theme;
+        ElementTheme = _appUISettings.Theme;
     }
 
     #endregion

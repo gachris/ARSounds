@@ -31,7 +31,4 @@
 
     <Thickness x:Key="SettingsPageHyperlinkButtonMargin">-12,4,0,0</Thickness>
 
-    <Thickness x:Key="ListDetailsViewTwoPaneViewBorderThickness">1,1,1,0</Thickness>
-    <CornerRadius x:Key="ListDetailsViewTwoPaneViewCornerRadius">4,4,0,0</CornerRadius>
-
 </ResourceDictionary>

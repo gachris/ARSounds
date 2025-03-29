@@ -3,6 +3,7 @@ using ARSounds.UI.Common;
 using ARSounds.UI.Common.ViewModels;
 using ARSounds.UI.WinUI.Activation;
 using ARSounds.UI.WinUI.Browser;
+using ARSounds.UI.WinUI.Contracts;
 using ARSounds.UI.WinUI.Services;
 using ARSounds.UI.WinUI.ViewModels;
 using ARSounds.UI.WinUI.Views;

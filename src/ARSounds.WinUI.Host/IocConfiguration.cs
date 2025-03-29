@@ -3,7 +3,7 @@ using ARSounds.Application.Services;
 using ARSounds.Core;
 using ARSounds.Core.Configuration;
 using ARSounds.UI.WinUI;
-using ARSounds.UI.WinUI.Services;
+using ARSounds.UI.WinUI.Contracts;
 using CommonServiceLocator;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

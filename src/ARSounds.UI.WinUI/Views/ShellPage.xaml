@@ -3,7 +3,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="using:ARSounds.UI.WinUI.Behaviors"
-    xmlns:converters="using:CommunityToolkit.WinUI.UI.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:loc="using:ARSounds.UI.WinUI.Localization"
@@ -97,7 +96,7 @@
             PaneDisplayMode="LeftCompact">
             <i:Interaction.Behaviors>
                 <behaviors:NavigationViewBehavior
-                    IsSettingsSelected="{Binding IsSettingsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    IsSettingsSelected="{Binding IsSettingsOpen, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                     SelectedValue="{Binding SelectedViewItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                     SelectedValuePath="Tag" />
 

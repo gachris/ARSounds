@@ -5,8 +5,6 @@
     xmlns:loc="clr-namespace:ARSounds.Localization.Properties;assembly=ARSounds.Localization"
     xmlns:viewModels="clr-namespace:ARSounds.UI.Wpf.ViewModels">
 
-    <devtoolbox:EnumBooleanConverter x:Key="EnumBooleanConverter" />
-
     <DataTemplate DataType="{x:Type viewModels:SettingsViewModel}">
         <ScrollViewer
             Focusable="False"
@@ -34,27 +32,27 @@
                         Margin="0,5"
                         HorizontalAlignment="Left"
                         VerticalContentAlignment="Center"
-                        Command="{Binding ChangeThemeCommand}"
+                        Command="{Binding SwitchThemeCommand}"
                         CommandParameter="{x:Static devtoolbox:ElementTheme.Light}"
-                        IsChecked="{Binding Path=Theme, Mode=OneWay, Converter={StaticResource EnumBooleanConverter}, ConverterParameter='Light'}">
+                        IsChecked="{Binding Path=ElementTheme, Mode=OneWay, Converter={StaticResource EnumBooleanConverter}, ConverterParameter='Light'}">
                         <TextBlock FontSize="{DynamicResource FontSize16}" Text="{x:Static loc:Resources.Light}" />
                     </RadioButton>
                     <RadioButton
                         Margin="0,5"
                         HorizontalAlignment="Left"
                         VerticalContentAlignment="Center"
-                        Command="{Binding ChangeThemeCommand}"
+                        Command="{Binding SwitchThemeCommand}"
                         CommandParameter="{x:Static devtoolbox:ElementTheme.Dark}"
-                        IsChecked="{Binding Path=Theme, Mode=OneWay, Converter={StaticResource EnumBooleanConverter}, ConverterParameter='Dark'}">
+                        IsChecked="{Binding Path=ElementTheme, Mode=OneWay, Converter={StaticResource EnumBooleanConverter}, ConverterParameter='Dark'}">
                         <TextBlock FontSize="{DynamicResource FontSize16}" Text="{x:Static loc:Resources.Dark}" />
                     </RadioButton>
                     <RadioButton
                         Margin="0,6"
                         HorizontalAlignment="Left"
                         VerticalContentAlignment="Center"
-                        Command="{Binding ChangeThemeCommand}"
+                        Command="{Binding SwitchThemeCommand}"
                         CommandParameter="{x:Static devtoolbox:ElementTheme.WindowsDefault}"
-                        IsChecked="{Binding Path=Theme, Mode=OneWay, Converter={StaticResource EnumBooleanConverter}, ConverterParameter='WindowsDefault'}">
+                        IsChecked="{Binding Path=ElementTheme, Mode=OneWay, Converter={StaticResource EnumBooleanConverter}, ConverterParameter='WindowsDefault'}">
                         <TextBlock FontSize="{DynamicResource FontSize16}" Text="{x:Static loc:Resources.Windows_default}" />
                     </RadioButton>
                 </StackPanel>
@@ -67,7 +65,7 @@
                     <TextBlock
                         Margin="0,0,0,5"
                         FontSize="{DynamicResource FontSize16}"
-                        Text="{Binding ApplicationVersion}" />
+                        Text="{Binding VersionDescription}" />
                     <TextBlock
                         Margin="0,5"
                         FontSize="{DynamicResource FontSize16}"

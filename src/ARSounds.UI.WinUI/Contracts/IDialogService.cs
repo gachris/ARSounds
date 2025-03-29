@@ -1,6 +1,6 @@
 ﻿using ARSounds.UI.Common.Windows;
 
-namespace ARSounds.UI.WinUI.Services;
+namespace ARSounds.UI.WinUI.Contracts;
 
 public interface IDialogService
 {

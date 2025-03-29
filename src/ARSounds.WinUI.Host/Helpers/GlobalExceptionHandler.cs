@@ -1,4 +1,4 @@
-﻿using ARSounds.UI.WinUI.Services;
+﻿using ARSounds.UI.WinUI.Contracts;
 using CommonServiceLocator;
 using Microsoft.Extensions.DependencyInjection;
 

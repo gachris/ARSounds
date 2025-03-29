@@ -1,31 +1,20 @@
-﻿using ARSounds.UI.Wpf.Contracts;
+﻿using ARSounds.UI.Common.ViewModels;
+using ARSounds.UI.Wpf.Contracts;
 using ARSounds.UI.Wpf.Views;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MediatR;
 
 namespace ARSounds.UI.Wpf.ViewModels;
 
-public partial class ShellViewModel : ObservableObject
+public partial class ShellViewModel : BaseShellViewModel
 {
     #region Fields/Consts
 
     private readonly INavigationService _navigationService;
 
-    private bool _isSettingsOpen;
-
     #endregion
 
-    #region Properties
-
-    public bool IsSettingsOpen
-    {
-        get => _isSettingsOpen;
-        private set => SetProperty(ref _isSettingsOpen, value);
-    }
-
-    #endregion
-
-    public ShellViewModel(INavigationService navigationService)
+    public ShellViewModel(IMediator mediator, INavigationService navigationService) : base(mediator)
     {
         _navigationService = navigationService;
     }
