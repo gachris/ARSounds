@@ -1,7 +1,7 @@
-﻿using Microsoft.Xaml.Behaviors;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
+using Microsoft.Xaml.Behaviors;
 
 namespace ARSounds.UI.Wpf.Behaviors;
 

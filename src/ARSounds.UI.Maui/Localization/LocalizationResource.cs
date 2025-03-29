@@ -1,6 +1,7 @@
 ﻿namespace ARSounds.UI.Maui.Localization;
 
 [ContentProperty(nameof(Text))]
+[RequireService([typeof(IProvideValueTarget)])]
 public class LocalizationResourceExtension : IMarkupExtension<BindingBase>
 {
     #region Properties

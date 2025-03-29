@@ -1,7 +1,7 @@
-﻿using ARSounds.UI.Wpf.Contracts;
-using ARSounds.UI.Wpf.ViewModels;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
+using ARSounds.UI.Wpf.Contracts;
+using ARSounds.UI.Wpf.ViewModels;
 
 namespace ARSounds.UI.Wpf.Views;
 

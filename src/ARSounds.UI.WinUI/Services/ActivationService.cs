@@ -1,9 +1,9 @@
-﻿using CommonServiceLocator;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml;
-using ARSounds.UI.WinUI.Activation;
-using Microsoft.Extensions.DependencyInjection;
+﻿using ARSounds.UI.WinUI.Activation;
 using ARSounds.UI.WinUI.Views;
+using CommonServiceLocator;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace ARSounds.UI.WinUI.Services;
 

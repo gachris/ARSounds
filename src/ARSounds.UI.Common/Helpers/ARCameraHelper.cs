@@ -1,10 +1,10 @@
-﻿using Emgu.CV;
+﻿using System.Drawing;
+using System.Text.RegularExpressions;
+using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
 using OpenVision.Core.DataTypes;
-using System.Drawing;
-using System.Text.RegularExpressions;
 
 namespace ARSounds.UI.Common.Camera;
 

@@ -1,10 +1,7 @@
 ﻿using ARSounds.Application.Commands;
-using ARSounds.UI.Maui.FontIcons;
 using ARSounds.UI.Maui.Services;
 using CommunityToolkit.Mvvm.Input;
 using MediatR;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
 
 namespace ARSounds.UI.Maui.ViewModels;
 
@@ -20,15 +17,11 @@ public partial class ProfileViewModel : ViewModelBase
 
     #region Properties
 
-    public ICommand TapCommand { get; private set; }
-
     public string Name { get; set; } = "Nura Lineon";
 
     public string Email { get; set; } = "nr-lineon@maui.com";
 
     public string ImageUrl { get; set; } = "user2.png";
-
-    public ObservableCollection<MenuItems> MenuItems { get; } = new ObservableCollection<MenuItems>();
 
     #endregion
 
@@ -39,39 +32,12 @@ public partial class ProfileViewModel : ViewModelBase
         _connectivity = connectivity;
     }
 
-    public override async Task InitializeAsync(object initParams)
+    public override async Task InitializeAsync(object? initParams)
     {
-        MainThread.BeginInvokeOnMainThread(() =>
-        {
-            PopulateData();
-            CommandInit();
-        });
-
         await Task.CompletedTask;
     }
 
     #region Methods
-
-    private void PopulateData()
-    {
-        MenuItems.Clear();
-
-        MenuItems.Add(new MenuItems("Edit Profile", IonIcons.Edit, typeof(SettingsViewModel)));
-        MenuItems.Add(new MenuItems("Notifications", IonIcons.AndroidNotifications, typeof(SettingsViewModel)));
-        MenuItems.Add(new MenuItems("Shipping Address", IonIcons.Location, typeof(SettingsViewModel)));
-        MenuItems.Add(new MenuItems("Payment Info", IonIcons.Card, typeof(SettingsViewModel)));
-        MenuItems.Add(new MenuItems("Order History", IonIcons.AndroidTime, typeof(SettingsViewModel)));
-        MenuItems.Add(new MenuItems("Settings", IonIcons.Settings, typeof(SettingsViewModel)));
-        MenuItems.Add(new MenuItems("Delete Account", IonIcons.AndroidDelete, typeof(SettingsViewModel)));
-    }
-
-    private void CommandInit()
-    {
-        TapCommand = new Command<MenuItems>(async item =>
-        {
-            await _navigationService.PushAsync(item.TargetType);
-        });
-    }
 
     [RelayCommand]
     private async Task SignOut()

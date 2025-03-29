@@ -1,18 +1,18 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Emgu.CV.Structure;
-using Emgu.CV;
-using NAudio.Wave;
-using OpenVision.Wpf.Controls;
-using ARSounds.Core.Targets;
-using OpenVision.Core.Reco;
-using System.IO;
+﻿using System.IO;
 using System.Text.RegularExpressions;
-using ARSounds.UI.Wpf.Contracts;
-using ARSounds.UI.Common.Camera;
+using ARSounds.Application.Services;
 using ARSounds.ApplicationFlow;
 using ARSounds.Core.Auth.Events;
-using ARSounds.Application.Services;
+using ARSounds.Core.Targets;
+using ARSounds.UI.Common.Camera;
+using ARSounds.UI.Wpf.Contracts;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Emgu.CV;
+using Emgu.CV.Structure;
+using NAudio.Wave;
+using OpenVision.Core.Reco;
+using OpenVision.Wpf.Controls;
 
 namespace ARSounds.UI.Wpf.ViewModels;
 

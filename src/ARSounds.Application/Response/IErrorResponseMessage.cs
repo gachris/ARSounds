@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
+﻿namespace ARSounds.Application.Response;
 
-namespace ARSounds.Application.Response
+public interface IErrorResponseMessage : IResponseMessage
 {
-    public interface IErrorResponseMessage : IResponseMessage
-    {
-        List<Error> Errors { get; }
-    }
+    List<Error> Errors { get; }
 }

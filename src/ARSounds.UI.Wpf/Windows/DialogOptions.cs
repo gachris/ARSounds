@@ -1,5 +1,5 @@
-﻿using ARSounds.UI.Common.Windows;
-using System.Windows;
+﻿using System.Windows;
+using ARSounds.UI.Common.Windows;
 
 namespace ARSounds.UI.Wpf.Windows;
 

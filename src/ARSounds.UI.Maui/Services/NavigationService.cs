@@ -1,5 +1,4 @@
-﻿using ARSounds.UI.Maui.Helpers;
-using ARSounds.UI.Maui.ViewModels;
+﻿using ARSounds.UI.Maui.ViewModels;
 
 namespace ARSounds.UI.Maui.Services;
 
@@ -13,10 +12,7 @@ public class NavigationService : INavigationService
 
     #region Properties
 
-    private static Microsoft.Maui.Controls.Application Application => Microsoft.Maui.Controls.Application.Current;
-
-    [Obsolete]
-    private static INavigation Navigation => Application.MainPage.Navigation;
+    private static INavigation? Navigation => Microsoft.Maui.Controls.Application.Current?.Windows[0].Page?.Navigation;
 
     #endregion
 
@@ -74,12 +70,12 @@ public class NavigationService : INavigationService
 
     public async Task PopAsync()
     {
-        await Navigation.PopAsync();
+        await (Navigation?.PopAsync() ?? Task.CompletedTask);
     }
 
     public async Task PopModalAsync()
     {
-        await Navigation.PopModalAsync();
+        await (Navigation?.PopModalAsync() ?? Task.CompletedTask);
     }
 
     #endregion
@@ -93,19 +89,19 @@ public class NavigationService : INavigationService
             : _mappings[viewModelType];
     }
 
-    protected Page CreateAndBindPage(Type viewModelType)
+    protected Page? CreateAndBindPage(Type viewModelType)
     {
         var pageType = GetPageTypeForViewModel(viewModelType);
-        return ServiceHelper.Current.GetService(pageType) as Page;
+        return IPlatformApplication.Current?.Services.GetService(pageType) as Page;
     }
 
     protected virtual async Task InternalPushAsync(Type viewModelType, object? initParams)
     {
         var page = CreateAndBindPage(viewModelType);
 
-        await Navigation.PushAsync(page);
+        await (Navigation?.PushAsync(page) ?? Task.CompletedTask);
 
-        if (page.BindingContext is ViewModelBase modelBase)
+        if (page?.BindingContext is ViewModelBase modelBase)
         {
             await modelBase.InitializeAsync(initParams);
         }
@@ -115,9 +111,9 @@ public class NavigationService : INavigationService
     {
         var page = CreateAndBindPage(viewModelType);
 
-        await Navigation.PushModalAsync(page);
+        await (Navigation?.PushModalAsync(page) ?? Task.CompletedTask);
 
-        if (page.BindingContext is ViewModelBase modelBase)
+        if (page?.BindingContext is ViewModelBase modelBase)
         {
             await modelBase.InitializeAsync(initParams);
         }
@@ -127,9 +123,12 @@ public class NavigationService : INavigationService
     {
         var page = CreateAndBindPage(type);
 
-        Application.MainPage = page;
+        if (Microsoft.Maui.Controls.Application.Current?.Windows[0] is Window window)
+        {
+            window.Page = page;
+        }
 
-        if (page.BindingContext is ViewModelBase modelBase)
+        if (page?.BindingContext is ViewModelBase modelBase)
         {
             await modelBase.InitializeAsync(value);
         }

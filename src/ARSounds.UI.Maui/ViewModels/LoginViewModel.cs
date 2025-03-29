@@ -1,7 +1,6 @@
 ﻿using ARSounds.Application.Commands;
 using ARSounds.ApplicationFlow;
 using ARSounds.Core.Auth.Events;
-using ARSounds.UI.Maui.Helpers;
 using ARSounds.UI.Maui.Services;
 using ARSounds.UI.Maui.Views;
 using CommunityToolkit.Mvvm.Input;
@@ -54,13 +53,19 @@ public partial class LoginViewModel : ViewModelBase
         {
             AppSettings.IsFirstLaunching = false;
 
-            var backgroundPage = ServiceHelper.GetService<BackgroundPage>();
-            Microsoft.Maui.Controls.Application.Current.MainPage = new NavigationPage(backgroundPage);
+            var backgroundPage = IPlatformApplication.Current?.Services.GetService<BackgroundPage>()!;
+            if (Microsoft.Maui.Controls.Application.Current?.Windows[0] is Window window)
+            {
+                window.Page = new NavigationPage(backgroundPage);
+            }
         }
         else
         {
-            var appShell = ServiceHelper.GetService<AppShell>();
-            Microsoft.Maui.Controls.Application.Current.MainPage = appShell;
+            var appShell = IPlatformApplication.Current?.Services.GetService<AppShell>()!;
+            if (Microsoft.Maui.Controls.Application.Current?.Windows[0] is Window window)
+            {
+                window.Page = new NavigationPage(appShell);
+            }
         }
     }
 

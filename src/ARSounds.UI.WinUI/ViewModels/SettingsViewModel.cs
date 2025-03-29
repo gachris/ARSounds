@@ -1,10 +1,10 @@
-﻿using ARSounds.UI.Common.Helpers;
+﻿using System.Reflection;
+using ARSounds.UI.Common.Helpers;
 using ARSounds.UI.WinUI.Helpers;
 using ARSounds.UI.WinUI.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
-using System.Reflection;
 using Windows.ApplicationModel;
 
 namespace ARSounds.UI.WinUI.ViewModels;

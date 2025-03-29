@@ -1,6 +1,6 @@
-﻿using ARSounds.UI.Common.Contracts;
+﻿using System.Reflection;
+using ARSounds.UI.Common.Contracts;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 
 namespace ARSounds.UI.Common;
 

@@ -1,16 +1,14 @@
 ﻿using Newtonsoft.Json;
-using System.Collections.Generic;
 
-namespace ARSounds.Application.Response
+namespace ARSounds.Application.Response;
+
+public class ErrorResponseMessage : ResponseMessage, IErrorResponseMessage
 {
-    public class ErrorResponseMessage : ResponseMessage, IErrorResponseMessage
-    {
-        [JsonProperty("errors")]
-        public List<Error> Errors { get; }
+    [JsonProperty("errors")]
+    public List<Error> Errors { get; }
 
-        public ErrorResponseMessage()
-        {
-            Errors = new List<Error>();
-        }
+    public ErrorResponseMessage()
+    {
+        Errors = new List<Error>();
     }
 }

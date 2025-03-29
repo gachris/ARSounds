@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
+using Newtonsoft.Json;
 
 namespace ARSounds.Core.Auth;
 

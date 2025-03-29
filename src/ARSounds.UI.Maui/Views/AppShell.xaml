@@ -5,5 +5,5 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:ARSounds.UI.Maui.Views;assembly=ARSounds.UI.Maui"
     BackgroundColor="{DynamicResource BasePageColor}">
-    <ShellContent ContentTemplate="{DataTemplate views:HomePage}" Route="main" />
+    <ShellContent ContentTemplate="{DataTemplate views:ARCameraPage}" Route="main" />
 </Shell>

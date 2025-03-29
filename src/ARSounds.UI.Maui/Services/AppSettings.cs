@@ -33,12 +33,12 @@ public class AppSettings
             if (_isDarkTheme)
             {
                 // Dark Theme
-                Microsoft.Maui.Controls.Application.Current.Resources.ApplyDarkTheme();
+                Microsoft.Maui.Controls.Application.Current?.Resources.ApplyDarkTheme();
             }
             else
             {
                 // Light Theme
-                Microsoft.Maui.Controls.Application.Current.Resources.ApplyLightTheme();
+                Microsoft.Maui.Controls.Application.Current?.Resources.ApplyLightTheme();
             }
         }
     }
@@ -64,7 +64,7 @@ public class AppSettings
 
     private AppSettings()
     {
-        _currentTheme = Microsoft.Maui.Controls.Application.Current.RequestedTheme;
+        _currentTheme = Microsoft.Maui.Controls.Application.Current?.RequestedTheme ?? AppTheme.Unspecified;
         _selectedPrimaryColor = _currentTheme == AppTheme.Light ? 0 : 1;  //ThemeUtil: ApplyColorSet1 by default for LightTheme, ApplyColorSet2 by default for DarkTheme
     }
 }

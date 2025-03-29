@@ -1,7 +1,7 @@
-﻿using ARSounds.UI.Wpf.Contracts;
+﻿using System.Windows;
+using ARSounds.UI.Wpf.Contracts;
 using ARSounds.Wpf.Host.Helpers;
 using CommonServiceLocator;
-using System.Windows;
 
 namespace ARSounds.Wpf.Host;
 

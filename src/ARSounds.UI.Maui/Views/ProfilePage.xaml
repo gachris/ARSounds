@@ -53,59 +53,6 @@
             </StackLayout>
         </StackLayout>
 
-        <!--  OPTIONS  -->
-        <ListView
-            Grid.Row="1"
-            Margin="20"
-            CachingStrategy="RecycleElement"
-            HasUnevenRows="False"
-            ItemsSource="{Binding MenuItems}"
-            VerticalScrollBarVisibility="Never">
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="{x:Type viewModels:MenuItems}">
-                    <ViewCell>
-                        <Grid Padding="0,12">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="40" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="40" />
-                            </Grid.ColumnDefinitions>
-                            <Label
-                                FontFamily="IonIcons"
-                                FontSize="22"
-                                HorizontalOptions="Start"
-                                Text="{Binding Icon}"
-                                TextColor="{DynamicResource PrimaryColor}"
-                                VerticalOptions="Center" />
-
-                            <Label
-                                Grid.Column="1"
-                                FontAttributes="Bold"
-                                FontSize="15"
-                                HorizontalOptions="Start"
-                                Text="{Binding Title}"
-                                VerticalOptions="Center"
-                                VerticalTextAlignment="Center" />
-
-                            <Label
-                                Grid.Column="2"
-                                FontFamily="IonIcons"
-                                FontSize="15"
-                                HorizontalOptions="End"
-                                HorizontalTextAlignment="Center"
-                                Text="{x:Static fontIcons:IonIcons.ChevronRight}"
-                                TextColor="{DynamicResource BaseIconColor}"
-                                VerticalOptions="CenterAndExpand" />
-
-                            <Grid.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.TapCommand}" CommandParameter="{Binding .}" />
-                            </Grid.GestureRecognizers>
-                        </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-
         <!--  SETTINGS  -->
         <StackLayout Grid.Row="2" Padding="20,0">
             <Label

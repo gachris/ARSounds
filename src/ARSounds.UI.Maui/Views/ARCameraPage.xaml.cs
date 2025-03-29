@@ -2,9 +2,9 @@
 
 namespace ARSounds.UI.Maui.Views;
 
-public partial class HomePage : ContentPage
+public partial class ARCameraPage : ContentPage
 {
-    public HomePage(HomeViewModel viewModel)
+    public ARCameraPage(ARCameraViewModel viewModel)
     {
         BindingContext = viewModel;
         InitializeComponent();
@@ -13,11 +13,11 @@ public partial class HomePage : ContentPage
 
     private async void MainPage_Loaded(object? sender, EventArgs e)
     {
-        if (BindingContext is not HomeViewModel homeViewModel)
+        if (BindingContext is not ARCameraViewModel viewModel)
         {
             return;
         }
 
-        await homeViewModel.InitializeAsync(default);
+        await viewModel.InitializeAsync(default);
     }
 }

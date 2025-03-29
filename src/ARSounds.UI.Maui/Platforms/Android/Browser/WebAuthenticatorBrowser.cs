@@ -1,5 +1,5 @@
-﻿using IdentityModel.OidcClient.Browser;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using IdentityModel.OidcClient.Browser;
 using IBrowser = IdentityModel.OidcClient.Browser.IBrowser;
 
 namespace ARSounds.UI.Maui.Platforms.Android.Browser;

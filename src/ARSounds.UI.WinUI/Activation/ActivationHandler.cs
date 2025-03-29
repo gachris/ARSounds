@@ -15,6 +15,6 @@ public abstract class ActivationHandler<T> : IActivationHandler where T : class
     public bool CanHandle(object args) => args is T && CanHandleInternal((args as T)!);
 
     public async Task HandleAsync(object args) => await HandleInternalAsync((args as T)!);
-    
+
     #endregion
 }

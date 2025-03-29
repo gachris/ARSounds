@@ -1,16 +1,13 @@
-﻿using System;
+﻿namespace ARSounds.Application.Response;
 
-namespace ARSounds.Application.Response
+public interface IResponseMessage
 {
-    public interface IResponseMessage
-    {
-        Guid TransactionId { get; }
+    Guid TransactionId { get; }
 
-        StatusCode StatusCode { get; set; }
-    }
+    StatusCode StatusCode { get; set; }
+}
 
-    public interface IResponseMessage<TResult> : IResponseMessage
-    {
-        ResponseDoc<TResult> Response { get; }
-    }
+public interface IResponseMessage<TResult> : IResponseMessage
+{
+    ResponseDoc<TResult> Response { get; }
 }

@@ -1,7 +1,7 @@
-﻿using ARSounds.Localization.Properties;
+﻿using System.Collections.ObjectModel;
+using ARSounds.Localization.Properties;
 using ARSounds.UI.Maui.Services;
 using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
 
 namespace ARSounds.UI.Maui.ViewModels;
 
@@ -60,7 +60,7 @@ public partial class WalkthroughViewModel : ViewModelBase
 
     #region Methods
 
-    public override Task InitializeAsync(object initParams)
+    public override Task InitializeAsync(object? initParams)
     {
         CreateBoardingCollection();
 

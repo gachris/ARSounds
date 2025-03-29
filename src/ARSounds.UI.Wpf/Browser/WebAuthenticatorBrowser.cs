@@ -1,7 +1,7 @@
-﻿using ARSounds.UI.Wpf.Windows;
+﻿using System.IO;
+using ARSounds.UI.Wpf.Windows;
 using IdentityModel.OidcClient.Browser;
 using Microsoft.Web.WebView2.Core;
-using System.IO;
 
 namespace ARSounds.UI.Wpf.Browser;
 

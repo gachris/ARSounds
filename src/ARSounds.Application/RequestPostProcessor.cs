@@ -1,8 +1,6 @@
 ﻿using ARSounds.ApplicationFlow;
 using MediatR;
 using MediatR.Pipeline;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace ARSounds.Application;
 

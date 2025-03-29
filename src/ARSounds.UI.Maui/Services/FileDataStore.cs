@@ -63,16 +63,16 @@ public class FileDataStore : IDataStore
     /// <param name="key">The key.</param>
     /// <param name="value">The value to store in the data store.</param>
     public Task StoreAsync<T>(string key, T value) => Task.Factory.StartNew(() =>
-                                                           {
-                                                               if (string.IsNullOrEmpty(key))
-                                                               {
-                                                                   throw new ArgumentException("Key MUST have a value");
-                                                               }
+    {
+        if (string.IsNullOrEmpty(key))
+        {
+            throw new ArgumentException("Key MUST have a value");
+        }
 
-                                                               var serialized = JsonConvert.SerializeObject(value);
-                                                               var filePath = Path.Combine(_folderPath, GenerateStoredKey(key, typeof(T)));
-                                                               File.WriteAllText(filePath, serialized);
-                                                           });
+        var serialized = JsonConvert.SerializeObject(value);
+        var filePath = Path.Combine(_folderPath, GenerateStoredKey(key, typeof(T)));
+        File.WriteAllText(filePath, serialized);
+    });
 
     /// <summary>
     /// Deletes the given key. It deletes the <see cref="GenerateStoredKey"/> named file in 
@@ -80,18 +80,18 @@ public class FileDataStore : IDataStore
     /// </summary>
     /// <param name="key">The key to delete from the data store.</param>
     public Task DeleteAsync<T>(string key) => Task.Factory.StartNew(() =>
-                                                   {
-                                                       if (string.IsNullOrEmpty(key))
-                                                       {
-                                                           throw new ArgumentException("Key MUST have a value");
-                                                       }
+    {
+        if (string.IsNullOrEmpty(key))
+        {
+            throw new ArgumentException("Key MUST have a value");
+        }
 
-                                                       var filePath = Path.Combine(_folderPath, GenerateStoredKey(key, typeof(T)));
-                                                       if (File.Exists(filePath))
-                                                       {
-                                                           File.Delete(filePath);
-                                                       }
-                                                   });
+        var filePath = Path.Combine(_folderPath, GenerateStoredKey(key, typeof(T)));
+        if (File.Exists(filePath))
+        {
+            File.Delete(filePath);
+        }
+    });
 
     /// <summary>
     /// Returns the stored value for the given key or <c>null</c> if the matching file (<see cref="GenerateStoredKey"/>
@@ -100,11 +100,11 @@ public class FileDataStore : IDataStore
     /// <typeparam name="T">The type to retrieve.</typeparam>
     /// <param name="key">The key to retrieve from the data store.</param>
     /// <returns>The stored object.</returns>
-    public Task<T> GetAsync<T>(string key)
+    public Task<T?> GetAsync<T>(string key)
     {
         if (string.IsNullOrEmpty(key)) throw new ArgumentException("Key MUST have a value");
 
-        var tcs = new TaskCompletionSource<T>();
+        var tcs = new TaskCompletionSource<T?>();
         var filePath = Path.Combine(_folderPath, GenerateStoredKey(key, typeof(T)));
         if (File.Exists(filePath))
         {

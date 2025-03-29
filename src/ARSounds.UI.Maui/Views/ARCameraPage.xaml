@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="ARSounds.UI.Maui.Views.HomePage"
+    x:Class="ARSounds.UI.Maui.Views.ARCameraPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:ARSounds.UI.Maui.Controls"
     xmlns:fontIcons="clr-namespace:ARSounds.UI.Maui.FontIcons"
     xmlns:loc="clr-namespace:ARSounds.UI.Maui.Localization"
     xmlns:viewModels="clr-namespace:ARSounds.UI.Maui.ViewModels"
-    x:DataType="{x:Type viewModels:HomeViewModel}"
+    x:DataType="{x:Type viewModels:ARCameraViewModel}"
     BackgroundColor="{DynamicResource BasePageColor}"
     Shell.NavBarIsVisible="True">
     <ContentPage.ToolbarItems>

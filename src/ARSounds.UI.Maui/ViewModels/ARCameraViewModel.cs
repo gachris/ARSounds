@@ -18,7 +18,7 @@ using OpenCV.Core;
 
 namespace ARSounds.UI.Maui.ViewModels;
 
-public partial class HomeViewModel : ViewModelBase
+public partial class ARCameraViewModel : ViewModelBase
 {
     #region Fields/Consts
 
@@ -41,7 +41,7 @@ public partial class HomeViewModel : ViewModelBase
 
     #endregion
 
-    public HomeViewModel(
+    public ARCameraViewModel(
         IMediator mediator,
         IApplicationEvents applicationEvents,
         IAudioManager audioManager,
@@ -129,7 +129,7 @@ public partial class HomeViewModel : ViewModelBase
             var audioBytes = Convert.FromBase64String(audioBase64);
             PlayAudio(audioBytes);
 
-            _waveformImage = ARCameraHelper.DecodeBase64(_target.ImageBase64);
+            _waveformImage = ARCameraHelper.DecodeBase64(_target.ImageBase64!);
         }
 
         // Compute audio playback progress (0.0 to 1.0)
@@ -145,7 +145,7 @@ public partial class HomeViewModel : ViewModelBase
             e.Frame,
             targetMatchResult,
             audioProgress,
-            _target.HexColor);
+            _target.HexColor!);
     }
 
     [RelayCommand]

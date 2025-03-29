@@ -62,6 +62,11 @@ public static class ThemeHelpers
 
     private static void ApplyColorSet1()
     {
+        if (Microsoft.Maui.Controls.Application.Current is null)
+        {
+            return;
+        }
+
         Microsoft.Maui.Controls.Application.Current.Resources.TryGetValue("ThemePrimaryColorOption1", out var primaryColorOption1);
 
         Microsoft.Maui.Controls.Application.Current.Resources["PrimaryColor"] = (Color)primaryColorOption1;
@@ -74,6 +79,11 @@ public static class ThemeHelpers
 
     private static void ApplyColorSet2()
     {
+        if (Microsoft.Maui.Controls.Application.Current is null)
+        {
+            return;
+        }
+
         Microsoft.Maui.Controls.Application.Current.Resources.TryGetValue("ThemePrimaryColorOption2", out var primaryColorOption2);
 
         Microsoft.Maui.Controls.Application.Current.Resources["PrimaryColor"] = (Color)primaryColorOption2;
@@ -86,6 +96,11 @@ public static class ThemeHelpers
 
     private static void ApplyColorSet3()
     {
+        if (Microsoft.Maui.Controls.Application.Current is null)
+        {
+            return;
+        }
+
         Microsoft.Maui.Controls.Application.Current.Resources.TryGetValue("ThemePrimaryColorOption3", out var primaryColorOption3);
 
         Microsoft.Maui.Controls.Application.Current.Resources["PrimaryColor"] = (Color)primaryColorOption3;
@@ -98,6 +113,11 @@ public static class ThemeHelpers
 
     private static void ApplyColorSet4()
     {
+        if (Microsoft.Maui.Controls.Application.Current is null)
+        {
+            return;
+        }
+
         Microsoft.Maui.Controls.Application.Current.Resources.TryGetValue("ThemePrimaryColorOption4", out var primaryColorOption4);
 
         Microsoft.Maui.Controls.Application.Current.Resources["PrimaryColor"] = (Color)primaryColorOption4;
@@ -110,6 +130,11 @@ public static class ThemeHelpers
 
     private static void ApplyColorSet5()
     {
+        if (Microsoft.Maui.Controls.Application.Current is null)
+        {
+            return;
+        }
+
         Microsoft.Maui.Controls.Application.Current.Resources.TryGetValue("ThemePrimaryColorOption5", out var primaryColorOption5);
 
         Microsoft.Maui.Controls.Application.Current.Resources["PrimaryColor"] = (Color)primaryColorOption5;

@@ -1,6 +1,6 @@
-﻿using ARSounds.Localization.Properties;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Globalization;
+using ARSounds.Localization.Properties;
 
 namespace ARSounds.UI.Maui.Localization;
 

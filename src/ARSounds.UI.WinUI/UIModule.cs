@@ -1,15 +1,15 @@
-﻿using ARSounds.UI.WinUI.Activation;
+﻿using ARSounds.Application.Services;
+using ARSounds.UI.Common;
+using ARSounds.UI.Common.ViewModels;
+using ARSounds.UI.WinUI.Activation;
+using ARSounds.UI.WinUI.Browser;
 using ARSounds.UI.WinUI.Services;
 using ARSounds.UI.WinUI.ViewModels;
 using ARSounds.UI.WinUI.Views;
+using IdentityModel.OidcClient.Browser;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using OpenVision.Core.Configuration;
-using ARSounds.Application.Services;
-using ARSounds.UI.Common.ViewModels;
-using IdentityModel.OidcClient.Browser;
-using ARSounds.UI.WinUI.Browser;
-using ARSounds.UI.Common;
 
 namespace ARSounds.UI.WinUI;
 

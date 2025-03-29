@@ -18,12 +18,12 @@ public sealed partial class WindowWebView2 : WindowEx
         InitializeComponent();
 
         IsMaximizable = false;
-        IsResizable = false; 
+        IsResizable = false;
         IsAlwaysOnTop = true;
         IsShownInSwitchers = false;
         IsMinimizable = false;
         IsTitleBarVisible = true;
-        
+
         Title = Resources.Application_title;
 
         ExtendsContentIntoTitleBar = true;

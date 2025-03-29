@@ -10,10 +10,18 @@ public partial class AppShell : Shell
 
         BindingContext = viewModel;
         InitializeComponent();
+
+        Loaded += AppShell_Loaded;
+    }
+
+    private async void AppShell_Loaded(object? sender, EventArgs e)
+    {
+        var viewModel = (AppShellViewModel)BindingContext;
+        await viewModel.InitializeAsync(null);
     }
 
     private static void RegisterRoutes()
     {
-        Routing.RegisterRoute(nameof(HomePage), typeof(HomePage));
+        Routing.RegisterRoute(nameof(ARCameraPage), typeof(ARCameraPage));
     }
 }
