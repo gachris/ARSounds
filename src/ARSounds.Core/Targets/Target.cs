@@ -8,16 +8,16 @@ public class Target
     public Guid Id { get; set; }
 
     [JsonProperty("description")]
-    public string Description { get; set; }
+    public required string Description { get; set; }
 
     [JsonProperty("title")]
-    public string Title { get; set; }
+    public required string Title { get; set; }
 
     [JsonProperty("audio_type")]
-    public string AudioType { get; set; }
+    public required string AudioType { get; set; }
 
     [JsonProperty("audio_base64")]
-    public string AudioBase64 { get; set; }
+    public required string AudioBase64 { get; set; }
 
     [JsonProperty("image_base64")]
     public string? ImageBase64 { get; set; }

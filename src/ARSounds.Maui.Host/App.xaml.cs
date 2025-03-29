@@ -1,11 +1,10 @@
-﻿using ARSounds.Application.Auth;
-using ARSounds.Application.Auth.Commands;
-using ARSounds.UI.Maui.Handlers;
-using ARSounds.UI.Maui.Common.Views;
+﻿using ARSounds.UI.Maui.Handlers;
 using ARSounds.UI.Maui.Helpers;
-using ARSounds.UI.Maui.User.Views;
 using MediatR;
 using OpenVision.Core.Configuration;
+using ARSounds.Application.Services;
+using ARSounds.UI.Maui.Views;
+using ARSounds.Application.Commands;
 
 namespace ARSounds.Maui.Host;
 
@@ -66,11 +65,11 @@ public partial class App : Microsoft.Maui.Controls.Application
         var mediator = ServiceHelper.GetService<IMediator>();
         var authService = ServiceHelper.GetService<IAuthService>();
 
-        await mediator.Send(new SignInUserFromCacheCommand()).ConfigureAwait(false);
+        await mediator.Send(new SignInSilentCommand()).ConfigureAwait(false);
 
         MainThread.BeginInvokeOnMainThread(() =>
         {
-            if (!authService.IsUserLoggedIn)
+            if (!authService.IsAuthenticated)
             {
                 var loginPage = ServiceHelper.GetService<LoginPage>();
                 MainPage = new NavigationPage(loginPage);

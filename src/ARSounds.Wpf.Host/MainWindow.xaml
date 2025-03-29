@@ -4,11 +4,82 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:devtoolbox="http://devtoolbox.wpf/winfx/2021/xaml/presentation"
+    xmlns:loc="clr-namespace:ARSounds.Localization.Properties;assembly=ARSounds.Localization"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:views="clr-namespace:ARSounds.UI.Wpf.Camera.Views;assembly=ARSounds.UI.Wpf"
-    Title="MainWindow"
-    Width="800"
-    Height="450"
+    x:Name="appWindow"
+    Title="{x:Static loc:Resources.Application_title}"
+    Width="1200"
+    Height="850"
+    FontFamily="Segoe UI"
+    FontSize="{DynamicResource FontSize14}"
+    ShowIcon="False"
+    ShowTitle="True"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <views:ARCameraView />
+    <devtoolbox:WindowEx.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ARSounds.UI.Wpf;component/DataTemplates/AccountView.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </devtoolbox:WindowEx.Resources>
+    <devtoolbox:WindowEx.Header>
+        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+            <devtoolbox:DropDown
+                Width="48"
+                BorderThickness="0"
+                Content="{Binding AccountViewModel, Source={StaticResource ViewModelLocator}}"
+                Header="{Binding AccountViewModel, Source={StaticResource ViewModelLocator}}"
+                Placement="Bottom"
+                SpeechBalloonPlacement="None"
+                Style="{StaticResource DropDwon.TitleBar.BorderlessStyle}"
+                WindowChrome.IsHitTestVisibleInChrome="True">
+                <devtoolbox:DropDown.HeaderTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <devtoolbox:FontGlyph
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Code="{x:Static devtoolbox:Symbol.User}"
+                                FontSize="{DynamicResource FontSize16}"
+                                Visibility="{Binding IsAuthenticated, Converter={StaticResource FlipBoolToVisibilityConverter}}" />
+                            <Border
+                                Width="24"
+                                Height="24"
+                                Background="#001E51"
+                                CornerRadius="100"
+                                Visibility="{Binding IsAuthenticated, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="12"
+                                    Text="CG" />
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </devtoolbox:DropDown.HeaderTemplate>
+            </devtoolbox:DropDown>
+            <ToggleButton
+                Width="48"
+                BorderThickness="0"
+                Command="{Binding ElementName=appWindow, Path=Content.DataContext.OpenSettingsCommand}"
+                IsChecked="{Binding ElementName=appWindow, Path=Content.DataContext.IsSettingsOpen, Mode=OneWay}"
+                Style="{StaticResource ToggleButton.TitleBar.BorderlessStyle}"
+                WindowChrome.IsHitTestVisibleInChrome="True">
+                <ToggleButton.ContentTemplate>
+                    <DataTemplate>
+                        <devtoolbox:FontGlyph Code="{x:Static devtoolbox:Symbol.Settings}" FontSize="{DynamicResource FontSize16}" />
+                    </DataTemplate>
+                </ToggleButton.ContentTemplate>
+            </ToggleButton>
+        </StackPanel>
+    </devtoolbox:WindowEx.Header>
+    <devtoolbox:WindowEx.TitleTextBlockStyle>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Margin" Value="0,0,0,4" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{DynamicResource Window.Title.Foreground}" />
+        </Style>
+    </devtoolbox:WindowEx.TitleTextBlockStyle>
 </devtoolbox:WindowEx>

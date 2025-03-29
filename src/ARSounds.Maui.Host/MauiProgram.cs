@@ -1,13 +1,13 @@
 ﻿using ARSounds.Application;
-using ARSounds.Application.Store;
+using ARSounds.Application.Services;
 using ARSounds.Core;
 using ARSounds.Core.Configuration;
 using ARSounds.UI.Maui;
-using ARSounds.UI.Maui.Store;
 using CommonServiceLocator;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
+using FileDataStore = ARSounds.UI.Maui.Services.FileDataStore;
 
 namespace ARSounds.Maui.Host;
 
@@ -23,14 +23,17 @@ public static class MauiProgram
             .ConfigureFonts(fonts => fonts.AddFonts())
             .ConfigureMauiHandlers(handlers => handlers.AddHandlers());
 
+#if WINDOWS
         builder.Configuration
-            .AddJsonFromPackageFile("appsettings.json");
+            .AddJsonFromPackageFile("appsettings.windows.json");
+#else
+        builder.Configuration
+            .AddJsonFromPackageFile("appsettings.android.json");
+#endif
 
         var appConfiguration = builder.Configuration.GetRequiredSection(nameof(AppConfiguration)).Get<AppConfiguration>()!;
-        var oidcConfiguration = builder.Configuration.GetRequiredSection(nameof(OidcConfiguration)).Get<OidcConfiguration>()!;
 
         builder.Services.AddSingleton(appConfiguration);
-        builder.Services.AddSingleton(oidcConfiguration);
 
         builder.Services.AddSingleton<IDataStore, FileDataStore>(t => new FileDataStore(appConfiguration.ApplicationName));
 

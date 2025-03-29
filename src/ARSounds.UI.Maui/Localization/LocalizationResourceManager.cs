@@ -10,16 +10,16 @@ public class LocalizationResourceManager : INotifyPropertyChanged
 
     private static readonly LocalizationResourceManager _current = new();
 
-    public event PropertyChangedEventHandler PropertyChanged;
-    
+    public event PropertyChangedEventHandler? PropertyChanged;
+
     #endregion
 
     #region Properties
 
     public static LocalizationResourceManager Current => _current;
 
-    public object this[string resourceKey] => Resources.ResourceManager.GetObject(resourceKey, Resources.Culture);
-    
+    public object? this[string resourceKey] => Resources.ResourceManager.GetObject(resourceKey, Resources.Culture);
+
     #endregion
 
     private LocalizationResourceManager()

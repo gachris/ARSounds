@@ -1,9 +1,5 @@
-﻿using ARSounds.UI.Maui.Controls.Videos;
-using ARSounds.UI.Maui.Handlers;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using OpenVision.Maui.Controls;
-using SkiaSharp.Views.Maui.Controls;
-using SkiaSharp.Views.Maui.Handlers;
 
 namespace ARSounds.Maui.Host;
 
@@ -25,26 +21,18 @@ public static class MauiProgramHelper
 
     public static IFontCollection AddFonts(this IFontCollection fonts)
     {
-        return fonts.AddFont("Poppins-Regular.otf", "AppFontFamily")
-                    .AddFont("Poppins-Medium.otf", "AppMediumFontFamily")
-                    .AddFont("Poppins-SemiBold.otf", "AppSemiBoldFontFamily")
+        return fonts.AddFont("ionicons.ttf", "IonIcons")
                     .AddFont("Poppins-Bold.otf", "AppBoldFontFamily")
-                    .AddFont("SecondFontFamily-Bold.ttf", "SecondBoldFontFamily")
-                    .AddFont("SecondFontFamily-Medium.ttf", "SecondMediumFontFamily")
-                    .AddFont("SecondFontFamily-Regular.ttf", "SecondFontFamily")
-                    .AddFont("fa-solid-900.ttf", "FaPro")
-                    .AddFont("fa-brands-400.ttf", "FaBrands")
-                    .AddFont("fa-regular-400.ttf", "FaRegular")
-                    .AddFont("line-awesome.ttf", "LineAwesome")
-                    .AddFont("material-icons-outlined-regular.otf", "MaterialDesign")
-                    .AddFont("ionicons.ttf", "IonIcons")
-                    .AddFont("icon.ttf", "MauiKitIcons");
+                    .AddFont("Poppins-Medium.otf", "AppMediumFontFamily")
+                    .AddFont("Poppins-Regular.otf", "AppFontFamily")
+                    .AddFont("Poppins-SemiBold.otf", "AppSemiBoldFontFamily")
+                    .AddFont("Roboto-Bold.ttf", "SecondBoldFontFamily")
+                    .AddFont("Roboto-Medium.ttf", "SecondMediumFontFamily")
+                    .AddFont("Roboto-Regular.ttf", "SecondFontFamily");
     }
 
     public static IMauiHandlersCollection AddHandlers(this IMauiHandlersCollection handlers)
     {
-        return handlers.AddHandler(typeof(ARCamera), typeof(ARCameraHandler))
-                       .AddHandler(typeof(SKCanvasView), typeof(SKCanvasViewHandler))
-                       .AddHandler(typeof(Video), typeof(VideoHandler));
+        return handlers.AddHandler<ARCamera, ARCameraHandler>();
     }
 }

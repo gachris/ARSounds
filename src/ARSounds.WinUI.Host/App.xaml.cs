@@ -1,5 +1,8 @@
-﻿using Microsoft.UI.Xaml;
-using OpenVision.Core.Configuration;
+﻿using ARSounds.UI.WinUI.Services;
+using ARSounds.WinUI.Host.Helpers;
+using CommonServiceLocator;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI.Xaml;
 
 namespace ARSounds.WinUI.Host;
 
@@ -14,26 +17,16 @@ public partial class App : Microsoft.UI.Xaml.Application
     /// </summary>
     public App()
     {
-        VisionSystemConfig.ImageRequestBuilder = new OpenVision.Core.DataTypes.ImageRequestBuilder()
-            .WithGrayscale()
-            .WithGaussianBlur(new System.Drawing.Size(5, 5), 0)
-            .WithLowResolution(320);
-
-        VisionSystemConfig.WebSocketUrl = "wss://localhost:44320/ws";
-        IocConfiguration.Setup();
-
         InitializeComponent();
+
+        IocConfiguration.Setup();
+        GlobalExceptionHandler.SetupExceptionHandling();
     }
 
-    /// <summary>
-    /// Invoked when the application is launched.
-    /// </summary>
-    /// <param name="args">Details about the launch request and process.</param>
-    protected override void OnLaunched(LaunchActivatedEventArgs args)
+    protected async override void OnLaunched(LaunchActivatedEventArgs args)
     {
-        m_window = new MainWindow();
-        m_window.Activate();
-    }
+        base.OnLaunched(args);
 
-    private Window? m_window;
+        await ServiceLocator.Current.GetService<IActivationService>()!.ActivateAsync(args);
+    }
 }

@@ -6,7 +6,10 @@
 
 	<ItemGroup>
 		<PackageReference Include="MediatR" />
+		<PackageReference Include="AutoMapper" />
 		<PackageReference Include="IdentityModel.OidcClient" />
+		<PackageReference Include="Microsoft.Extensions.Options" />
+		<PackageReference Include="Microsoft.Extensions.Logging" />
 	</ItemGroup>
 
 	<ItemGroup>

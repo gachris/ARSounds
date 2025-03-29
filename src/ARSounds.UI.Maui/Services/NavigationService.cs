@@ -1,9 +1,5 @@
-﻿using ARSounds.UI.Maui.Common.ViewModels;
-using ARSounds.UI.Maui.Helpers;
-using Microsoft.Maui.Controls;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using ARSounds.UI.Maui.Helpers;
+using ARSounds.UI.Maui.ViewModels;
 
 namespace ARSounds.UI.Maui.Services;
 
@@ -19,6 +15,7 @@ public class NavigationService : INavigationService
 
     private static Microsoft.Maui.Controls.Application Application => Microsoft.Maui.Controls.Application.Current;
 
+    [Obsolete]
     private static INavigation Navigation => Application.MainPage.Navigation;
 
     #endregion
@@ -102,7 +99,7 @@ public class NavigationService : INavigationService
         return ServiceHelper.Current.GetService(pageType) as Page;
     }
 
-    protected virtual async Task InternalPushAsync(Type viewModelType, object initParams)
+    protected virtual async Task InternalPushAsync(Type viewModelType, object? initParams)
     {
         var page = CreateAndBindPage(viewModelType);
 
@@ -114,7 +111,7 @@ public class NavigationService : INavigationService
         }
     }
 
-    protected virtual async Task InternalPushModalAsync(Type viewModelType, object initParams)
+    protected virtual async Task InternalPushModalAsync(Type viewModelType, object? initParams)
     {
         var page = CreateAndBindPage(viewModelType);
 
@@ -126,7 +123,7 @@ public class NavigationService : INavigationService
         }
     }
 
-    protected virtual async Task InternalPushMainAsync(Type type, object value)
+    protected virtual async Task InternalPushMainAsync(Type type, object? value)
     {
         var page = CreateAndBindPage(type);
 

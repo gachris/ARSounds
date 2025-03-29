@@ -9,26 +9,17 @@
 	</PropertyGroup>
 	
 	<ItemGroup>
-	  <None Remove="Camera\Views\ARCameraView.xaml" />
-	</ItemGroup>
-	
-	<ItemGroup>
-		<PackageReference Include="NAudio" />
-		<PackageReference Include="OpenVision.WinUI" />
-		<PackageReference Include="CommunityToolkit.Mvvm" />
+		<PackageReference Include="CommunityToolkit.WinUI.UI.Controls" />
+		<PackageReference Include="Microsoft.Web.WebView2" />
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" />
 		<PackageReference Include="Microsoft.WindowsAppSDK" />
+		<PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" />
+		<PackageReference Include="OpenVision.WinUI" />
+		<PackageReference Include="WinUIEx" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\ARSounds.Application\ARSounds.Application.csproj" />
-		<ProjectReference Include="..\ARSounds.Localization\ARSounds.Localization.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Page Update="Camera\Views\ARCameraView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<ProjectReference Include="..\ARSounds.UI.Common\ARSounds.UI.Common.csproj" />
 	</ItemGroup>
 
 </Project>

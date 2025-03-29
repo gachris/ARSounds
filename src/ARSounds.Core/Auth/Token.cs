@@ -6,13 +6,13 @@ namespace ARSounds.Core.Auth;
 public class Token
 {
     [JsonProperty("access_token")]
-    public virtual string AccessToken { get; set; }
+    public virtual required string AccessToken { get; set; }
 
     [JsonProperty("refresh_token")]
-    public virtual string RefreshToken { get; set; }
+    public virtual required string RefreshToken { get; set; }
 
     [JsonProperty("identity_token")]
-    public virtual string IdentityToken { get; set; }
+    public virtual required string IdentityToken { get; set; }
 
     [JsonProperty("expires_in")]
     public virtual int ExpiresIn { get; set; }

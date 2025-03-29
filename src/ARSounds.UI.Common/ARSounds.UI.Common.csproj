@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" />
+		<PackageReference Include="NAudio" />
+		<PackageReference Include="OpenVision.Core" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\ARSounds.Application\ARSounds.Application.csproj" />
+		<ProjectReference Include="..\ARSounds.Localization\ARSounds.Localization.csproj" />
+	</ItemGroup>
+
+</Project>

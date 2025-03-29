@@ -1,7 +1,4 @@
-﻿using ARSounds.UI.Maui.Common.ViewModels;
-using Microsoft.Maui.Controls;
-using System;
-using System.Collections.Generic;
+﻿using ARSounds.UI.Maui.ViewModels;
 
 namespace ARSounds.UI.Maui.Services;
 

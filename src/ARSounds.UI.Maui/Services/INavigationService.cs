@@ -1,6 +1,4 @@
-﻿using ARSounds.UI.Maui.Common.ViewModels;
-using System;
-using System.Threading.Tasks;
+﻿using ARSounds.UI.Maui.ViewModels;
 
 namespace ARSounds.UI.Maui.Services;
 

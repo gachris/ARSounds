@@ -1,6 +1,18 @@
-﻿namespace ARSounds.UI.Maui;
+﻿using ARSounds.UI.Maui.ViewModels;
+using CommonServiceLocator;
+
+namespace ARSounds.UI.Maui;
 
 public class ViewModelLocator
 {
-    //    public static HomePageViewModel HomePageViewModel => DependencyService.Get<HomePageViewModel>();
+    static ViewModelLocator()
+    {
+        SettingsViewModel = ServiceLocator.Current.GetInstance<SettingsViewModel>();
+    }
+
+    #region Settings
+
+    public static SettingsViewModel SettingsViewModel { get; }
+
+    #endregion
 }

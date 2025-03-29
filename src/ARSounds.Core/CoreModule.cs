@@ -12,6 +12,7 @@ public static class CoreModule
     {
         services.AddSingleton<IDomainRoot, AppRoot>();
         services.AddSingleton<IAppRoot>(s => (AppRoot)s.GetService<IDomainRoot>()!);
+        services.AddSingleton(s => s.GetService<IAppRoot>()!.Targets);
 
         services.AddSingleton<IApplicationEvents, ApplicationEvents>();
         services.AddSingleton<IApplicationEventsDispatcher, ApplicationEventsDispatcher>();

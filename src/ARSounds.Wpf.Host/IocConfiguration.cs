@@ -1,9 +1,9 @@
 ﻿using ARSounds.Application;
-using ARSounds.Application.Store;
+using ARSounds.Application.Services;
 using ARSounds.Core;
 using ARSounds.Core.Configuration;
-using ARSounds.UI.Wpf.Store;
 using ARSounds.UI.Wpf;
+using ARSounds.UI.Wpf.Contracts;
 using CommonServiceLocator;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,21 +32,21 @@ public static class IocConfiguration
                .UseContentRoot(AppContext.BaseDirectory)
                .ConfigureServices((context, services) =>
                {
-                   var appConfiguration = context.Configuration.GetRequiredSection(nameof(AppConfiguration)).Get<AppConfiguration>()!;
-                   var oidcConfiguration = context.Configuration.GetRequiredSection(nameof(OidcConfiguration)).Get<OidcConfiguration>()!;
-
-                   services.AddSingleton(appConfiguration);
-                   services.AddSingleton(oidcConfiguration);
-
-                   services.AddSingleton<IDataStore, FileDataStore>(t => new FileDataStore(appConfiguration.ApplicationName));
-
-                   services.AddSingleton(t => ServiceLocator.Current);
-
                    if (SynchronizationContext.Current is not null)
                    {
                        services.AddSingleton(t => SynchronizationContext.Current);
                    }
 
+                   var appConfiguration = context.Configuration.GetRequiredSection(nameof(AppConfiguration)).Get<AppConfiguration>();
+                   ArgumentNullException.ThrowIfNull(appConfiguration, nameof(appConfiguration));
+
+                   services.AddSingleton(appConfiguration);
+
+                   // TODO: must moved to ApplicationModule
+                   services.AddSingleton<IDataStore, FileDataStore>(t => new FileDataStore(appConfiguration.ApplicationName));
+
+                   services.AddSingleton<IApplication>(sp => (App)System.Windows.Application.Current);
+                   services.AddSingleton(t => ServiceLocator.Current);
                    services.AddCore();
                    services.AddApplication();
                    services.AddUI();
@@ -59,12 +59,10 @@ public static class IocConfiguration
 
             AppHost = builder.Build();
 
-            // Set ServiceLocator provider for legacy use
             ServiceLocator.SetLocatorProvider(() => new AppServiceLocator(AppHost.Services));
         }
         catch (Exception ex)
         {
-            // Handle initialization failures (logging, UI message, etc.)
             Console.WriteLine($"Error setting up the IoC: {ex.Message}");
             throw;
         }
@@ -72,12 +70,15 @@ public static class IocConfiguration
 
     public static async Task ShutdownAsync()
     {
-        if (AppHost != null)
+        if (AppHost is null)
         {
-            await AppHost.StopAsync();
-            AppHost.Dispose();
-            AppHost = null;
+            return;
         }
+
+        await AppHost.StopAsync();
+
+        AppHost.Dispose();
+        AppHost = null;
     }
 
     #endregion

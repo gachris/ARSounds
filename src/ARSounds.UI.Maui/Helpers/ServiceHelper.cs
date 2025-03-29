@@ -1,9 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Maui;
-
-using System;
-
-namespace ARSounds.UI.Maui.Helpers;
+﻿namespace ARSounds.UI.Maui.Helpers;
 
 public static class ServiceHelper
 {

@@ -1,30 +1,54 @@
-﻿using System.Windows;
-using DevToolbox.Wpf.Media;
-using OpenVision.Core.Configuration;
+﻿using ARSounds.UI.Wpf.Contracts;
+using ARSounds.Wpf.Host.Helpers;
+using CommonServiceLocator;
+using System.Windows;
 
 namespace ARSounds.Wpf.Host;
 
 /// <summary>
 /// Interaction logic for App.xaml
 /// </summary>
-public partial class App : System.Windows.Application
+public partial class App : System.Windows.Application, IApplication
 {
+    #region Fields/Consts
+
+    /// <summary>
+    /// The event mutex name.
+    /// </summary>
+    private const string _uniqueEventName = "3F6C896A-EF81-4B88-A8FC-1974E21A9465";
+
+    /// <summary>
+    /// The unique mutex name.
+    /// </summary>
+    private const string _uniqueMutexName = "ARSounds";
+
+    /// <summary>
+    /// The singleton application manager.
+    /// </summary>
+    private readonly SingletonApplicationManager _singletonApplicationManager;
+
+    #endregion
+
     public App()
     {
-        VisionSystemConfig.ImageRequestBuilder = new OpenVision.Core.DataTypes.ImageRequestBuilder()
-            .WithGrayscale()
-            .WithGaussianBlur(new System.Drawing.Size(5, 5), 0)
-            .WithLowResolution(320);
-
-        VisionSystemConfig.WebSocketUrl = "wss://localhost:44320/ws";
+        _singletonApplicationManager = new SingletonApplicationManager(_uniqueEventName, _uniqueMutexName);
     }
 
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
 
-        IocConfiguration.Setup();
+        _singletonApplicationManager.Register(this, async () =>
+        {
+            IocConfiguration.Setup();
+            GlobalExceptionHandler.SetupExceptionHandling();
 
-        ThemeManager.RequestedTheme = ElementTheme.WindowsDefault;
+            var applicationManager = ServiceLocator.Current.GetInstance<IAppUISettings>();
+            await applicationManager.InitializeAsync();
+        },
+        () =>
+        {
+            Current.MainWindow.Activate();
+        });
     }
 }

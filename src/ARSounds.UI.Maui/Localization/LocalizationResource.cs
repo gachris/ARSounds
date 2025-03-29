@@ -1,17 +1,13 @@
-﻿using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Xaml;
-using System;
-
-namespace ARSounds.UI.Maui.Localization;
+﻿namespace ARSounds.UI.Maui.Localization;
 
 [ContentProperty(nameof(Text))]
 public class LocalizationResourceExtension : IMarkupExtension<BindingBase>
 {
     #region Properties
 
-    public string Text { get; set; }
+    public string? Text { get; set; }
 
-    public IValueConverter Converter { get; set; }
+    public required IValueConverter Converter { get; set; }
 
     #endregion
 

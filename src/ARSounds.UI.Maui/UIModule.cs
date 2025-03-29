@@ -1,18 +1,11 @@
-﻿using ARSounds.Application.Auth;
-using ARSounds.UI.Maui.Auth;
-using ARSounds.UI.Maui.Camera.ViewModels;
-using ARSounds.UI.Maui.Camera.Views;
-using ARSounds.UI.Maui.Common.ViewModels;
-using ARSounds.UI.Maui.Common.Views;
-using ARSounds.UI.Maui.Onboardings.ViewModels;
-using ARSounds.UI.Maui.Onboardings.Views;
+﻿using ARSounds.Application.Services;
+using ARSounds.UI.Maui.ViewModels;
 using ARSounds.UI.Maui.Services;
-using ARSounds.UI.Maui.Targets.ViewModels;
-using ARSounds.UI.Maui.Targets.Views;
-using ARSounds.UI.Maui.User.ViewModels;
-using ARSounds.UI.Maui.User.Views;
+using ARSounds.UI.Maui.Views;
 using CommunityToolkit.Maui;
 using Plugin.Maui.Audio;
+using IBrowser = IdentityModel.OidcClient.Browser.IBrowser;
+using ARSounds.UI.Common;
 
 namespace ARSounds.UI.Maui;
 
@@ -29,16 +22,19 @@ public static class UIModule
         navigationMapping.Add<WalkthroughViewModel, WalkthroughPage>();
         navigationMapping.Add<HomeViewModel, HomePage>();
         navigationMapping.Add<ProfileViewModel, ProfilePage>();
-        navigationMapping.Add<CameraViewModel, CameraPage>();
-        navigationMapping.Add<TargetsListViewModel, TargetsListPage>();
-        navigationMapping.Add<TargetDetailsViewModel, TargetDetailsPage>();
-        navigationMapping.Add<User.ViewModels.SettingsViewModel, User.Views.SettingsPage>();
+        navigationMapping.Add<SettingsViewModel, SettingsPage>();
         navigationMapping.Add<LoginViewModel, LoginPage>();
-        navigationMapping.Add<Camera.ViewModels.SettingsViewModel, Camera.Views.SettingsPage>();
 
+#if WINDOWS
+        services.AddSingleton<IBrowser, WinUI.Browser.WebAuthenticatorBrowser>();
+#else
+        services.AddSingleton<IBrowser, Platforms.Android.Browser.WebAuthenticatorBrowser>();
+#endif
         services.AddSingleton<IAuthService, AuthService>();
 
         services.AddSingleton<INavigationService, NavigationService>((provider) => new NavigationService(navigationMapping));
+
+        services.AddIUIServices(typeof(UIModule).Assembly);
 
         services.AddSingleton<AppShell>();
         services.AddSingleton<AppShellViewModel>();
@@ -55,26 +51,15 @@ public static class UIModule
         services.AddTransient<ProfilePage>();
         services.AddTransient<ProfileViewModel>();
 
-        services.AddTransient<CameraPage>();
-        services.AddTransient<CameraViewModel>();
-
-        services.AddTransient<TargetsListPage>();
-        services.AddTransient<TargetsListViewModel>();
-
-        services.AddTransient<TargetDetailsPage>();
-        services.AddTransient<TargetDetailsViewModel>();
-
-        services.AddTransient<User.Views.SettingsPage>();
-        services.AddTransient<User.ViewModels.SettingsViewModel>();
-
-        services.AddTransient<Camera.Views.SettingsPage>();
-        services.AddTransient<Camera.ViewModels.SettingsViewModel>();
+        services.AddTransient<SettingsPage>();
+        services.AddTransient<SettingsViewModel>();
 
         services.AddTransient<LoginPage>();
         services.AddTransient<LoginViewModel>();
 
-        services.AddSingleton<IdentityModel.OidcClient.Browser.IBrowser, WebAuthenticatorBrowser>();
         services.AddSingleton<IAudioManager, AudioManager>();
+
+        services.AddAutoMapper(typeof(UIModule).Assembly);
     }
 
     #endregion
