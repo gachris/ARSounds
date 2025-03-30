@@ -3,51 +3,23 @@
     x:Class="ARSounds.UI.Maui.Views.ARCameraPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="clr-namespace:ARSounds.UI.Maui.Behaviors"
     xmlns:controls="clr-namespace:ARSounds.UI.Maui.Controls"
-    xmlns:fontIcons="clr-namespace:ARSounds.UI.Maui.FontIcons"
-    xmlns:loc="clr-namespace:ARSounds.UI.Maui.Localization"
-    xmlns:viewModels="clr-namespace:ARSounds.UI.Maui.ViewModels"
-    x:DataType="{x:Type viewModels:ARCameraViewModel}"
-    BackgroundColor="{DynamicResource BasePageColor}"
-    Shell.NavBarIsVisible="True">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{Binding OpenUserProfileCommand}" Text="Profile">
-            <ToolbarItem.IconImageSource>
-                <FontImageSource
-                    FontFamily="IonIcons"
-                    Glyph="{x:Static fontIcons:IonIcons.IosContact}"
-                    Size="24"
-                    Color="{DynamicResource PrimaryColor}" />
-            </ToolbarItem.IconImageSource>
-        </ToolbarItem>
-    </ContentPage.ToolbarItems>
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Themes/Styles/CameraTemplates.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-            <Style x:Key="SectionHeaderTextStyle" TargetType="Label">
-                <Setter Property="FontSize" Value="20" />
-                <Setter Property="FontAttributes" Value="Bold" />
-                <Setter Property="TextColor" Value="{DynamicResource BaseTextColor}" />
-                <Setter Property="Margin" Value="0,0,0,5" />
-                <Setter Property="VerticalOptions" Value="End" />
-                <Setter Property="FontFamily" Value="AppFontFamily" />
-            </Style>
-            <Style x:Key="SectionSubheaderTextStyle" TargetType="Label">
-                <Setter Property="FontSize" Value="14" />
-                <Setter Property="FontFamily" Value="AppMediumFontFamily" />
-                <Setter Property="TextColor" Value="{DynamicResource BaseLightTextColor}" />
-            </Style>
-        </ResourceDictionary>
-    </ContentPage.Resources>
+    xmlns:openVision="http://openVision/winfx/2021/xaml/presentation"
+    xmlns:viewModels="clr-namespace:ARSounds.UI.Common.ViewModels;assembly=ARSounds.UI.Common"
+    x:DataType="{x:Type viewModels:ARCameraViewModel}">
     <Grid>
-        <ContentView ControlTemplate="{OnIdiom DesktopCameraTemplate, Phone={StaticResource PhoneCameraTemplate}, Tablet={StaticResource TabletCameraTemplate}, Desktop={StaticResource DesktopCameraTemplate}}" />
-        <!--  Busy Indicator  -->
+        <openVision:ARCamera>
+            <openVision:ARCamera.Behaviors>
+                <behaviors:ARCameraBehavior
+                    ClientApiKey="{Binding ClientApiKey}"
+                    TrackFoundCommand="{Binding TrackFoundCommand}"
+                    TrackLostCommand="{Binding TrackLostCommand}" />
+            </openVision:ARCamera.Behaviors>
+        </openVision:ARCamera>
         <controls:LoadingIndicator
             HorizontalOptions="Center"
-            IsBusy="{Binding IsBusy, Mode=TwoWay}"
-            LoadingText="{Binding LoadingText, Mode=TwoWay}"
+            IsBusy="{Binding IsBusy}"
             VerticalOptions="Center" />
     </Grid>
 </ContentPage>

@@ -8,5 +8,5 @@ public interface IAppUISettings
 
     Task InitializeAsync();
 
-    Task SetThemeAsync(ElementTheme appTheme);
+    Task SetThemeAsync(ElementTheme elementTheme);
 }

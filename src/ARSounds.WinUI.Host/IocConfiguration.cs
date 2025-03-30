@@ -2,6 +2,7 @@
 using ARSounds.Application.Services;
 using ARSounds.Core;
 using ARSounds.Core.Configuration;
+using ARSounds.UI.Common;
 using ARSounds.UI.WinUI;
 using ARSounds.UI.WinUI.Contracts;
 using CommonServiceLocator;
@@ -49,6 +50,9 @@ public static class IocConfiguration
                    // TODO: must moved to ApplicationModule
                    services.AddSingleton<IDataStore, FileDataStore>(t => new FileDataStore(appConfiguration.ApplicationName));
                    services.AddSingleton(t => ServiceLocator.Current);
+
+                   services.ConfigureOpenVision(appConfiguration.OpenVisionWebSocketUrl);
+
                    services.AddCore();
                    services.AddApplication();
                    services.AddUI();

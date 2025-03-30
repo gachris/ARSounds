@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 using ARSounds.Localization.Properties;
-using ARSounds.UI.Common.ViewModels;
+using ARSounds.UI.Common.ViewModel;
 using ARSounds.UI.Wpf.Contracts;
 using CommunityToolkit.Mvvm.Input;
 using DevToolbox.Wpf.Media;

@@ -3,10 +3,10 @@
     x:Class="ARSounds.UI.Maui.Views.WalkthroughPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:data="clr-namespace:ARSounds.UI.Common.Data;assembly=ARSounds.UI.Common"
     xmlns:loc="clr-namespace:ARSounds.UI.Maui.Localization"
     xmlns:viewModels="clr-namespace:ARSounds.UI.Maui.ViewModels"
     x:DataType="{x:Type viewModels:WalkthroughViewModel}"
-    BackgroundColor="{DynamicResource BasePageColor}"
     NavigationPage.HasNavigationBar="False"
     Shell.NavBarIsVisible="False">
     <Grid RowDefinitions="*, Auto">
@@ -23,7 +23,7 @@
                     SnapPointsType="MandatorySingle" />
             </CarouselView.ItemsLayout>
             <CarouselView.ItemTemplate>
-                <DataTemplate x:DataType="{x:Type viewModels:WalkthroughBoarding}">
+                <DataTemplate x:DataType="{x:Type data:WalkthroughBoarding}">
                     <Grid RowDefinitions="*,Auto">
                         <Image
                             Grid.RowSpan="2"
@@ -64,9 +64,8 @@
                 x:Name="IndicatorView"
                 Margin="0"
                 HorizontalOptions="Center"
-                IndicatorColor="{DynamicResource BaseLightTextColor}"
                 IndicatorsShape="Circle"
-                SelectedIndicatorColor="{DynamicResource PrimaryColor}" />
+                SelectedIndicatorColor="{DynamicResource Primary}" />
             <!--  Next button  -->
             <Button
                 Margin="30,20"
@@ -74,7 +73,6 @@
                 CornerRadius="12"
                 FontAttributes="Bold"
                 HeightRequest="50"
-                Style="{StaticResource PrimaryActionButtonStyle}"
                 Text="FINISH">
                 <Button.Triggers>
                     <DataTrigger
@@ -91,14 +89,12 @@
         <Button
             Margin="20"
             Padding="10,5"
-            BackgroundColor="{DynamicResource BasePageColor}"
             Command="{Binding SkipCommand}"
             FontSize="12"
             HeightRequest="26"
             HorizontalOptions="End"
             IsVisible="{Binding IsSkipButtonVisible, Mode=TwoWay}"
             Text="{loc:LocalizationResource ButtonSkip}"
-            TextColor="{DynamicResource BaseTextColor}"
             VerticalOptions="StartAndExpand" />
     </Grid>
 </ContentPage>

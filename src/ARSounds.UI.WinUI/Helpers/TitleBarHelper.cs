@@ -21,7 +21,7 @@ public class TitleBarHelper
 
     public static void UpdateTitleBar(WindowEx window, ElementTheme theme)
     {
-        if (window!.ExtendsContentIntoTitleBar)
+        if (window.ExtendsContentIntoTitleBar)
         {
             if (theme == ElementTheme.Default)
             {

@@ -62,7 +62,6 @@
 	<PackageVersion Include="OpenVision.Web.ServiceDefaults" Version="1.0.0.6-alpha" />
 	<PackageVersion Include="OpenVision.WinUI" Version="1.0.0.6-alpha" />
 	<PackageVersion Include="OpenVision.Wpf" Version="1.0.0.6-alpha" />
-	<PackageVersion Include="Plugin.Maui.Audio" Version="3.1.0" />
 	<PackageVersion Include="Serilog" Version="4.2.0" />
 	<PackageVersion Include="Serilog.AspNetCore" Version="9.0.0" />
 	<PackageVersion Include="Serilog.Enrichers.Environment" Version="3.0.1" />

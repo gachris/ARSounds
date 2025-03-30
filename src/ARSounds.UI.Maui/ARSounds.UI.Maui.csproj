@@ -18,9 +18,6 @@
 	<ItemGroup>
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-		<!-- Custom Fonts -->
-		<MauiFont Include="Resources\Fonts\*" />
-		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 	</ItemGroup>
 
 	<ItemGroup>
@@ -31,7 +28,6 @@
 		<PackageReference Include="CommunityToolkit.Maui" />
 		<PackageReference Include="Microsoft.Extensions.Localization.Abstractions" />
 		<PackageReference Include="Microsoft.Extensions.Localization" />
-		<PackageReference Include="Plugin.Maui.Audio" />
 		<PackageReference Include="OpenVision.Maui" />
 	</ItemGroup>
 
@@ -41,12 +37,6 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\ARSounds.UI.Common\ARSounds.UI.Common.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Compile Update="Views\ARCameraPage.xaml.cs">
-	    <DependentUpon>ARCameraPage.xaml</DependentUpon>
-	  </Compile>
 	</ItemGroup>
 
 </Project>

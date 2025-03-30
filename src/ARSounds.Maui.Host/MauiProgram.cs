@@ -2,12 +2,14 @@
 using ARSounds.Application.Services;
 using ARSounds.Core;
 using ARSounds.Core.Configuration;
+using ARSounds.Maui.Host.Helpers;
+using ARSounds.UI.Common;
 using ARSounds.UI.Maui;
 using CommonServiceLocator;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
-using FileDataStore = ARSounds.UI.Maui.Services.FileDataStore;
+using OpenVision.Maui.Controls;
 
 namespace ARSounds.Maui.Host;
 
@@ -20,8 +22,15 @@ public static class MauiProgram
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
             .UseMauiCompatibility()
-            .ConfigureFonts(fonts => fonts.AddFonts())
-            .ConfigureMauiHandlers(handlers => handlers.AddHandlers());
+            .ConfigureFonts(fonts =>
+            {
+                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+            })
+            .ConfigureMauiHandlers(handlers =>
+            {
+                handlers.AddHandler<ARCamera, ARCameraHandler>();
+            });
 
 #if WINDOWS
         builder.Configuration
@@ -31,17 +40,23 @@ public static class MauiProgram
             .AddJsonFromPackageFile("appsettings.android.json");
 #endif
 
+        if (SynchronizationContext.Current is not null)
+            builder.Services.AddSingleton(SynchronizationContext.Current);
+
         var appConfiguration = builder.Configuration.GetRequiredSection(nameof(AppConfiguration)).Get<AppConfiguration>()!;
 
         builder.Services.AddSingleton(appConfiguration);
 
-        builder.Services.AddSingleton<IDataStore, FileDataStore>(t => new FileDataStore(appConfiguration.ApplicationName));
+        var appData = FileSystem.Current.AppDataDirectory;
+        var folderPath =  Path.Combine(appData, appConfiguration.ApplicationName);
+        builder.Services.AddSingleton<IDataStore, FileDataStore>(t => new FileDataStore(folderPath, true));
 
         builder.Services.AddSingleton(Connectivity.Current);
         builder.Services.AddSingleton(t => ServiceLocator.Current);
 
         builder.Services.AddLocalization();
-        builder.Services.AddSynchronizationContext();
+
+        builder.Services.ConfigureOpenVision(appConfiguration.OpenVisionWebSocketUrl);
 
         builder.Services.AddCore();
         builder.Services.AddApplication();

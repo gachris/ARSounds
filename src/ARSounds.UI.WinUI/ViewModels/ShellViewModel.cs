@@ -1,4 +1,4 @@
-﻿using ARSounds.UI.Common.ViewModels;
+﻿using ARSounds.UI.Common.ViewModel;
 using ARSounds.UI.WinUI.Contracts;
 using MediatR;
 

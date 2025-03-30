@@ -1,4 +1,4 @@
-﻿using ARSounds.UI.Maui.ViewModels;
+﻿using ARSounds.UI.Common.ViewModels;
 
 namespace ARSounds.UI.Maui.Views;
 
@@ -8,16 +8,5 @@ public partial class ARCameraPage : ContentPage
     {
         BindingContext = viewModel;
         InitializeComponent();
-        Loaded += MainPage_Loaded;
-    }
-
-    private async void MainPage_Loaded(object? sender, EventArgs e)
-    {
-        if (BindingContext is not ARCameraViewModel viewModel)
-        {
-            return;
-        }
-
-        await viewModel.InitializeAsync(default);
     }
 }

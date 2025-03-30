@@ -1,31 +1,21 @@
-﻿namespace ARSounds.UI.Common.Data;
+﻿#if WINDOWS
+using Emgu.CV;
+#else
+using OpenCV.Core;
+#endif
+using OpenVision.Core.DataTypes;
+
+namespace ARSounds.UI.Common.Data;
 
 public class TargetMatchingResult
 {
-    public string Id { get; }
+    public Mat Frame { get; }
 
-    public System.Drawing.PointF[] ProjectedRegion { get; }
+    public IReadOnlyCollection<TargetMatchResult> TargetMatchResults { get; }
 
-    public System.Drawing.SizeF Size { get; }
-
-    public float CenterX { get; }
-
-    public float CenterY { get; }
-
-    public float Angle { get; }
-
-    internal TargetMatchingResult(string id,
-                                  System.Drawing.PointF[] projectedRegion,
-                                  System.Drawing.SizeF size,
-                                  float centerX,
-                                  float centerY,
-                                  float angle)
+    public TargetMatchingResult(Mat frame, IReadOnlyCollection<TargetMatchResult> targetMatchResults)
     {
-        Id = id;
-        ProjectedRegion = projectedRegion;
-        Size = size;
-        CenterX = centerX;
-        CenterY = centerY;
-        Angle = angle;
+        Frame = frame;
+        TargetMatchResults = targetMatchResults;
     }
 }

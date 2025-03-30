@@ -1,36 +1,29 @@
-﻿using ARSounds.UI.Maui.ViewModels;
+﻿using ARSounds.UI.Maui.Contracts;
 
 namespace ARSounds.UI.Maui.Services;
 
 public class NavigationService : INavigationService
 {
-    #region Fields/Consts
-
-    protected readonly IReadOnlyDictionary<Type, Type> _mappings;
-
-    #endregion
-
     #region Properties
 
     private static INavigation? Navigation => Microsoft.Maui.Controls.Application.Current?.Windows[0].Page?.Navigation;
 
     #endregion
 
-    public NavigationService(NavigationMapping navigationMapping)
+    public NavigationService()
     {
-        _mappings = navigationMapping.Mappings;
     }
 
     #region INavigationService Implementation
 
-    public Task PushAsync<TViewModel>() where TViewModel : ViewModelBase
+    public Task PushAsync<TPage>() where TPage : Page
     {
-        return InternalPushAsync(typeof(TViewModel), null);
+        return InternalPushAsync(typeof(TPage), null);
     }
 
-    public Task PushAsync<TViewModel>(object initParams) where TViewModel : ViewModelBase
+    public Task PushAsync<TPage>(object initParams) where TPage : Page
     {
-        return InternalPushAsync(typeof(TViewModel), initParams);
+        return InternalPushAsync(typeof(TPage), initParams);
     }
 
     public Task PushAsync(Type viewModelType)
@@ -43,19 +36,19 @@ public class NavigationService : INavigationService
         return InternalPushAsync(viewModelType, initParams);
     }
 
-    public Task PushModalAsync<TViewModel>() where TViewModel : ViewModelBase
+    public Task PushModalAsync<TPage>() where TPage : Page
     {
-        throw new NotImplementedException();
+        return InternalPushModalAsync(typeof(TPage), null);
     }
 
-    public Task PushModalAsync<TViewModel>(object initParams) where TViewModel : ViewModelBase
+    public Task PushModalAsync<TPage>(object initParams) where TPage : Page
     {
-        throw new NotImplementedException();
+        return InternalPushModalAsync(typeof(TPage), initParams);
     }
 
     public Task PushModalAsync(Type viewModelType, object initParams)
     {
-        throw new NotImplementedException();
+        return InternalPushModalAsync(viewModelType, initParams);
     }
 
     public Task PushModalAsync(Type viewModelType)
@@ -63,9 +56,14 @@ public class NavigationService : INavigationService
         return InternalPushModalAsync(viewModelType, null);
     }
 
-    public Task PushMainAsync(Type type)
+    public void PushMain<TPage>() where TPage : Page
     {
-        return InternalPushMainAsync(type, null);
+        InternalPushMain(typeof(TPage), null);
+    }
+
+    public void PushMain(Type type)
+    {
+        InternalPushMain(type, null);
     }
 
     public async Task PopAsync()
@@ -82,55 +80,27 @@ public class NavigationService : INavigationService
 
     #region Methods
 
-    protected Type GetPageTypeForViewModel(Type viewModelType)
+    protected virtual async Task InternalPushAsync(Type pageType, object? initParams)
     {
-        return !_mappings.ContainsKey(viewModelType)
-            ? throw new KeyNotFoundException($"No map for ${viewModelType} was found on navigation mappings")
-            : _mappings[viewModelType];
-    }
-
-    protected Page? CreateAndBindPage(Type viewModelType)
-    {
-        var pageType = GetPageTypeForViewModel(viewModelType);
-        return IPlatformApplication.Current?.Services.GetService(pageType) as Page;
-    }
-
-    protected virtual async Task InternalPushAsync(Type viewModelType, object? initParams)
-    {
-        var page = CreateAndBindPage(viewModelType);
+        var page = IPlatformApplication.Current?.Services.GetService(pageType) as Page;
 
         await (Navigation?.PushAsync(page) ?? Task.CompletedTask);
-
-        if (page?.BindingContext is ViewModelBase modelBase)
-        {
-            await modelBase.InitializeAsync(initParams);
-        }
     }
 
-    protected virtual async Task InternalPushModalAsync(Type viewModelType, object? initParams)
+    protected virtual async Task InternalPushModalAsync(Type pageType, object? initParams)
     {
-        var page = CreateAndBindPage(viewModelType);
+        var page = IPlatformApplication.Current?.Services.GetService(pageType) as Page;
 
         await (Navigation?.PushModalAsync(page) ?? Task.CompletedTask);
-
-        if (page?.BindingContext is ViewModelBase modelBase)
-        {
-            await modelBase.InitializeAsync(initParams);
-        }
     }
 
-    protected virtual async Task InternalPushMainAsync(Type type, object? value)
+    protected virtual void InternalPushMain(Type pageType, object? value)
     {
-        var page = CreateAndBindPage(type);
+        var page = IPlatformApplication.Current?.Services.GetService(pageType) as Page;
 
         if (Microsoft.Maui.Controls.Application.Current?.Windows[0] is Window window)
         {
             window.Page = page;
-        }
-
-        if (page?.BindingContext is ViewModelBase modelBase)
-        {
-            await modelBase.InitializeAsync(value);
         }
     }
 

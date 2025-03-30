@@ -159,24 +159,6 @@
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>
-  <data name="LabelAppSettings" xml:space="preserve">
-    <value>App Settings</value>
-  </data>
-  <data name="LabelChooseTheme" xml:space="preserve">
-    <value>Choose your Theme</value>
-  </data>
-  <data name="LabelEnableLocation" xml:space="preserve">
-    <value>Enable Location Services</value>
-  </data>
-  <data name="LabelFaceIdLogin" xml:space="preserve">
-    <value>Enable Face ID for Log in</value>
-  </data>
-  <data name="LabelLogOut" xml:space="preserve">
-    <value>Log out</value>
-  </data>
-  <data name="LabelPickColor" xml:space="preserve">
-    <value>Pick your Color</value>
-  </data>
   <data name="Light" xml:space="preserve">
     <value>Light</value>
   </data>
@@ -210,9 +192,6 @@
   <data name="StringAppWelcomeTitle" xml:space="preserve">
     <value>Ready made UI's for .NET MAUI and Xamarin.Forms.</value>
   </data>
-  <data name="StringLoginOrRegister" xml:space="preserve">
-    <value>Login or register using your email and password</value>
-  </data>
   <data name="StringWalkthroughSubtitleStep1" xml:space="preserve">
     <value>To a new world of possibilities,
 welcome to ARSounds.</value>
@@ -234,8 +213,8 @@ MAUI Kit has ton of examples for you to play.</value>
   <data name="StringWalkthroughTitleStep3" xml:space="preserve">
     <value>Learn</value>
   </data>
-  <data name="StringWelcomeToMauiKit" xml:space="preserve">
-    <value>Welcome to ARSounds</value>
+  <data name="System_theme" xml:space="preserve">
+    <value>System Theme</value>
   </data>
   <data name="Theme" xml:space="preserve">
     <value>Theme</value>

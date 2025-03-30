@@ -1,5 +1,4 @@
-﻿
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 
 namespace ARSounds.UI.WinUI.DataTemplates;
 

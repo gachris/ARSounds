@@ -10,7 +10,6 @@ using ARSounds.UI.WinUI.Views;
 using IdentityModel.OidcClient.Browser;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
-using OpenVision.Core.Configuration;
 
 namespace ARSounds.UI.WinUI;
 
@@ -20,13 +19,6 @@ public static class UIModule
 
     public static void AddUI(this IServiceCollection services)
     {
-        VisionSystemConfig.ImageRequestBuilder = new OpenVision.Core.DataTypes.ImageRequestBuilder()
-            .WithGrayscale()
-            .WithGaussianBlur(new System.Drawing.Size(5, 5), 0)
-            .WithLowResolution(320);
-
-        VisionSystemConfig.WebSocketUrl = "wss://localhost:44320/ws";
-
         services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
         services.AddSingleton<IActivationService, ActivationService>();
         services.AddSingleton<IPageService, PageService>();

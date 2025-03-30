@@ -1,9 +1,12 @@
-﻿using ARSounds.UI.Maui.Services;
+﻿using ARSounds.UI.Common.Contracts;
+using ARSounds.UI.Maui.Contracts;
+using ARSounds.UI.Maui.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace ARSounds.UI.Maui.ViewModels;
 
-public partial class BackgroundViewModel : ViewModelBase
+public partial class BackgroundViewModel : ObservableObject, IViewModelAware
 {
     #region Fields/Consts
 
@@ -11,23 +14,35 @@ public partial class BackgroundViewModel : ViewModelBase
 
     #endregion
 
-    public BackgroundViewModel(INavigationService navigationService) : base(navigationService)
+    public BackgroundViewModel(INavigationService navigationService)
     {
         _navigationService = navigationService;
     }
 
-    #region RelayCommands
+    #region Methods
+
+    public void OnNavigated()
+    {
+    }
+
+    public void OnNavigatedAway()
+    {
+    }
+
+    #endregion
+
+    #region Relay Commands
 
     [RelayCommand]
     private async Task TakeTour()
     {
-        await _navigationService.PushAsync<WalkthroughViewModel>();
+        await _navigationService.PushAsync<WalkthroughPage>();
     }
 
     [RelayCommand]
-    private async Task Skip()
+    private void Skip()
     {
-        await _navigationService.PushMainAsync(typeof(AppShellViewModel));
+        _navigationService.PushMain<AppShell>();
     }
 
     #endregion

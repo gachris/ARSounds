@@ -1,4 +1,4 @@
-﻿using ARSounds.UI.Common.ViewModels;
+﻿using ARSounds.UI.Common.ViewModel;
 using ARSounds.UI.Wpf.Contracts;
 using ARSounds.UI.Wpf.Views;
 using CommunityToolkit.Mvvm.Input;

@@ -87,7 +87,7 @@ public class NavigationService : INavigationService
                 _lastParameterUsed = parameter;
                 if (vmBeforeNavigation is IViewModelAware navigationAware)
                 {
-                    navigationAware.OnNavigated(parameter);
+                    navigationAware.OnNavigated();
                 }
             }
 
@@ -133,7 +133,7 @@ public class NavigationService : INavigationService
 
             if (frame.GetPageViewModel() is IViewModelAware navigationAware)
             {
-                navigationAware.OnNavigated(e.Parameter);
+                navigationAware.OnNavigated();
             }
 
             Navigated?.Invoke(sender, e);

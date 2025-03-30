@@ -1,5 +1,5 @@
 ﻿using System.Windows.Controls;
-using ARSounds.UI.Wpf.ViewModels;
+using ARSounds.UI.Common.ViewModels;
 
 namespace ARSounds.UI.Wpf.Views;
 

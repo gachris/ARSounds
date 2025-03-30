@@ -42,11 +42,11 @@ public class AppUISettings : IAppUISettings
         ThemeManager.RequestedTheme = Theme;
     }
 
-    public async Task SetThemeAsync(ElementTheme appTheme)
+    public async Task SetThemeAsync(ElementTheme elementTheme)
     {
-        await _localSettingsService.SaveSettingAsync(SettingsKey, appTheme.ToString());
+        await _localSettingsService.SaveSettingAsync(SettingsKey, elementTheme.ToString());
 
-        Theme = appTheme;
+        Theme = elementTheme;
         ThemeManager.RequestedTheme = Theme;
     }
 

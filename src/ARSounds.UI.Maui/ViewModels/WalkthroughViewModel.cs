@@ -1,16 +1,19 @@
 ﻿using System.Collections.ObjectModel;
 using ARSounds.Localization.Properties;
-using ARSounds.UI.Maui.Services;
+using ARSounds.UI.Common.Contracts;
+using ARSounds.UI.Common.Data;
+using ARSounds.UI.Maui.Contracts;
+using ARSounds.UI.Maui.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace ARSounds.UI.Maui.ViewModels;
 
-public partial class WalkthroughViewModel : ViewModelBase
+public partial class WalkthroughViewModel : ObservableObject, IViewModelAware
 {
     #region Fields/Consts
 
-    private readonly ObservableCollection<WalkthroughBoarding> _boardingsCollection = new();
-    private readonly IReadOnlyCollection<WalkthroughBoarding> _boardingsReadOnlyCollection;
+    private readonly ReadOnlyObservableCollection<WalkthroughBoarding> _boardingsReadOnlyCollection;
     private readonly INavigationService _navigationService;
     private bool _isSkipButtonVisible = true;
     private int _position = 0;
@@ -19,7 +22,7 @@ public partial class WalkthroughViewModel : ViewModelBase
 
     #region Properties
 
-    public IReadOnlyCollection<WalkthroughBoarding> Boardings => _boardingsReadOnlyCollection;
+    public ReadOnlyObservableCollection<WalkthroughBoarding> Boardings => _boardingsReadOnlyCollection;
 
     public bool IsSkipButtonVisible
     {
@@ -35,43 +38,37 @@ public partial class WalkthroughViewModel : ViewModelBase
 
     #endregion
 
-    public WalkthroughViewModel(INavigationService navigationService) : base(navigationService)
+    public WalkthroughViewModel(INavigationService navigationService)
     {
         _navigationService = navigationService;
-        _boardingsReadOnlyCollection = new ReadOnlyObservableCollection<WalkthroughBoarding>(_boardingsCollection);
+        _boardingsReadOnlyCollection = new ReadOnlyObservableCollection<WalkthroughBoarding>
+        (
+            [
+                new WalkthroughBoarding("walkthrough_01_image.jpg", Resources.StringWalkthroughTitleStep1, Resources.StringWalkthroughSubtitleStep1),
+                new WalkthroughBoarding("walkthrough_02_image.jpg", Resources.StringWalkthroughTitleStep2, Resources.StringWalkthroughSubtitleStep2),
+                new WalkthroughBoarding("walkthrough_03_image.jpg", Resources.StringWalkthroughTitleStep3, Resources.StringWalkthroughSubtitleStep3),
+            ]
+        );
     }
-
-    #region RelayCommands
-
-    [RelayCommand]
-    private async Task Skip()
-    {
-        await _navigationService.PushMainAsync(typeof(AppShellViewModel));
-    }
-
-    [RelayCommand]
-    private async Task Next()
-    {
-        if (!ValidateAndUpdatePosition()) return;
-        await _navigationService.PushMainAsync(typeof(AppShellViewModel));
-    }
-
-    #endregion
 
     #region Methods
 
-    public override Task InitializeAsync(object? initParams)
+    public void OnNavigated()
     {
-        CreateBoardingCollection();
+    }
 
-        return Task.CompletedTask;
+    public void OnNavigatedAway()
+    {
     }
 
     private bool ValidateAndUpdatePosition()
     {
         ValidateSelection(Position + 1);
 
-        if (Position >= Boardings.Count - 1) return true;
+        if (Position >= Boardings.Count - 1)
+        {
+            return true;
+        }
 
         Position++;
 
@@ -83,11 +80,25 @@ public partial class WalkthroughViewModel : ViewModelBase
         IsSkipButtonVisible = index <= Boardings.Count - 2;
     }
 
-    private void CreateBoardingCollection()
+    #endregion
+
+    #region Relay Commands
+
+    [RelayCommand]
+    private void Skip()
     {
-        _boardingsCollection.Add(new WalkthroughBoarding("walkthrough_01_image.jpg", Resources.StringWalkthroughTitleStep1, Resources.StringWalkthroughSubtitleStep1));
-        _boardingsCollection.Add(new WalkthroughBoarding("walkthrough_02_image.jpg", Resources.StringWalkthroughTitleStep2, Resources.StringWalkthroughSubtitleStep2));
-        _boardingsCollection.Add(new WalkthroughBoarding("walkthrough_03_image.jpg", Resources.StringWalkthroughTitleStep3, Resources.StringWalkthroughSubtitleStep3));
+        _navigationService.PushMain<AppShell>();
+    }
+
+    [RelayCommand]
+    private void Next()
+    {
+        if (!ValidateAndUpdatePosition())
+        {
+            return;
+        }
+
+        _navigationService.PushMain<AppShell>();
     }
 
     #endregion

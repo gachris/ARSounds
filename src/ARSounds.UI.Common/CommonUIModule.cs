@@ -1,12 +1,23 @@
 ﻿using System.Reflection;
 using ARSounds.UI.Common.Contracts;
 using Microsoft.Extensions.DependencyInjection;
+using OpenVision.Core.Configuration;
 
 namespace ARSounds.UI.Common;
 
 public static class CommonUIModule
 {
     #region Methods
+
+    public static void ConfigureOpenVision(this IServiceCollection services, string wsUrl)
+    {
+        VisionSystemConfig.WebSocketUrl = wsUrl;
+
+        VisionSystemConfig.ImageRequestBuilder = new OpenVision.Core.DataTypes.ImageRequestBuilder()
+            .WithGrayscale()
+            .WithGaussianBlur(new System.Drawing.Size(5, 5), 0)
+            .WithLowResolution(320);
+    }
 
     public static void AddIUIServices(this IServiceCollection services, Assembly assembly)
     {

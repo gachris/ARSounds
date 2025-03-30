@@ -187,60 +187,6 @@ namespace ARSounds.Localization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to App Settings.
-        /// </summary>
-        public static string LabelAppSettings {
-            get {
-                return ResourceManager.GetString("LabelAppSettings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Choose your Theme.
-        /// </summary>
-        public static string LabelChooseTheme {
-            get {
-                return ResourceManager.GetString("LabelChooseTheme", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enable Location Services.
-        /// </summary>
-        public static string LabelEnableLocation {
-            get {
-                return ResourceManager.GetString("LabelEnableLocation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enable Face ID for Log in.
-        /// </summary>
-        public static string LabelFaceIdLogin {
-            get {
-                return ResourceManager.GetString("LabelFaceIdLogin", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Log out.
-        /// </summary>
-        public static string LabelLogOut {
-            get {
-                return ResourceManager.GetString("LabelLogOut", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Pick your Color.
-        /// </summary>
-        public static string LabelPickColor {
-            get {
-                return ResourceManager.GetString("LabelPickColor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Light.
         /// </summary>
         public static string Light {
@@ -340,15 +286,6 @@ namespace ARSounds.Localization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Login or register using your email and password.
-        /// </summary>
-        public static string StringLoginOrRegister {
-            get {
-                return ResourceManager.GetString("StringLoginOrRegister", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to To a new world of possibilities,
         ///welcome to ARSounds..
         /// </summary>
@@ -406,11 +343,11 @@ namespace ARSounds.Localization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Welcome to ARSounds.
+        ///   Looks up a localized string similar to System Theme.
         /// </summary>
-        public static string StringWelcomeToMauiKit {
+        public static string System_theme {
             get {
-                return ResourceManager.GetString("StringWelcomeToMauiKit", resourceCulture);
+                return ResourceManager.GetString("System_theme", resourceCulture);
             }
         }
         

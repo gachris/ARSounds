@@ -27,7 +27,7 @@
             HorizontalOptions="Center"
             HorizontalTextAlignment="Center"
             LineBreakMode="WordWrap"
-            TextColor="{DynamicResource PrimaryColor}" />
+            TextColor="{DynamicResource White}" />
     </VerticalStackLayout>
 </Border>
 

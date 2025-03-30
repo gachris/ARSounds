@@ -2,7 +2,7 @@
 
 public interface IViewModelAware
 {
-    void OnNavigated(object? parameter);
+    void OnNavigated();
 
     void OnNavigatedAway();
 }

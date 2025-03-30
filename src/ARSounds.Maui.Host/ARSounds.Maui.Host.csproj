@@ -9,6 +9,8 @@
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 
+		<DefaultLanguage>en-US</DefaultLanguage>
+		
 		<!-- Display name -->
 		<ApplicationTitle>ARSounds</ApplicationTitle>
 

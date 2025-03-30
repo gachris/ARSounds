@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 using ARSounds.UI.Common.Helpers;
-using ARSounds.UI.Common.ViewModels;
+using ARSounds.UI.Common.ViewModel;
 using ARSounds.UI.WinUI.Contracts;
 using ARSounds.UI.WinUI.Helpers;
 using CommunityToolkit.Mvvm.Input;

@@ -2,6 +2,7 @@
 using ARSounds.Application.Services;
 using ARSounds.Core;
 using ARSounds.Core.Configuration;
+using ARSounds.UI.Common;
 using ARSounds.UI.Wpf;
 using ARSounds.UI.Wpf.Contracts;
 using CommonServiceLocator;
@@ -47,6 +48,9 @@ public static class IocConfiguration
 
                    services.AddSingleton<IApplication>(sp => (App)System.Windows.Application.Current);
                    services.AddSingleton(t => ServiceLocator.Current);
+
+                   services.ConfigureOpenVision(appConfiguration.OpenVisionWebSocketUrl);
+
                    services.AddCore();
                    services.AddApplication();
                    services.AddUI();

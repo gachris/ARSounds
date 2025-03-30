@@ -3,93 +3,64 @@
     x:Class="ARSounds.UI.Maui.Views.SettingsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:app="clr-namespace:Microsoft.Maui.ApplicationModel;assembly=Microsoft.Maui.Essentials"
+    xmlns:behaviors="clr-namespace:ARSounds.UI.Maui.Behavior"
+    xmlns:converters="clr-namespace:ARSounds.UI.Maui.Converters"
     xmlns:loc="clr-namespace:ARSounds.UI.Maui.Localization"
-    xmlns:themes="clr-namespace:ARSounds.UI.Maui.Themes"
+    xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
     xmlns:viewModels="clr-namespace:ARSounds.UI.Maui.ViewModels"
-    x:DataType="{x:Type viewModels:SettingsViewModel}"
-    BackgroundColor="{DynamicResource BasePageColor}">
-    <Grid RowDefinitions="30, Auto, Auto, 44, Auto, Auto">
-        <StackLayout
-            Grid.Row="1"
-            Padding="15,0"
-            HorizontalOptions="Fill"
-            Orientation="Horizontal"
-            Spacing="0">
+    x:DataType="{x:Type viewModels:SettingsViewModel}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView>
+        <VerticalStackLayout Padding="32,12">
+            <Label FontSize="24" Text="{loc:LocalizationResource Text=Settings}" />
             <Label
-                x:Name="pickThemeText"
+                Margin="0,12,0,0"
                 FontAttributes="Bold"
-                FontSize="18"
-                HorizontalOptions="Start"
-                Text="{loc:LocalizationResource LabelChooseTheme}"
-                TextColor="{DynamicResource BaseTextColor}"
-                VerticalOptions="Center" />
-        </StackLayout>
-        <Grid
-            Grid.Row="2"
-            Margin="25"
-            ColumnDefinitions="*, *"
-            ColumnSpacing="12">
-            <Button
-                x:Name="lightThemeButton"
-                BackgroundColor="{Binding LightThemeButtonBackgroundColor}"
-                Command="{Binding SettingLightThemeCommand}"
-                CornerRadius="10"
-                FontAttributes="Bold"
-                HeightRequest="44"
-                Text="{loc:LocalizationResource Light}"
-                TextColor="{Binding LightThemeButtonTextColor}" />
-            <Button
-                x:Name="darkThemeButton"
-                Grid.Column="1"
-                BackgroundColor="{Binding DarkThemeButtonBackgroundColor}"
-                Command="{Binding SettingDarkThemeCommand}"
-                CornerRadius="10"
-                FontAttributes="Bold"
-                HeightRequest="44"
-                Text="{loc:LocalizationResource Dark}"
-                TextColor="{Binding DarkThemeButtonTextColor}" />
-        </Grid>
-        <Label
-            x:Name="pickColorText"
-            Grid.Row="3"
-            Margin="20,7,0,0"
-            FontSize="15"
-            HorizontalOptions="Start"
-            HorizontalTextAlignment="Start"
-            Text="{loc:LocalizationResource LabelPickColor}"
-            TextColor="{DynamicResource BaseTextColor}" />
-        <CollectionView
-            x:Name="CollectioView"
-            Grid.Row="4"
-            Margin="20,0,20,30"
-            HorizontalOptions="Center"
-            ItemsSource="{Binding ThemePalettes}"
-            SelectedItem="{Binding SelectedPrimaryColorItem}"
-            SelectionChangedCommand="{Binding ColorPaletteSelectionChangedCommand}"
-            SelectionMode="Single">
-            <CollectionView.ItemsLayout>
-                <LinearItemsLayout ItemSpacing="20" Orientation="Horizontal" />
-            </CollectionView.ItemsLayout>
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="{x:Type themes:ThemePalette}">
-                    <Border
-                        Padding="5"
-                        HeightRequest="40"
-                        StrokeThickness="2"
-                        WidthRequest="45">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10" />
-                        </Border.StrokeShape>
-                        <RoundRectangle
-                            CornerRadius="8"
-                            Fill="{Binding Color}"
-                            HeightRequest="30"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center"
-                            WidthRequest="35" />
-                    </Border>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </Grid>
+                FontSize="22"
+                Text="{loc:LocalizationResource Text=Personalization}" />
+            <VerticalStackLayout Margin="0,12,0,12">
+                <Label FontSize="16" Text="{loc:LocalizationResource Text=Theme}" />
+                <VerticalStackLayout Margin="0,8,0,0">
+                    <RadioButton
+                        behaviors:RadioButtonCommandBehavior.Command="{Binding SwitchThemeCommand}"
+                        behaviors:RadioButtonCommandBehavior.CommandParameter="{x:Static app:AppTheme.Light}"
+                        Content="{loc:LocalizationResource Text=Light}"
+                        FontSize="15"
+                        GroupName="AppTheme"
+                        IsChecked="{Binding AppTheme, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light}" />
+                    <RadioButton
+                        behaviors:RadioButtonCommandBehavior.Command="{Binding SwitchThemeCommand}"
+                        behaviors:RadioButtonCommandBehavior.CommandParameter="{x:Static app:AppTheme.Dark}"
+                        Content="{loc:LocalizationResource Text=Dark}"
+                        FontSize="15"
+                        GroupName="AppTheme"
+                        IsChecked="{Binding AppTheme, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark}" />
+                    <RadioButton
+                        behaviors:RadioButtonCommandBehavior.Command="{Binding SwitchThemeCommand}"
+                        behaviors:RadioButtonCommandBehavior.CommandParameter="{x:Static app:AppTheme.Unspecified}"
+                        Content="{loc:LocalizationResource Text=System_theme}"
+                        FontSize="15"
+                        GroupName="AppTheme"
+                        IsChecked="{Binding AppTheme, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Unspecified}" />
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+            <Label FontSize="22" Text="{loc:LocalizationResource Text=About_application}" />
+            <VerticalStackLayout>
+                <Label FontSize="16" Text="{Binding VersionDescription}" />
+                <Label
+                    Margin="0,8,0,0"
+                    FontSize="16"
+                    Text="{loc:LocalizationResource Text=About_application_description}" />
+                <Button
+                    Margin="0,10,0,0"
+                    FontSize="14"
+                    Text="{loc:LocalizationResource Text=Privacy_terms_link}" />
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

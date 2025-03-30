@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using ARSounds.UI.Common.Contracts;
 using ARSounds.UI.Wpf.Contracts;
 using CommonServiceLocator;
 
@@ -133,7 +134,7 @@ public class NavigationService : INavigationService
         {
             if (e.Content is FrameworkElement fe && fe.DataContext is IViewModelAware vm)
             {
-                vm.OnNavigated(e.ExtraData);
+                vm.OnNavigated();
             }
             _lastViews[frame] = e.Content as FrameworkElement;
         }

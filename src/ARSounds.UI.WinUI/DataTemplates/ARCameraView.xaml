@@ -3,20 +3,19 @@
     x:Class="ARSounds.UI.WinUI.DataTemplates.ARCameraView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="using:Microsoft.Xaml.Interactivity"
     xmlns:behaviors="using:ARSounds.UI.Wpf.Behaviors"
-    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:openVision="using:OpenVision.WinUI.Controls"
-    xmlns:viewModels="using:ARSounds.UI.WinUI.ViewModels">
+    xmlns:viewModels="using:ARSounds.UI.Common.ViewModels">
 
     <DataTemplate x:Key="ARCameraTemplate" x:DataType="viewModels:ARCameraViewModel">
-        <openVision:ARCamera x:Name="camera" BorderThickness="0">
-            <interactivity:Interaction.Behaviors>
-                <interactivity:EventTriggerBehavior EventName="Loaded">
-                    <interactivity:InvokeCommandAction Command="{Binding CameraLoadedCommand}" CommandParameter="{Binding ElementName=camera}" />
-                </interactivity:EventTriggerBehavior>
-                <behaviors:EventToCommandBehavior Command="{Binding TrackFoundCommand}" EventName="TrackFound" />
-                <behaviors:EventToCommandBehavior Command="{Binding TrackLostCommand}" EventName="TrackLost" />
-            </interactivity:Interaction.Behaviors>
+        <openVision:ARCamera>
+            <b:Interaction.Behaviors>
+                <behaviors:ARCameraBehavior
+                    ClientApiKey="{Binding ClientApiKey}"
+                    TrackFoundCommand="{Binding TrackFoundCommand}"
+                    TrackLostCommand="{Binding TrackLostCommand}" />
+            </b:Interaction.Behaviors>
         </openVision:ARCamera>
     </DataTemplate>
 
