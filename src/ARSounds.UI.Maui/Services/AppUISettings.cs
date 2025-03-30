@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using ARSounds.Application.Services;
 using ARSounds.Localization.Properties;
 using ARSounds.UI.Common.Contracts;
 using ARSounds.UI.Common.Media;

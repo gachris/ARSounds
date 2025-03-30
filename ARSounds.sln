@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.UI.WinUI", "src\AR
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.UI.Common", "src\ARSounds.UI.Common\ARSounds.UI.Common.csproj", "{9DD237F6-EDB4-4320-BDE8-014869E25B8E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.ApiClient", "src\ARSounds.ApiClient\ARSounds.ApiClient.csproj", "{0A5F87BE-54D7-4281-802D-4FD7522D6860}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{9DD237F6-EDB4-4320-BDE8-014869E25B8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DD237F6-EDB4-4320-BDE8-014869E25B8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DD237F6-EDB4-4320-BDE8-014869E25B8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A5F87BE-54D7-4281-802D-4FD7522D6860}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A5F87BE-54D7-4281-802D-4FD7522D6860}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A5F87BE-54D7-4281-802D-4FD7522D6860}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A5F87BE-54D7-4281-802D-4FD7522D6860}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

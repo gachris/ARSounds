@@ -21,6 +21,9 @@
             </devtoolbox:ThemePartResourceDictionary.Key>
         </devtoolbox:ThemePartResourceDictionary>
         <ResourceDictionary Source="pack://application:,,,/ARSounds.UI.Wpf;component/Themes/Styles/ARCamera.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ARSounds.UI.Wpf;component/Themes/Styles/Button.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ARSounds.UI.Wpf;component/Themes/Styles/Control.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ARSounds.UI.Wpf;component/Themes/Styles/DropDown.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ARSounds.UI.Wpf;component/Themes/Styles/Frame.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ARSounds.UI.Wpf;component/Themes/Styles/Page.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ARSounds.UI.Wpf;component/Themes/Styles/Separator.xaml" />

@@ -1,4 +1,4 @@
-﻿using ARSounds.Application.Services;
+﻿using ARSounds.UI.Common.Contracts;
 using ARSounds.UI.WinUI.Contracts;
 using ARSounds.UI.WinUI.Helpers;
 using Microsoft.UI.Xaml;

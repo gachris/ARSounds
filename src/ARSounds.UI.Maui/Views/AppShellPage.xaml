@@ -9,6 +9,7 @@
     xmlns:viewModels="clr-namespace:ARSounds.UI.Common.ViewModels;assembly=ARSounds.UI.Common"
     xmlns:views="clr-namespace:ARSounds.UI.Maui.Views;assembly=ARSounds.UI.Maui"
     Title="{loc:LocalizationResource Text=Application_title}"
+    x:DataType="{x:Type viewModels:ShellViewModel}"
     FlyoutHeaderBehavior="Fixed">
     <Shell.Resources>
         <ResourceDictionary>

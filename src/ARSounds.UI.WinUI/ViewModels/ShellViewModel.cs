@@ -1,30 +1,13 @@
-﻿using ARSounds.UI.Common.ViewModels;
-using ARSounds.UI.WinUI.Contracts;
+﻿using ARSounds.UI.WinUI.Contracts;
 using MediatR;
 
 namespace ARSounds.UI.WinUI.ViewModels;
 
-public partial class ShellViewModel : BaseShellViewModel
+public partial class ShellViewModel : Common.ViewModels.ShellViewModel
 {
     #region Fields/Consts
 
     private readonly INavigationService _navigationService;
-
-    private string _selectedViewItem = PageKeys.CameraPage;
-
-    #endregion
-
-    #region Properties
-
-    public string SelectedViewItem
-    {
-        get => _selectedViewItem;
-        set
-        {
-            SetProperty(ref _selectedViewItem, value);
-            OnSelectedViewItemChanged();
-        }
-    }
 
     #endregion
 
@@ -35,7 +18,7 @@ public partial class ShellViewModel : BaseShellViewModel
 
     #region Methods
 
-    private void OnSelectedViewItemChanged()
+    protected override void OnSelectedViewItemChanged()
     {
         _navigationService.NavigateTo(SelectedViewItem);
     }

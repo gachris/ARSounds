@@ -1,9 +1,10 @@
 ﻿using ARSounds.Application;
-using ARSounds.Application.Services;
+using ARSounds.Application.Configuration;
 using ARSounds.Core;
-using ARSounds.Core.Configuration;
 using ARSounds.UI.Common;
+using ARSounds.UI.Common.Services;
 using ARSounds.UI.WinUI;
+using ARSounds.UI.WinUI.Browser;
 using ARSounds.UI.WinUI.Contracts;
 using CommonServiceLocator;
 using Microsoft.Extensions.Configuration;
@@ -42,7 +43,7 @@ public static class IocConfiguration
                    
                    services.AddSingleton(appConfiguration);
                    services.AddSingleton(t => ServiceLocator.Current);
-                   services.AddDataStore(appConfiguration.ApplicationName, false);
+                   services.AddClientOptions(appConfiguration.ApplicationName, false, new WebAuthenticatorBrowser(), appConfiguration);
                    services.ConfigureOpenVision(appConfiguration.OpenVisionWebSocketUrl);
                
                    if (SynchronizationContext.Current is not null)

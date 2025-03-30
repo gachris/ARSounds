@@ -7,13 +7,16 @@
 	<ItemGroup>
 		<PackageReference Include="MediatR" />
 		<PackageReference Include="AutoMapper" />
-		<PackageReference Include="IdentityModel.OidcClient" />
-		<PackageReference Include="Microsoft.Extensions.Options" />
 		<PackageReference Include="Microsoft.Extensions.Logging" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\ARSounds.ApiClient\ARSounds.ApiClient.csproj" />
 		<ProjectReference Include="..\ARSounds.Core\ARSounds.Core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Services\" />
 	</ItemGroup>
 
 	<PropertyGroup Label="Sign Assembly">

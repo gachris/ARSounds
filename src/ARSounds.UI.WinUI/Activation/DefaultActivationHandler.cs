@@ -1,4 +1,5 @@
-﻿using ARSounds.UI.WinUI.Contracts;
+﻿using ARSounds.UI.Common;
+using ARSounds.UI.WinUI.Contracts;
 using Microsoft.UI.Xaml;
 
 namespace ARSounds.UI.WinUI.Activation;

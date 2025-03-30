@@ -5,9 +5,36 @@
     xmlns:loc="clr-namespace:ARSounds.Localization.Properties;assembly=ARSounds.Localization"
     xmlns:viewModels="clr-namespace:ARSounds.UI.Common.ViewModels;assembly=ARSounds.UI.Common">
 
-    <DataTemplate DataType="{x:Type viewModels:AccountViewModel}">
+    <DataTemplate x:Key="AccountHeaderTemplate" DataType="{x:Type viewModels:AccountViewModel}">
         <Grid>
-            <StackPanel Margin="16" Visibility="{Binding IsAuthenticated, Converter={StaticResource BoolToVisibilityConverter}}">
+            <devtoolbox:FontGlyph
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Code="{x:Static devtoolbox:Symbol.User}"
+                FontSize="{DynamicResource FontSize16}"
+                Visibility="{Binding IsAuthenticated, Converter={StaticResource FlipBoolToVisibilityConverter}}" />
+            <Border
+                Width="24"
+                Height="24"
+                Background="{DynamicResource Avatar.Background}"
+                CornerRadius="100"
+                Visibility="{Binding IsAuthenticated, Converter={StaticResource BoolToVisibilityConverter}}">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="12"
+                    Foreground="{DynamicResource Avatar.Foreground}"
+                    Text="{Binding Initials}" />
+            </Border>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="AccountContentTemplate" DataType="{x:Type viewModels:AccountViewModel}">
+        <Grid>
+            <StackPanel
+                Width="320"
+                Margin="16"
+                Visibility="{Binding IsAuthenticated, Converter={StaticResource BoolToVisibilityConverter}}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -19,58 +46,45 @@
                         Margin="0"
                         HorizontalAlignment="Left"
                         devtoolbox:ButtonHelper.ShowContextMenuOnLeftClick="True"
-                        devtoolbox:UIElementHelper.DisabledBackground="Transparent"
-                        devtoolbox:UIElementHelper.FocusedBackground="Transparent"
-                        devtoolbox:UIElementHelper.MouseOverBackground="Transparent"
-                        devtoolbox:UIElementHelper.MouseOverForeground="#FFFFFF"
-                        devtoolbox:UIElementHelper.PressedBackground="Transparent"
-                        devtoolbox:UIElementHelper.PressedForeground="#FFFFFF"
-                        Background="Transparent"
-                        BorderThickness="0"
                         ContextMenuService.Placement="Bottom"
                         Cursor="Hand"
-                        FontSize="{DynamicResource FontSize12}">
+                        FontSize="{DynamicResource FontSize12}"
+                        Style="{StaticResource Button.BorderlessStyle}">
                         <devtoolbox:FontGlyph Code="{x:Static devtoolbox:Symbol.MonacoEllipses}" FontSize="{DynamicResource FontSize16}" />
-                        <Button.ContextMenu>
+                        <ContextMenuService.ContextMenu>
                             <ContextMenu Placement="Bottom">
                                 <MenuItem Command="{Binding SignOutCommand}" Header="{x:Static loc:Resources.Sign_out}" />
                             </ContextMenu>
-                        </Button.ContextMenu>
+                        </ContextMenuService.ContextMenu>
                     </Button>
                 </Grid>
                 <StackPanel Margin="0,24,0,6" Orientation="Horizontal">
                     <Border
                         Width="86"
                         Height="86"
-                        Background="#001E51"
+                        Background="{DynamicResource Avatar.Background}"
                         CornerRadius="100">
                         <TextBlock
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             FontSize="36"
-                            Text="CG" />
+                            Foreground="{DynamicResource Avatar.Foreground}"
+                            Text="{Binding Initials}" />
                     </Border>
                     <StackPanel Margin="16,0,0,0">
                         <TextBlock
                             FontSize="{DynamicResource FontSize16}"
                             FontWeight="SemiBold"
-                            Text="Christos Gkatzos" />
-                        <TextBlock FontSize="{DynamicResource FontSize12}" Text="christos.gkatzos@hotmail.com" />
+                            Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock FontSize="{DynamicResource FontSize12}" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
                 </StackPanel>
                 <Button
                     Margin="0,6,0,0"
                     HorizontalAlignment="Left"
-                    devtoolbox:UIElementHelper.DisabledBackground="Transparent"
-                    devtoolbox:UIElementHelper.FocusedBackground="Transparent"
-                    devtoolbox:UIElementHelper.MouseOverBackground="Transparent"
-                    devtoolbox:UIElementHelper.MouseOverForeground="#388bcb"
-                    devtoolbox:UIElementHelper.PressedBackground="Transparent"
-                    devtoolbox:UIElementHelper.PressedForeground="#0078D4"
-                    Background="Transparent"
-                    BorderThickness="0"
                     Content="{x:Static loc:Resources.Account_settings}"
-                    FontSize="{DynamicResource FontSize12}" />
+                    FontSize="{DynamicResource FontSize12}"
+                    Style="{StaticResource Button.BorderlessStyle}" />
             </StackPanel>
             <Button
                 Width="320"

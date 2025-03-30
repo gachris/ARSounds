@@ -1,5 +1,4 @@
 ﻿using ARSounds.ApplicationFlow;
-using ARSounds.Core.Auth.Events;
 using ARSounds.Core.Targets;
 using ARSounds.UI.Common.Contracts;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -10,7 +9,11 @@ using MediatR;
 using System.Text.RegularExpressions;
 using ARSounds.UI.Common.Camera;
 using ARSounds.UI.Common.Data;
-using ARSounds.Core.Configuration;
+using ARSounds.Core.ClaimsPrincipal.Events;
+using ARSounds.Application.Configuration;
+
+
+
 #if WINDOWS
 using Emgu.CV;
 using Emgu.CV.Structure;
@@ -68,9 +71,9 @@ public partial class ARCameraViewModel : ObservableObject, IViewModelAware
         ClientApiKey = appConfiguration.OpenVisionClientApiKey;
 
         applicationEvents.Register<SignedInEvent>(OnSignedIn);
-        applicationEvents.Register<TargetsUpdatedStartedEvent>(OnTargetsUpdatedStarted);
-        applicationEvents.Register<TargetsUpdatedFinishedEvent>(OnTargetsUpdatedFinished);
-        applicationEvents.Register<TargetsUpdatedEvent>(OnTargetsUpdated);
+        applicationEvents.Register<RetrieveTargetsStartedEvent>(OnTargetsUpdatedStarted);
+        applicationEvents.Register<RetrieveTargetsFinishedEvent>(OnTargetsUpdatedFinished);
+        applicationEvents.Register<TargetsCollectionUpdatedEvent>(OnTargetsUpdated);
     }
 
     #region Relay Commands
@@ -134,7 +137,7 @@ public partial class ARCameraViewModel : ObservableObject, IViewModelAware
 
     public virtual async void OnNavigated()
     {
-        await _mediator.Send(new GetTargetsQuery());
+        await _mediator.Send(new RetrieveTargetsQuery());
     }
 
     public virtual void OnNavigatedAway()
@@ -165,24 +168,24 @@ public partial class ARCameraViewModel : ObservableObject, IViewModelAware
 
     #region Events Subscriptions
 
-    private void OnTargetsUpdatedStarted(TargetsUpdatedStartedEvent obj)
+    private void OnTargetsUpdatedStarted(RetrieveTargetsStartedEvent obj)
     {
         IsBusy = true;
     }
 
-    private void OnTargetsUpdatedFinished(TargetsUpdatedFinishedEvent obj)
+    private void OnTargetsUpdatedFinished(RetrieveTargetsFinishedEvent obj)
     {
         IsBusy = false;
     }
 
-    private void OnTargetsUpdated(TargetsUpdatedEvent obj)
+    private void OnTargetsUpdated(TargetsCollectionUpdatedEvent obj)
     {
         Targets = obj.Items;
     }
 
     private async void OnSignedIn(SignedInEvent obj)
     {
-        await _mediator.Send(new GetTargetsQuery());
+        await _mediator.Send(new RetrieveTargetsQuery());
     }
 
     #endregion

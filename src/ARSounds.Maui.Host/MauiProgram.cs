@@ -1,9 +1,10 @@
 ﻿using ARSounds.Application;
-using ARSounds.Application.Services;
+using ARSounds.Application.Configuration;
 using ARSounds.Core;
-using ARSounds.Core.Configuration;
 using ARSounds.UI.Common;
+using ARSounds.UI.Common.Services;
 using ARSounds.UI.Maui;
+using ARSounds.UI.Maui.Browser;
 using CommonServiceLocator;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Configuration;
@@ -50,7 +51,7 @@ public static class MauiProgram
 
                     services.AddSingleton(appConfiguration);
                     services.AddSingleton(t => ServiceLocator.Current);
-                    services.AddDataStore(folderPath, true);
+                    services.AddClientOptions(folderPath, true, new WebAuthenticatorBrowser(), appConfiguration);
                     services.ConfigureOpenVision(appConfiguration.OpenVisionWebSocketUrl);
 
                     if (SynchronizationContext.Current is not null)

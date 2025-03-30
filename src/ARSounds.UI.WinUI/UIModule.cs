@@ -1,14 +1,11 @@
-﻿using ARSounds.Application.Services;
-using ARSounds.UI.Common;
+﻿using ARSounds.UI.Common;
 using ARSounds.UI.Common.Contracts;
+using ARSounds.UI.Common.Services;
 using ARSounds.UI.Common.ViewModels;
 using ARSounds.UI.WinUI.Activation;
-using ARSounds.UI.WinUI.Browser;
 using ARSounds.UI.WinUI.Contracts;
 using ARSounds.UI.WinUI.Services;
-using ARSounds.UI.WinUI.ViewModels;
 using ARSounds.UI.WinUI.Views;
-using IdentityModel.OidcClient.Browser;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 
@@ -28,13 +25,12 @@ public static class UIModule
         services.AddSingleton<IDialogService, DialogService>();
         services.AddSingleton<IAppUISettings, AppUISettings>();
         services.AddSingleton<INavigationService, NavigationService>();
+        services.AddSingleton<IFileService, FileService>();
+        services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
         services.AddIUIServices(typeof(UIModule).Assembly);
 
         // ActivationHandler
         services.AddSingleton<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
-
-        // WebAuthenticatorBrowser
-        services.AddSingleton<IBrowser, WebAuthenticatorBrowser>();
 
         // Controls
         services.AddSingleton<AppShellPage>();
@@ -42,7 +38,7 @@ public static class UIModule
         services.AddSingleton<ARCameraPage>();
 
         // ViewModels
-        services.AddSingleton<ShellViewModel>();
+        services.AddSingleton<ARSounds.UI.WinUI.ViewModels.ShellViewModel>();
         services.AddSingleton<AccountViewModel>();
         services.AddSingleton<ARCameraViewModel>();
         services.AddSingleton<SettingsViewModel>();

@@ -1,12 +1,11 @@
-﻿using ARSounds.UI.Common.ViewModels;
-using ARSounds.UI.Wpf.Contracts;
+﻿using ARSounds.UI.Wpf.Contracts;
 using ARSounds.UI.Wpf.Views;
 using CommunityToolkit.Mvvm.Input;
 using MediatR;
 
 namespace ARSounds.UI.Wpf.ViewModels;
 
-public partial class ShellViewModel : BaseShellViewModel
+public partial class ShellViewModel : Common.ViewModels.ShellViewModel
 {
     #region Fields/Consts
 

@@ -27,38 +27,14 @@
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
             <devtoolbox:DropDown
                 Width="48"
-                BorderThickness="0"
                 Content="{Binding AccountViewModel, Source={StaticResource ViewModelLocator}}"
+                ContentTemplate="{StaticResource AccountContentTemplate}"
                 Header="{Binding AccountViewModel, Source={StaticResource ViewModelLocator}}"
+                HeaderTemplate="{StaticResource AccountHeaderTemplate}"
                 Placement="Bottom"
                 SpeechBalloonPlacement="None"
                 Style="{StaticResource DropDwon.TitleBar.BorderlessStyle}"
-                WindowChrome.IsHitTestVisibleInChrome="True">
-                <devtoolbox:DropDown.HeaderTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <devtoolbox:FontGlyph
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Code="{x:Static devtoolbox:Symbol.User}"
-                                FontSize="{DynamicResource FontSize16}"
-                                Visibility="{Binding IsAuthenticated, Converter={StaticResource FlipBoolToVisibilityConverter}}" />
-                            <Border
-                                Width="24"
-                                Height="24"
-                                Background="#001E51"
-                                CornerRadius="100"
-                                Visibility="{Binding IsAuthenticated, Converter={StaticResource BoolToVisibilityConverter}}">
-                                <TextBlock
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    FontSize="12"
-                                    Text="CG" />
-                            </Border>
-                        </Grid>
-                    </DataTemplate>
-                </devtoolbox:DropDown.HeaderTemplate>
-            </devtoolbox:DropDown>
+                WindowChrome.IsHitTestVisibleInChrome="True" />
             <ToggleButton
                 Width="48"
                 BorderThickness="0"
@@ -68,7 +44,7 @@
                 WindowChrome.IsHitTestVisibleInChrome="True">
                 <ToggleButton.ContentTemplate>
                     <DataTemplate>
-                        <devtoolbox:FontGlyph Code="{x:Static devtoolbox:Symbol.Settings}" FontSize="{DynamicResource FontSize16}" />
+                        <devtoolbox:FontGlyph Code="{x:Static devtoolbox:Symbol.Settings}" FontSize="16" />
                     </DataTemplate>
                 </ToggleButton.ContentTemplate>
             </ToggleButton>
