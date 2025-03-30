@@ -1,6 +1,7 @@
-﻿using ARSounds.UI.WinUI.Contracts;
+﻿using ARSounds.UI.Common.Contracts;
+using ARSounds.UI.Common.ViewModels;
+using ARSounds.UI.WinUI.Contracts;
 using ARSounds.UI.WinUI.Helpers;
-using ARSounds.UI.WinUI.ViewModels;
 using CommonServiceLocator;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -80,11 +81,11 @@ public sealed partial class AppShellPage : Page
         await ViewModel.InitializeAsync();
     }
 
-    private static void OnKeyboardAcceleratorInvoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+    private static async void OnKeyboardAcceleratorInvoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
     {
         var navigationService = ServiceLocator.Current.GetService<INavigationService>()!;
 
-        var result = navigationService.GoBack();
+        var result = await navigationService.GoBackAsync();
 
         args.Handled = result;
     }

@@ -11,9 +11,6 @@ using ARSounds.UI.Common.Camera;
 using ARSounds.UI.Common.Data;
 using ARSounds.Core.ClaimsPrincipal.Events;
 using ARSounds.Application.Configuration;
-
-
-
 #if WINDOWS
 using Emgu.CV;
 using Emgu.CV.Structure;

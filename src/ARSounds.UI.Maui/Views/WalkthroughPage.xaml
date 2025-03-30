@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:data="clr-namespace:ARSounds.UI.Common.Data;assembly=ARSounds.UI.Common"
     xmlns:loc="clr-namespace:ARSounds.UI.Maui.Localization"
-    xmlns:viewModels="clr-namespace:ARSounds.UI.Maui.ViewModels"
+    xmlns:viewModels="clr-namespace:ARSounds.UI.Common.ViewModels;assembly=ARSounds.UI.Common"
     x:DataType="{x:Type viewModels:WalkthroughViewModel}"
     NavigationPage.HasNavigationBar="False"
     Shell.NavBarIsVisible="False">

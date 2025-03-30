@@ -24,7 +24,7 @@
                     VerticalAlignment="Center"
                     FontSize="12"
                     Foreground="{DynamicResource Avatar.Foreground}"
-                    Text="{Binding Initials}" />
+                    Text="{Binding Initials, UpdateSourceTrigger=PropertyChanged}" />
             </Border>
         </Grid>
     </DataTemplate>
@@ -69,7 +69,7 @@
                             VerticalAlignment="Center"
                             FontSize="36"
                             Foreground="{DynamicResource Avatar.Foreground}"
-                            Text="{Binding Initials}" />
+                            Text="{Binding Initials, UpdateSourceTrigger=PropertyChanged}" />
                     </Border>
                     <StackPanel Margin="16,0,0,0">
                         <TextBlock

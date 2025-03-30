@@ -1,4 +1,4 @@
-using ARSounds.UI.Maui.ViewModels;
+using ARSounds.UI.Common.ViewModels;
 
 namespace ARSounds.UI.Maui.Views;
 

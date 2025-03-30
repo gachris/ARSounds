@@ -6,7 +6,30 @@
     xmlns:loc="using:ARSounds.UI.WinUI.Localization"
     xmlns:viewModels="using:ARSounds.UI.Common.ViewModels">
 
-    <DataTemplate x:Key="AccountTemplate" x:DataType="viewModels:AccountViewModel">
+    <DataTemplate x:Key="AccountContentTemplate" x:DataType="viewModels:AccountViewModel">
+        <Grid>
+            <FontIcon
+                FontFamily="Segoe MDL2 Assets"
+                FontSize="16"
+                Glyph="&#xE77B;"
+                Visibility="{Binding IsAuthenticated, Converter={StaticResource FlipBoolToVisibilityConverter}}" />
+            <Border
+                Width="24"
+                Height="24"
+                Background="{ThemeResource Avatar.Background}"
+                CornerRadius="100"
+                Visibility="{Binding IsAuthenticated, Converter={StaticResource BoolToVisibilityConverter}}">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="12"
+                    Foreground="{ThemeResource Avatar.Foreground}"
+                    Text="{Binding Initials, UpdateSourceTrigger=PropertyChanged}" />
+            </Border>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="AccountFlyoutContentTemplate" x:DataType="viewModels:AccountViewModel">
         <Grid Width="320">
             <StackPanel Margin="4" Visibility="{Binding IsAuthenticated, Converter={StaticResource BoolToVisibilityConverter}}">
                 <Grid>
@@ -34,24 +57,25 @@
                         </Button.Flyout>
                     </Button>
                 </Grid>
-                <StackPanel Margin="0,24,0,6" Orientation="Horizontal">
+                <StackPanel Margin="0,16,0,6" Orientation="Horizontal">
                     <Border
                         Width="86"
                         Height="86"
-                        Background="#001E51"
+                        Background="{ThemeResource Avatar.Background}"
                         CornerRadius="100">
                         <TextBlock
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             FontSize="36"
-                            Text="CG" />
+                            Foreground="{ThemeResource Avatar.Foreground}"
+                            Text="{Binding Initials, UpdateSourceTrigger=PropertyChanged}" />
                     </Border>
                     <StackPanel Margin="16,0,0,0">
                         <TextBlock
                             FontSize="16"
                             FontWeight="SemiBold"
-                            Text="Christos Gkatzos" />
-                        <TextBlock Text="christos.gkatzos@hotmail.com" />
+                            Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
                 </StackPanel>
                 <Button
@@ -75,7 +99,10 @@
                         Padding="8"
                         BorderThickness="1"
                         CornerRadius="100">
-                        <!--<devtoolbox:FontGlyph Code="{x:Static devtoolbox:Symbol.AddFriend}" FontSize="{DynamicResource FontSize16}" />-->
+                        <FontIcon
+                            FontFamily="Segoe MDL2 Assets"
+                            FontSize="16"
+                            Glyph="&#xE77B;" />
                     </Border>
                     <TextBlock
                         Margin="12,0,0,0"

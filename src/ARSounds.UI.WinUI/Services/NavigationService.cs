@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using ARSounds.UI.Common.Contracts;
 using ARSounds.UI.WinUI.Contracts;
-using ARSounds.UI.WinUI.Helpers;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 
@@ -11,9 +11,9 @@ public class NavigationService : INavigationService
 {
     #region Fields/Consts
 
-    private readonly IAppWindowService _appWindowService;
     private readonly IPageService _pageService;
-    private object? _lastParameterUsed;
+    private readonly IAppWindowService _appWindowService;
+    private readonly List<FrameworkElement> _lastViews = [];
     private Frame? _frame;
 
     public event NavigatedEventHandler? Navigated;
@@ -22,7 +22,7 @@ public class NavigationService : INavigationService
 
     #region Properties
 
-    public Frame? Frame
+    public object? Frame
     {
         get
         {
@@ -34,17 +34,16 @@ public class NavigationService : INavigationService
 
             return _frame;
         }
-
         set
         {
             UnregisterFrameEvents();
-            _frame = value;
+            _frame = value as Frame;
             RegisterFrameEvents();
         }
     }
 
     [MemberNotNullWhen(true, nameof(Frame), nameof(_frame))]
-    public bool CanGoBack => Frame != null && Frame.CanGoBack;
+    public bool CanGoBack => _frame?.CanGoBack == true;
 
     #endregion
 
@@ -54,58 +53,14 @@ public class NavigationService : INavigationService
         _appWindowService = appWindowService;
     }
 
-    #region INavigationService Methods Implementation
-
-    public bool GoBack()
-    {
-        if (CanGoBack)
-        {
-            var vmBeforeNavigation = _frame.GetPageViewModel();
-            _frame.GoBack();
-            if (vmBeforeNavigation is IViewModelAware navigationAware)
-            {
-                navigationAware.OnNavigatedAway();
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
-    public bool NavigateTo(string pageKey, object? parameter = null, bool clearNavigation = false)
-    {
-        var pageType = _pageService.GetPageType(pageKey);
-
-        if (_frame != null && (_frame.Content?.GetType() != pageType || parameter != null && !parameter.Equals(_lastParameterUsed)))
-        {
-            _frame.Tag = clearNavigation;
-            var vmBeforeNavigation = _frame.GetPageViewModel();
-            var navigated = _frame.Navigate(pageType, parameter);
-            if (navigated)
-            {
-                _lastParameterUsed = parameter;
-                if (vmBeforeNavigation is IViewModelAware navigationAware)
-                {
-                    navigationAware.OnNavigated();
-                }
-            }
-
-            return navigated;
-        }
-
-        return false;
-    }
-
-    #endregion
-
     #region Methods
 
     private void RegisterFrameEvents()
     {
         if (_frame != null)
         {
-            _frame.Navigated += OnNavigated;
+            _frame.Navigating += Frame_Navigating;
+            _frame.Navigated += Frame_Navigated;
         }
     }
 
@@ -113,31 +68,87 @@ public class NavigationService : INavigationService
     {
         if (_frame != null)
         {
-            _frame.Navigated -= OnNavigated;
+            _frame.Navigating -= Frame_Navigating;
+            _frame.Navigated -= Frame_Navigated;
         }
+    }
+
+    public async Task<bool> AddBackEntryAsync(string pageKey)
+    {
+        if (_frame is null)
+            return await Task.FromResult(false);
+
+        var pageType = _pageService.GetPageType(pageKey);
+
+        var entry = new PageStackEntry(pageType, null, null);
+
+        _frame.BackStack.Add(entry);
+        return await Task.FromResult(true); 
+    }
+
+    public async Task<bool> GoBackAsync()
+    {
+        if (!CanGoBack)
+            return await Task.FromResult(false);
+
+        _frame.GoBack();
+
+        return await Task.FromResult(true);
+    }
+
+    public async Task<bool> NavigateToAsync(string pageKey, object? parameter = null, bool clearNavigation = false)
+    {
+        var pageType = _pageService.GetPageType(pageKey);
+
+        if (_frame != null && _frame.Content?.GetType() != pageType)
+        {
+            _frame.Tag = clearNavigation;
+            return await Task.FromResult(_frame.Navigate(pageType, parameter));
+        }
+
+        return await Task.FromResult(true);
     }
 
     #endregion
 
     #region Events Subscriptions
 
-    private void OnNavigated(object sender, NavigationEventArgs e)
+    private void Frame_Navigating(object sender, NavigatingCancelEventArgs e)
     {
-        if (sender is Frame frame)
+        var lastView = _lastViews.LastOrDefault();
+        if (lastView?.DataContext is IViewModelAware vm)
         {
-            var clearNavigation = (bool)frame.Tag;
-            if (clearNavigation)
-            {
-                frame.BackStack.Clear();
-            }
-
-            if (frame.GetPageViewModel() is IViewModelAware navigationAware)
-            {
-                navigationAware.OnNavigated();
-            }
-
-            Navigated?.Invoke(sender, e);
+            vm.OnNavigatedAway();
         }
+
+        if (lastView is not null)
+        {
+            _lastViews.Remove(lastView);
+        }
+    }
+
+    private void Frame_Navigated(object sender, NavigationEventArgs e)
+    {
+        if (_frame is null)
+            return;
+
+        var clearNavigation = (bool)_frame.Tag;
+        if (clearNavigation)
+        {
+            _frame.BackStack.Clear();
+        }
+
+        if (e.Content is FrameworkElement fe)
+        {
+            if (fe.DataContext is IViewModelAware vm)
+            {
+                vm.OnNavigated();
+            }
+
+            _lastViews.Add(fe);
+        }
+
+        Navigated?.Invoke(sender, e);
     }
 
     #endregion

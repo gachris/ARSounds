@@ -6,6 +6,11 @@
 public static class PageKeys
 {
     /// <summary>
+    /// Key for navigating to the Shell page (main layout or container).
+    /// </summary>
+    public const string ShellPage = "Shell";
+
+    /// <summary>
     /// Key for navigating to the Camera page.
     /// </summary>
     public const string CameraPage = "Camera";
@@ -14,4 +19,14 @@ public static class PageKeys
     /// Key for navigating to the Settings page.
     /// </summary>
     public const string SettingsPage = "Settings";
+
+    /// <summary>
+    /// Key for navigating to the Background page.
+    /// </summary>
+    public const string BackgroundPage = "Background";
+
+    /// <summary>
+    /// Key for navigating to the Walkthrough page.
+    /// </summary>
+    public const string WalkthroughPage = "Walkthrough";
 }

@@ -38,7 +38,7 @@
             <ToggleButton
                 Width="48"
                 BorderThickness="0"
-                Command="{Binding ElementName=appWindow, Path=Content.DataContext.OpenSettingsCommand}"
+                Command="{Binding ElementName=appWindow, Path=Content.DataContext.ToggleSettingsCommand}"
                 IsChecked="{Binding ElementName=appWindow, Path=Content.DataContext.IsSettingsOpen, Mode=OneWay}"
                 Style="{StaticResource ToggleButton.TitleBar.BorderlessStyle}"
                 WindowChrome.IsHitTestVisibleInChrome="True">

@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using ARSounds.UI.Common.Contracts;
+using ARSounds.UI.Common.Services;
 using Microsoft.Extensions.DependencyInjection;
 using OpenVision.Core.Configuration;
 
@@ -9,6 +10,17 @@ public static class CommonUIModule
 {
     #region Methods
 
+    public static IServiceCollection AddPageService(this IServiceCollection services, Action<PageService>? configure = null)
+    {
+        var pageService = new PageService();
+
+        configure?.Invoke(pageService);
+
+        services.AddSingleton<IPageService>(pageService);
+
+        return services;
+    }
+    
     public static void ConfigureOpenVision(this IServiceCollection services, string wsUrl)
     {
         VisionSystemConfig.WebSocketUrl = wsUrl;

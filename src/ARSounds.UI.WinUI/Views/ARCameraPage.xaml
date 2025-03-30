@@ -19,7 +19,5 @@
         VerticalAlignment="Stretch"
         HorizontalContentAlignment="Stretch"
         VerticalContentAlignment="Stretch"
-        Content="{Binding}"
-        ContentTemplate="{StaticResource ARCameraTemplate}"
-        DataContext="{Binding ARCameraViewModel, Source={StaticResource ViewModelLocator}}" />
+        ContentTemplate="{StaticResource ARCameraTemplate}" />
 </Page>

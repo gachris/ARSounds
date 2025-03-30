@@ -2,12 +2,10 @@
 using ARSounds.Localization.Properties;
 using ARSounds.UI.Common.Contracts;
 using ARSounds.UI.Common.Data;
-using ARSounds.UI.Maui.Contracts;
-using ARSounds.UI.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
-namespace ARSounds.UI.Maui.ViewModels;
+namespace ARSounds.UI.Common.ViewModels;
 
 public partial class WalkthroughViewModel : ObservableObject, IViewModelAware
 {
@@ -85,20 +83,20 @@ public partial class WalkthroughViewModel : ObservableObject, IViewModelAware
     #region Relay Commands
 
     [RelayCommand]
-    private void Skip()
+    private async Task Skip()
     {
-        _navigationService.PushMain<AppShellPage>();
+        await _navigationService.NavigateToAsync(PageKeys.ShellPage, clearNavigation: true);
     }
 
     [RelayCommand]
-    private void Next()
+    private async Task Next()
     {
         if (!ValidateAndUpdatePosition())
         {
             return;
         }
 
-        _navigationService.PushMain<AppShellPage>();
+        await _navigationService.NavigateToAsync(PageKeys.ShellPage, clearNavigation: true);
     }
 
     #endregion

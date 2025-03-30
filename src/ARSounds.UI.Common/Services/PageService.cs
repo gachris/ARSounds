@@ -1,9 +1,6 @@
-﻿using ARSounds.UI.Common;
-using ARSounds.UI.WinUI.Contracts;
-using ARSounds.UI.WinUI.Views;
-using Microsoft.UI.Xaml.Controls;
+﻿using ARSounds.UI.Common.Contracts;
 
-namespace ARSounds.UI.WinUI.Services;
+namespace ARSounds.UI.Common.Services;
 
 public class PageService : IPageService
 {
@@ -12,12 +9,6 @@ public class PageService : IPageService
     private readonly Dictionary<string, Type> _pages = [];
 
     #endregion
-
-    public PageService()
-    {
-        Configure<ARCameraPage>(PageKeys.CameraPage);
-        Configure<SettingsPage>(PageKeys.SettingsPage);
-    }
 
     #region IPageService Implementation
 
@@ -39,7 +30,7 @@ public class PageService : IPageService
 
     #region Methods
 
-    private void Configure<V>(string key) where V : Page
+    public void Configure(string key, Type type)
     {
         lock (_pages)
         {
@@ -48,7 +39,6 @@ public class PageService : IPageService
                 throw new ArgumentException($"The key {key} is already configured in PageService");
             }
 
-            var type = typeof(V);
             if (_pages.ContainsValue(type))
             {
                 throw new ArgumentException($"This type is already configured with key {_pages.First(p => p.Value == type).Key}");

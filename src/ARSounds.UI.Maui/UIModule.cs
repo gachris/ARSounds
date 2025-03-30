@@ -2,9 +2,7 @@
 using ARSounds.UI.Common.Contracts;
 using ARSounds.UI.Common.Services;
 using ARSounds.UI.Common.ViewModels;
-using ARSounds.UI.Maui.Contracts;
 using ARSounds.UI.Maui.Services;
-using ARSounds.UI.Maui.ViewModels;
 using ARSounds.UI.Maui.Views;
 using CommunityToolkit.Maui;
 
@@ -22,6 +20,16 @@ public static class UIModule
         services.AddSingleton<IFileService, FileService>();
         services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
         services.AddIUIServices(typeof(UIModule).Assembly);
+
+        // Pages
+        services.AddPageService(options =>
+        {
+            options.Configure(PageKeys.ShellPage, typeof(AppShellPage));
+            options.Configure(PageKeys.CameraPage, typeof(ARCameraPage));
+            options.Configure(PageKeys.SettingsPage, typeof(SettingsPage));
+            options.Configure(PageKeys.BackgroundPage, typeof(BackgroundPage));
+            options.Configure(PageKeys.WalkthroughPage, typeof(WalkthroughPage));
+        });
 
         // Controls
         services.AddSingleton<AppShellPage>();

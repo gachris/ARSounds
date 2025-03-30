@@ -6,6 +6,7 @@ public sealed partial class ARCameraPage : Page
 {
     public ARCameraPage()
     {
+        DataContext = ViewModelLocator.ARCameraViewModel;
         InitializeComponent();
     }
 }

@@ -23,13 +23,20 @@ public static class UIModule
         services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
         services.AddIUIServices(typeof(UIModule).Assembly);
 
+        // Pages
+        services.AddPageService(options =>
+        {
+            options.Configure(PageKeys.CameraPage, typeof(ARCameraPage));
+            options.Configure(PageKeys.SettingsPage, typeof(SettingsPage));
+        });
+
         // Controls
         services.AddSingleton<AppShellView>();
         services.AddSingleton<ARCameraPage>();
         services.AddSingleton<SettingsPage>();
 
         // ViewModels
-        services.AddSingleton<ARSounds.UI.Wpf.ViewModels.ShellViewModel>();
+        services.AddSingleton<ShellViewModel>();
         services.AddSingleton<AccountViewModel>();
         services.AddSingleton<ARCameraViewModel>();
         services.AddSingleton<SettingsViewModel>();

@@ -1,28 +1,25 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using ARSounds.UI.Wpf.Contracts;
-using ARSounds.UI.Wpf.ViewModels;
+using ARSounds.UI.Common;
+using ARSounds.UI.Common.Contracts;
+using ARSounds.UI.Common.Extensions;
+using ARSounds.UI.Common.ViewModels;
 
 namespace ARSounds.UI.Wpf.Views;
 
 public partial class AppShellView : UserControl
 {
-    #region Fields/Consts
-
-    private readonly INavigationService _navigationService;
-
-    #endregion
-
     public AppShellView(ShellViewModel viewModel, INavigationService navigationService)
     {
         DataContext = viewModel;
         InitializeComponent();
 
-        navigationService.RegisterFrame(NavigationFrameKeys.Shell, MainFrame);
-        navigationService.NavigateTo(NavigationFrameKeys.Shell, typeof(ARCameraPage));
-
         Loaded += ShellView_Loaded;
-        _navigationService = navigationService;
+
+        navigationService.Frame = MainFrame;
+
+        navigationService.NavigateToAsync(PageKeys.CameraPage)
+            .FireAndForget();
     }
 
     #region Events Subscriptions
@@ -31,9 +28,6 @@ public partial class AppShellView : UserControl
     {
         var viewModel = (ShellViewModel)DataContext;
         await viewModel.InitializeAsync();
-
-        var window = Window.GetWindow(this);
-        window.Closed += (sender, e) => _navigationService.UnregisterFrame(NavigationFrameKeys.Shell);
     }
 
     #endregion

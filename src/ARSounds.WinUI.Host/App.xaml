@@ -9,7 +9,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
                 <ResourceDictionary Source="/ARSounds.UI.WinUI/Themes/Generic.xaml" />
-                <!--  Other merged dictionaries here  -->
             </ResourceDictionary.MergedDictionaries>
 
             <winui:ViewModelLocator x:Key="ViewModelLocator" />

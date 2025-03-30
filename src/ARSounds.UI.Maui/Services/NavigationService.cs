@@ -1,107 +1,99 @@
-﻿using ARSounds.UI.Maui.Contracts;
+﻿using System.Diagnostics.CodeAnalysis;
+using ARSounds.UI.Common.Contracts;
+using CommonServiceLocator;
+using MauiApplication = Microsoft.Maui.Controls.Application;
 
 namespace ARSounds.UI.Maui.Services;
 
 public class NavigationService : INavigationService
 {
+    #region Fields/Consts
+
+    private readonly IPageService _pageService;
+    private readonly IServiceLocator _serviceLocator;
+    private readonly List<Page> _lastViews = [];
+    private Window? _window;
+
+    #endregion
+
     #region Properties
 
-    private static INavigation? Navigation => Microsoft.Maui.Controls.Application.Current?.Windows[0].Page?.Navigation;
+    public object? Frame
+    {
+        get => _window ??= MauiApplication.Current?.Windows[0];
+        set => _window = value as Window;
+    }
+
+    [MemberNotNullWhen(true, nameof(Frame), nameof(_window))]
+    public bool CanGoBack => (_window?.Page as NavigationPage)?.Navigation.NavigationStack?.Count > 1;
 
     #endregion
 
-    public NavigationService()
+    public NavigationService(IPageService pageService, IServiceLocator serviceLocator)
     {
+        _pageService = pageService;
+        _serviceLocator = serviceLocator;
     }
-
-    #region INavigationService Implementation
-
-    public Task PushAsync<TPage>() where TPage : Page
-    {
-        return InternalPushAsync(typeof(TPage), null);
-    }
-
-    public Task PushAsync<TPage>(object initParams) where TPage : Page
-    {
-        return InternalPushAsync(typeof(TPage), initParams);
-    }
-
-    public Task PushAsync(Type viewModelType)
-    {
-        return InternalPushAsync(viewModelType, null);
-    }
-
-    public Task PushAsync(Type viewModelType, object initParams)
-    {
-        return InternalPushAsync(viewModelType, initParams);
-    }
-
-    public Task PushModalAsync<TPage>() where TPage : Page
-    {
-        return InternalPushModalAsync(typeof(TPage), null);
-    }
-
-    public Task PushModalAsync<TPage>(object initParams) where TPage : Page
-    {
-        return InternalPushModalAsync(typeof(TPage), initParams);
-    }
-
-    public Task PushModalAsync(Type viewModelType, object initParams)
-    {
-        return InternalPushModalAsync(viewModelType, initParams);
-    }
-
-    public Task PushModalAsync(Type viewModelType)
-    {
-        return InternalPushModalAsync(viewModelType, null);
-    }
-
-    public void PushMain<TPage>() where TPage : Page
-    {
-        InternalPushMain(typeof(TPage), null);
-    }
-
-    public void PushMain(Type type)
-    {
-        InternalPushMain(type, null);
-    }
-
-    public async Task PopAsync()
-    {
-        await (Navigation?.PopAsync() ?? Task.CompletedTask);
-    }
-
-    public async Task PopModalAsync()
-    {
-        await (Navigation?.PopModalAsync() ?? Task.CompletedTask);
-    }
-
-    #endregion
 
     #region Methods
 
-    protected virtual async Task InternalPushAsync(Type pageType, object? initParams)
+    public Task<bool> AddBackEntryAsync(string pageKey)
     {
-        var page = IPlatformApplication.Current?.Services.GetService(pageType) as Page;
-
-        await (Navigation?.PushAsync(page) ?? Task.CompletedTask);
+        // MAUI doesn't support manually pushing back entries without navigation
+        return Task.FromResult(false);
     }
 
-    protected virtual async Task InternalPushModalAsync(Type pageType, object? initParams)
+    public async Task<bool> GoBackAsync()
     {
-        var page = IPlatformApplication.Current?.Services.GetService(pageType) as Page;
+        if (_window?.Page is not NavigationPage navPage || !CanGoBack)
+            return false;
 
-        await (Navigation?.PushModalAsync(page) ?? Task.CompletedTask);
-    }
+        var currentPage = navPage.CurrentPage;
 
-    protected virtual void InternalPushMain(Type pageType, object? value)
-    {
-        var page = IPlatformApplication.Current?.Services.GetService(pageType) as Page;
-
-        if (Microsoft.Maui.Controls.Application.Current?.Windows[0] is Window window)
+        if (currentPage.BindingContext is IViewModelAware vm)
         {
-            window.Page = page;
+            vm.OnNavigatedAway();
         }
+
+        _lastViews.Remove(currentPage);
+
+        await navPage.Navigation.PopAsync();
+
+        return true;
+    }
+
+    public async Task<bool> NavigateToAsync(string pageKey, object? parameter = null, bool clearNavigation = false)
+    {
+        if (_window == null)
+            return false;
+
+        var pageType = _pageService.GetPageType(pageKey);
+        if (_serviceLocator.GetService(pageType) is not Page pageInstance)
+            return false;
+
+        if (pageInstance.BindingContext is IViewModelAware vm)
+        {
+            vm.OnNavigated();
+        }
+
+        var navPage = _window.Page as NavigationPage;
+
+        if (clearNavigation)
+        {
+            navPage = new NavigationPage(pageInstance);
+            _window.Page = navPage;
+        }
+        else if (navPage != null)
+        {
+            await navPage.Navigation.PushAsync(pageInstance);
+        }
+        else
+        {
+            _window.Page = new NavigationPage(pageInstance);
+        }
+
+        _lastViews.Add(pageInstance);
+        return true;
     }
 
     #endregion

@@ -1,8 +1,8 @@
-﻿using System.Windows;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using ARSounds.UI.Common.Contracts;
-using ARSounds.UI.Wpf.Contracts;
 using CommonServiceLocator;
 
 namespace ARSounds.UI.Wpf.Services;
@@ -24,7 +24,7 @@ public class NavigationService : INavigationService
         public override void Replay(System.Windows.Navigation.NavigationService navigationService, NavigationMode mode)
         {
             var pageInstance = _serviceLocator.GetService(_pageType);
-            if (navigationService.Content != pageInstance)
+            if (pageInstance is not null && navigationService.Content != pageInstance)
             {
                 navigationService.Navigate(pageInstance);
             }
@@ -33,111 +33,134 @@ public class NavigationService : INavigationService
 
     #region Fields/Consts
 
-    private readonly Dictionary<string, Frame> _frames = [];
+    private readonly IPageService _pageService;
     private readonly IServiceLocator _serviceLocator;
-    private readonly Dictionary<Frame, FrameworkElement?> _lastViews = [];
+    private readonly List<FrameworkElement> _lastViews = [];
+    private Frame? _frame;
+
+    public event NavigatedEventHandler? Navigated;
 
     #endregion
 
-    public NavigationService(IServiceLocator serviceLocator)
+    #region Properties
+
+    public object? Frame
     {
+        get => _frame;
+        set
+        {
+            UnregisterFrameEvents();
+            _frame = value as Frame;
+            RegisterFrameEvents();
+        }
+    }
+
+    [MemberNotNullWhen(true, nameof(Frame), nameof(_frame))]
+    public bool CanGoBack => _frame?.CanGoBack == true;
+
+    #endregion
+
+    public NavigationService(IPageService pageService, IServiceLocator serviceLocator)
+    {
+        _pageService = pageService;
         _serviceLocator = serviceLocator;
     }
 
     #region Methods
 
-    public void RegisterFrame(string key, Frame frame)
+    private void RegisterFrameEvents()
     {
-        if (!_frames.ContainsKey(key))
+        if (_frame is not null)
         {
-            _frames[key] = frame;
-            frame.Navigating += OnFrameNavigating;
-            frame.Navigated += OnFrameNavigated;
+            _frame.Navigating -= Frame_Navigating;
+            _frame.Navigated -= Frame_Navigated;
         }
     }
 
-    public void UnregisterFrame(string key)
+    private void UnregisterFrameEvents()
     {
-        if (_frames.TryGetValue(key, out var frame))
+        if (_frame is not null)
         {
-            frame.Navigating -= OnFrameNavigating;
-            frame.Navigated -= OnFrameNavigated;
-            _frames.Remove(key);
+            _frame.Navigating += Frame_Navigating;
+            _frame.Navigated += Frame_Navigated;
         }
     }
 
-    public void FrameNavigated(string key, Action<object, NavigationEventArgs> action)
+    public async Task<bool> AddBackEntryAsync(string pageKey)
     {
-        if (_frames.TryGetValue(key, out var frame))
+        if (_frame?.NavigationService != null)
         {
-            frame.Navigated += action.Invoke;
+            var pageType = _pageService.GetPageType(pageKey);
+
+            _frame.NavigationService.AddBackEntry(new DIContentState(pageType, _serviceLocator));
+
+            return await Task.FromResult(true);
         }
+
+        return await Task.FromResult(false);
     }
 
-    public void AddBackEntry(string key, Type pageType)
+    public async Task<bool> GoBackAsync()
     {
-        if (!_frames.TryGetValue(key, out var frame))
-        {
-            throw new KeyNotFoundException($"No frame found with key: {key}");
-        }
+        if (!CanGoBack)
+            return await Task.FromResult(false);
 
-        frame.NavigationService?.AddBackEntry(new DIContentState(pageType, _serviceLocator));
+        _frame.GoBack();
+
+        return await Task.FromResult(true);
     }
 
-    public void NavigateTo(string key, Type pageType)
+    public async Task<bool> NavigateToAsync(string pageKey, object? parameter = null, bool clearNavigation = false)
     {
-        if (_frames.TryGetValue(key, out var frame) && pageType != null)
-        {
-            var pageInstance = _serviceLocator.GetService(pageType);
-            if (pageInstance is not null)
-            {
-                frame.Navigate(pageInstance);
-            }
-        }
-    }
+        if (_frame is null)
+            return await Task.FromResult(false);
 
-    public void NavigateTo(string key, Type pageType, object parameter)
-    {
-        if (_frames.TryGetValue(key, out var frame) && pageType != null)
-        {
-            var pageInstance = _serviceLocator.GetService(pageType);
-            if (pageInstance is not null)
-            {
-                frame.Navigate(pageInstance, parameter);
-            }
-        }
-    }
+        var pageType = _pageService.GetPageType(pageKey);
 
-    public void GoBack(string key)
-    {
-        if (_frames.TryGetValue(key, out var frame) && frame.CanGoBack)
+        var pageInstance = _serviceLocator.GetService(pageType);
+        if (pageInstance is null)
+            return await Task.FromResult(false);
+
+        if (clearNavigation && _frame.NavigationService is not null)
         {
-            frame.GoBack();
+            while (_frame.CanGoBack)
+                _frame.RemoveBackEntry();
         }
+
+        return await Task.FromResult(_frame.Navigate(pageInstance, parameter));
     }
 
     #endregion
 
     #region Events Subscriptions
 
-    private void OnFrameNavigating(object sender, NavigatingCancelEventArgs e)
+    private void Frame_Navigating(object sender, NavigatingCancelEventArgs e)
     {
-        if (sender is Frame frame && _lastViews.TryGetValue(frame, out var lastView) && lastView is FrameworkElement fe && fe.DataContext is IViewModelAware vm)
+        var lastView = _lastViews.LastOrDefault();
+        if (lastView?.DataContext is IViewModelAware vm)
         {
             vm.OnNavigatedAway();
         }
+
+        if (lastView is not null)
+        {
+            _lastViews.Remove(lastView);
+        }
     }
 
-    private void OnFrameNavigated(object sender, NavigationEventArgs e)
+    private void Frame_Navigated(object sender, NavigationEventArgs e)
     {
-        if (sender is Frame frame)
+        if (e.Content is FrameworkElement fe)
         {
-            if (e.Content is FrameworkElement fe && fe.DataContext is IViewModelAware vm)
+            if (fe.DataContext is IViewModelAware vm)
             {
                 vm.OnNavigated();
             }
-            _lastViews[frame] = e.Content as FrameworkElement;
+
+            _lastViews.Add(fe);
         }
+
+        Navigated?.Invoke(sender, e);
     }
 
     #endregion

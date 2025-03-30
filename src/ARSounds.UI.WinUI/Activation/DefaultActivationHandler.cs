@@ -1,6 +1,7 @@
 ﻿using ARSounds.UI.Common;
-using ARSounds.UI.WinUI.Contracts;
+using ARSounds.UI.Common.Contracts;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace ARSounds.UI.WinUI.Activation;
 
@@ -21,14 +22,12 @@ public class DefaultActivationHandler : ActivationHandler<LaunchActivatedEventAr
 
     protected override bool CanHandleInternal(LaunchActivatedEventArgs args)
     {
-        return _navigationService.Frame?.Content == null;
+        return (_navigationService.Frame as Frame)?.Content == null;
     }
 
     protected async override Task HandleInternalAsync(LaunchActivatedEventArgs args)
     {
-        _navigationService.NavigateTo(PageKeys.CameraPage, args.Arguments);
-
-        await Task.CompletedTask;
+        await _navigationService.NavigateToAsync(PageKeys.CameraPage, args.Arguments);
     }
 
     #endregion

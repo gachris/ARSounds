@@ -1,15 +1,17 @@
 ﻿using ARSounds.Application.Commands;
 using ARSounds.UI.Common.Contracts;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using MediatR;
 
 namespace ARSounds.UI.Common.ViewModels;
 
-public class ShellViewModel : ObservableObject, IViewModelAware
+public partial class ShellViewModel : ObservableObject, IViewModelAware
 {
     #region Fields/Consts
 
     private readonly IMediator _mediator;
+    private readonly INavigationService _navigationService;
 
     private bool _isSettingsOpen;
     private string _selectedViewItem = PageKeys.CameraPage;
@@ -36,9 +38,10 @@ public class ShellViewModel : ObservableObject, IViewModelAware
 
     #endregion
 
-    public ShellViewModel(IMediator mediator)
+    public ShellViewModel(IMediator mediator, INavigationService navigationService)
     {
         _mediator = mediator;
+        _navigationService = navigationService;
     }
 
     #region Methods
@@ -48,16 +51,36 @@ public class ShellViewModel : ObservableObject, IViewModelAware
         await _mediator.Send(new SignInSilentCommand());
     }
 
-    public void OnNavigated()
+    public virtual void OnNavigated()
     {
     }
 
-    public void OnNavigatedAway()
+    public virtual void OnNavigatedAway()
     {
     }
 
-    protected virtual void OnSelectedViewItemChanged()
+    protected virtual async void OnSelectedViewItemChanged()
     {
+        await _navigationService.NavigateToAsync(SelectedViewItem);
+    }
+
+    #endregion
+
+    #region Relay Commands
+
+    [RelayCommand]
+    private async Task ToggleSettings()
+    {
+        IsSettingsOpen = !IsSettingsOpen;
+
+        if (IsSettingsOpen)
+        {
+            await _navigationService.NavigateToAsync(PageKeys.SettingsPage);
+        }
+        else
+        {
+            await _navigationService.GoBackAsync();
+        }
     }
 
     #endregion

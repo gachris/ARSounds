@@ -20,7 +20,6 @@ public static class UIModule
         // Services
         services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
         services.AddSingleton<IActivationService, ActivationService>();
-        services.AddSingleton<IPageService, PageService>();
         services.AddSingleton<IAppWindowService, AppWindowService>();
         services.AddSingleton<IDialogService, DialogService>();
         services.AddSingleton<IAppUISettings, AppUISettings>();
@@ -28,6 +27,13 @@ public static class UIModule
         services.AddSingleton<IFileService, FileService>();
         services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
         services.AddIUIServices(typeof(UIModule).Assembly);
+
+        // Pages
+        services.AddPageService(options =>
+        {
+            options.Configure(PageKeys.CameraPage, typeof(ARCameraPage));
+            options.Configure(PageKeys.SettingsPage, typeof(SettingsPage));
+        });
 
         // ActivationHandler
         services.AddSingleton<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
@@ -38,7 +44,7 @@ public static class UIModule
         services.AddSingleton<ARCameraPage>();
 
         // ViewModels
-        services.AddSingleton<ARSounds.UI.WinUI.ViewModels.ShellViewModel>();
+        services.AddSingleton<ShellViewModel>();
         services.AddSingleton<AccountViewModel>();
         services.AddSingleton<ARCameraViewModel>();
         services.AddSingleton<SettingsViewModel>();

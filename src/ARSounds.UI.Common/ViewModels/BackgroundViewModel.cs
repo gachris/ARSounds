@@ -1,10 +1,8 @@
 ﻿using ARSounds.UI.Common.Contracts;
-using ARSounds.UI.Maui.Contracts;
-using ARSounds.UI.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
-namespace ARSounds.UI.Maui.ViewModels;
+namespace ARSounds.UI.Common.ViewModels;
 
 public partial class BackgroundViewModel : ObservableObject, IViewModelAware
 {
@@ -36,13 +34,13 @@ public partial class BackgroundViewModel : ObservableObject, IViewModelAware
     [RelayCommand]
     private async Task TakeTour()
     {
-        await _navigationService.PushAsync<WalkthroughPage>();
+        await _navigationService.NavigateToAsync(PageKeys.WalkthroughPage);
     }
 
     [RelayCommand]
-    private void Skip()
+    private async Task Skip()
     {
-        _navigationService.PushMain<AppShellPage>();
+        await _navigationService.NavigateToAsync(PageKeys.ShellPage, clearNavigation: true);
     }
 
     #endregion

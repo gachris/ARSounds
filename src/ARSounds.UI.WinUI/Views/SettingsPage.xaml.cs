@@ -6,6 +6,7 @@ public sealed partial class SettingsPage : Page
 {
     public SettingsPage()
     {
+        DataContext = ViewModelLocator.SettingsViewModel;
         InitializeComponent();
     }
 }
