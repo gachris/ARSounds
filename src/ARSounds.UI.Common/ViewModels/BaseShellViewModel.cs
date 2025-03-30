@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using MediatR;
 
-namespace ARSounds.UI.Common.ViewModel;
+namespace ARSounds.UI.Common.ViewModels;
 
 public abstract class BaseShellViewModel : ObservableObject
 {

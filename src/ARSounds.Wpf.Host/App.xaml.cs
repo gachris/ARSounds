@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using ARSounds.UI.Wpf.Contracts;
+using ARSounds.UI.Common.Contracts;
 using ARSounds.Wpf.Host.Helpers;
 using CommonServiceLocator;
 
@@ -8,7 +8,7 @@ namespace ARSounds.Wpf.Host;
 /// <summary>
 /// Interaction logic for App.xaml
 /// </summary>
-public partial class App : System.Windows.Application, IApplication
+public partial class App : System.Windows.Application
 {
     #region Fields/Consts
 

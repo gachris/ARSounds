@@ -35,23 +35,20 @@ public static class IocConfiguration
                .UseContentRoot(AppContext.BaseDirectory)
                .ConfigureServices((context, services) =>
                {
+                   services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
+                   
+                   var appConfiguration = context.Configuration.GetRequiredSection(nameof(AppConfiguration)).Get<AppConfiguration>();
+                   ArgumentNullException.ThrowIfNull(appConfiguration, nameof(appConfiguration));
+                   
+                   services.AddSingleton(appConfiguration);
+                   services.AddSingleton(t => ServiceLocator.Current);
+                   services.AddDataStore(appConfiguration.ApplicationName, false);
+                   services.ConfigureOpenVision(appConfiguration.OpenVisionWebSocketUrl);
+               
                    if (SynchronizationContext.Current is not null)
                    {
                        services.AddSingleton(SynchronizationContext.Current);
                    }
-
-                   var appConfiguration = context.Configuration.GetRequiredSection(nameof(AppConfiguration)).Get<AppConfiguration>();
-                   ArgumentNullException.ThrowIfNull(appConfiguration, nameof(appConfiguration));
-
-                   services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
-
-                   services.AddSingleton(appConfiguration);
-
-                   // TODO: must moved to ApplicationModule
-                   services.AddSingleton<IDataStore, FileDataStore>(t => new FileDataStore(appConfiguration.ApplicationName));
-                   services.AddSingleton(t => ServiceLocator.Current);
-
-                   services.ConfigureOpenVision(appConfiguration.OpenVisionWebSocketUrl);
 
                    services.AddCore();
                    services.AddApplication();
@@ -65,15 +62,12 @@ public static class IocConfiguration
 
             AppHost = builder.Build();
 
-            // Set ServiceLocator provider for legacy use
             ServiceLocator.SetLocatorProvider(() => new AppServiceLocator(AppHost.Services));
 
-            // Initialize and register the MainWindow
             InitializeMainWindow();
         }
         catch (Exception ex)
         {
-            // Handle initialization failures (logging, UI message, etc.)
             Console.WriteLine($"Error setting up the IoC: {ex.Message}");
             throw;
         }
@@ -88,7 +82,6 @@ public static class IocConfiguration
 
         AppWindow = new MainWindow();
 
-        // Register the AppWindow in the window service
         var appWindowService = AppHost?.Services.GetService<IAppWindowService>()
             ?? throw new InvalidOperationException("Failed to retrieve IAppWindowService from IoC container.");
 

@@ -1,4 +1,6 @@
-﻿namespace ARSounds.UI.Maui.Localization;
+﻿using ARSounds.UI.Common.Localization;
+
+namespace ARSounds.UI.Maui.Localization;
 
 [ContentProperty(nameof(Text))]
 [RequireService([typeof(IProvideValueTarget)])]

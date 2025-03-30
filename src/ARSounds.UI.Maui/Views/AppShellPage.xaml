@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Shell
-    x:Class="ARSounds.UI.Maui.Views.AppShell"
+    x:Class="ARSounds.UI.Maui.Views.AppShellPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:loc="clr-namespace:ARSounds.UI.Maui.Localization"
@@ -8,7 +8,7 @@
     xmlns:ui="clr-namespace:ARSounds.UI.Maui"
     xmlns:viewModels="clr-namespace:ARSounds.UI.Common.ViewModels;assembly=ARSounds.UI.Common"
     xmlns:views="clr-namespace:ARSounds.UI.Maui.Views;assembly=ARSounds.UI.Maui"
-    Title="ARSounds"
+    Title="{loc:LocalizationResource Text=Application_title}"
     FlyoutHeaderBehavior="Fixed">
     <Shell.Resources>
         <ResourceDictionary>
@@ -40,8 +40,8 @@
                         Command="{Binding SignOutCommand}">
                         <ImageButton.Source>
                             <FontImageSource
-                                FontFamily="Segoe MDL2 Assets"
-                                Glyph="&#xF3B1;"
+                                FontFamily="MaterialIconsOutlined"
+                                Glyph="&#xe9ba;"
                                 Size="16" />
                         </ImageButton.Source>
                     </ImageButton>
@@ -97,30 +97,30 @@
                 Text="{loc:LocalizationResource Text=Add_account}">
                 <Button.ImageSource>
                     <FontImageSource
-                        FontFamily="Segoe MDL2 Assets"
-                        Glyph="&#xE77B;"
-                        Size="16"
+                        FontFamily="MaterialIconsOutlined"
+                        Glyph="&#xe7fe;"
+                        Size="22"
                         Color="{DynamicResource White}" />
                 </Button.ImageSource>
             </Button>
         </ContentView>
     </Shell.FlyoutFooter>
-    <FlyoutItem Title="Camera" Route="Camera">
+    <FlyoutItem Title="{loc:LocalizationResource Text=Camera}" Route="Camera">
         <FlyoutItem.Icon>
             <FontImageSource
-                FontFamily="Segoe MDL2 Assets"
-                Glyph="&#xE722;"
+                FontFamily="MaterialIconsOutlined"
+                Glyph="&#xe04b;"
                 Size="24" />
         </FlyoutItem.Icon>
-        <ShellContent Title="Camera" ContentTemplate="{DataTemplate views:ARCameraPage}" />
+        <ShellContent Title="{loc:LocalizationResource Text=Camera}" ContentTemplate="{DataTemplate views:ARCameraPage}" />
     </FlyoutItem>
-    <FlyoutItem Title="Settings" Route="Settings">
+    <FlyoutItem Title="{loc:LocalizationResource Text=Settings}" Route="Settings">
         <FlyoutItem.Icon>
             <FontImageSource
-                FontFamily="Segoe MDL2 Assets"
-                Glyph="&#xE713;"
+                FontFamily="MaterialIconsOutlined"
+                Glyph="&#xe8b8;"
                 Size="24" />
         </FlyoutItem.Icon>
-        <ShellContent Title="Settings" ContentTemplate="{DataTemplate views:SettingsPage}" />
+        <ShellContent ContentTemplate="{DataTemplate views:SettingsPage}" />
     </FlyoutItem>
 </Shell>

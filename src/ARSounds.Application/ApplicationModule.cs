@@ -10,10 +10,16 @@ public static class ApplicationModule
 {
     #region Methods
 
+    public static void AddDataStore(this IServiceCollection services, string folder, bool fullPath)
+    {
+        services.AddSingleton<IDataStore, FileDataStore>(t => new FileDataStore(folder, fullPath));
+    }
+
     public static void AddApplication(this IServiceCollection services)
     {
         services.AddMediatR((configuration) => configuration.RegisterServicesFromAssembly(typeof(ApplicationModule).Assembly));
-
+        
+        services.AddSingleton<IAuthService, AuthService>();
         services.AddSingleton<IFileService, FileService>();
         services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
         services.AddSingleton<ITargetsService, TargetsService>();

@@ -1,5 +1,6 @@
 ﻿using ARSounds.Application.Services;
 using ARSounds.UI.Common;
+using ARSounds.UI.Common.Contracts;
 using ARSounds.UI.Common.ViewModels;
 using ARSounds.UI.WinUI.Activation;
 using ARSounds.UI.WinUI.Browser;
@@ -19,30 +20,34 @@ public static class UIModule
 
     public static void AddUI(this IServiceCollection services)
     {
+        // Services
         services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
         services.AddSingleton<IActivationService, ActivationService>();
         services.AddSingleton<IPageService, PageService>();
-        services.AddSingleton<INavigationService, NavigationService>();
         services.AddSingleton<IAppWindowService, AppWindowService>();
         services.AddSingleton<IDialogService, DialogService>();
-        services.AddSingleton<IBrowser, WebAuthenticatorBrowser>();
-        services.AddSingleton<IAuthService, AuthService>();
-
-        services.AddSingleton<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
-
+        services.AddSingleton<IAppUISettings, AppUISettings>();
+        services.AddSingleton<INavigationService, NavigationService>();
         services.AddIUIServices(typeof(UIModule).Assembly);
 
-        services.AddSingleton<ShellPage>();
-        services.AddSingleton<ShellViewModel>();
+        // ActivationHandler
+        services.AddSingleton<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
 
-        services.AddSingleton<AccountViewModel>();
+        // WebAuthenticatorBrowser
+        services.AddSingleton<IBrowser, WebAuthenticatorBrowser>();
 
-        services.AddSingleton<ARCameraPage>();
-        services.AddSingleton<ARCameraViewModel>();
-
+        // Controls
+        services.AddSingleton<AppShellPage>();
         services.AddSingleton<SettingsPage>();
+        services.AddSingleton<ARCameraPage>();
+
+        // ViewModels
+        services.AddSingleton<ShellViewModel>();
+        services.AddSingleton<AccountViewModel>();
+        services.AddSingleton<ARCameraViewModel>();
         services.AddSingleton<SettingsViewModel>();
 
+        // AutoMapper
         services.AddAutoMapper(typeof(UIModule).Assembly);
     }
 

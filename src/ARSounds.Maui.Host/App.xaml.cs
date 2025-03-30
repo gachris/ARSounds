@@ -1,4 +1,4 @@
-﻿using ARSounds.UI.Maui.Contracts;
+﻿using ARSounds.UI.Common.Contracts;
 using ARSounds.UI.Maui.Services;
 using ARSounds.UI.Maui.Views;
 using CommonServiceLocator;
@@ -36,7 +36,7 @@ public partial class App : Microsoft.Maui.Controls.Application
         }
         else
         {
-            mainPage = IPlatformApplication.Current?.Services.GetService<AppShell>()!;
+            mainPage = IPlatformApplication.Current?.Services.GetService<AppShellPage>()!;
         }
 
         var window = new Window(mainPage)

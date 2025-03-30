@@ -87,7 +87,7 @@ public partial class WalkthroughViewModel : ObservableObject, IViewModelAware
     [RelayCommand]
     private void Skip()
     {
-        _navigationService.PushMain<AppShell>();
+        _navigationService.PushMain<AppShellPage>();
     }
 
     [RelayCommand]
@@ -98,7 +98,7 @@ public partial class WalkthroughViewModel : ObservableObject, IViewModelAware
             return;
         }
 
-        _navigationService.PushMain<AppShell>();
+        _navigationService.PushMain<AppShellPage>();
     }
 
     #endregion

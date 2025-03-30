@@ -1,5 +1,6 @@
 ﻿using ARSounds.Application.Services;
 using ARSounds.UI.Common;
+using ARSounds.UI.Common.Contracts;
 using ARSounds.UI.Common.ViewModels;
 using ARSounds.UI.Wpf.Browser;
 using ARSounds.UI.Wpf.Contracts;
@@ -17,26 +18,27 @@ public static class UIModule
 
     public static void AddUI(this IServiceCollection services)
     {
-        services.AddSingleton<IAppUISettings, AppUISettings>();
-        services.AddSingleton<IApplicationService, ApplicationService>();
-        services.AddSingleton<INavigationService, NavigationService>();
+        // Services
         services.AddSingleton<IDialogService, DialogService>();
-        services.AddSingleton<IBrowser, WebAuthenticatorBrowser>();
-        services.AddSingleton<IAuthService, AuthService>();
-
+        services.AddSingleton<IAppUISettings, AppUISettings>();
+        services.AddSingleton<INavigationService, NavigationService>();
         services.AddIUIServices(typeof(UIModule).Assembly);
 
-        services.AddSingleton<ShellView>();
-        services.AddSingleton<ShellViewModel>();
+        // WebAuthenticatorBrowser
+        services.AddSingleton<IBrowser, WebAuthenticatorBrowser>();
 
-        services.AddSingleton<AccountViewModel>();
-
+        // Controls
+        services.AddSingleton<AppShellView>();
         services.AddSingleton<ARCameraPage>();
-        services.AddSingleton<ARCameraViewModel>();
-
         services.AddSingleton<SettingsPage>();
+
+        // ViewModels
+        services.AddSingleton<ShellViewModel>();
+        services.AddSingleton<AccountViewModel>();
+        services.AddSingleton<ARCameraViewModel>();
         services.AddSingleton<SettingsViewModel>();
 
+        // AutoMapper
         services.AddAutoMapper(typeof(UIModule).Assembly);
     }
 

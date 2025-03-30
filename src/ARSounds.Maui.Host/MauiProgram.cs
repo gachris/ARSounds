@@ -2,7 +2,6 @@
 using ARSounds.Application.Services;
 using ARSounds.Core;
 using ARSounds.Core.Configuration;
-using ARSounds.Maui.Host.Helpers;
 using ARSounds.UI.Common;
 using ARSounds.UI.Maui;
 using CommonServiceLocator;
@@ -15,57 +14,96 @@ namespace ARSounds.Maui.Host;
 
 public static class MauiProgram
 {
+    #region Methods
+
     public static MauiApp CreateMauiApp()
     {
-        var builder = MauiApp.CreateBuilder();
-        builder
-            .UseMauiApp<App>()
-            .UseMauiCommunityToolkit()
-            .UseMauiCompatibility()
-            .ConfigureFonts(fonts =>
-            {
-                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-            })
-            .ConfigureMauiHandlers(handlers =>
-            {
-                handlers.AddHandler<ARCamera, ARCameraHandler>();
-            });
+        try
+        {
+            var builder = MauiApp.CreateBuilder();
 
+            builder.Configuration.AddAppSettings();
+
+            builder
+                .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
+                .UseMauiCompatibility()
+                .ConfigureFonts(fonts =>
+                {
+                    fonts.AddMaterialIcons();
+
+                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                })
+                .ConfigureMauiHandlers(handlers =>
+                {
+                    handlers.AddHandler<ARCamera, ARCameraHandler>();
+                })
+                .ConfigureServices(services =>
+                {
+                    services.Configure<LocalSettingsOptions>(builder.Configuration.GetSection(nameof(LocalSettingsOptions)));
+
+                    var appConfiguration = builder.Configuration.GetRequiredSection(nameof(AppConfiguration)).Get<AppConfiguration>();
+                    ArgumentNullException.ThrowIfNull(appConfiguration, nameof(appConfiguration));
+
+                    var folderPath = Path.Combine(FileSystem.Current.AppDataDirectory, appConfiguration.ApplicationName);
+
+                    services.AddSingleton(appConfiguration);
+                    services.AddSingleton(t => ServiceLocator.Current);
+                    services.AddDataStore(folderPath, true);
+                    services.ConfigureOpenVision(appConfiguration.OpenVisionWebSocketUrl);
+
+                    if (SynchronizationContext.Current is not null)
+                    {
+                        services.AddSingleton(t => SynchronizationContext.Current);
+                    }
+
+                    services.AddCore();
+                    services.AddApplication();
+                    services.AddUI();
+                });
+
+            var mauiApp = builder.Build();
+
+            ServiceLocator.SetLocatorProvider(() => new AppServiceLocator(mauiApp.Services));
+
+            return mauiApp;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error setting up the IoC: {ex.Message}");
+            throw;
+        }
+    }
+
+    private static IConfigurationBuilder AddAppSettings(this IConfigurationBuilder configuration)
+    {
+        var fileName = "appsettings";
+
+        configuration
+            .AddJsonStreamPackageFile($"{fileName}.json");
 #if WINDOWS
-        builder.Configuration
-            .AddJsonFromPackageFile("appsettings.windows.json");
-#else
-        builder.Configuration
-            .AddJsonFromPackageFile("appsettings.android.json");
+        configuration
+            .AddJsonStreamPackageFile($"{fileName}.windows.json");
+#elif ANDROID
+        configuration
+            .AddJsonStreamPackageFile($"{fileName}.android.json");
 #endif
 
-        if (SynchronizationContext.Current is not null)
-            builder.Services.AddSingleton(SynchronizationContext.Current);
-
-        var appConfiguration = builder.Configuration.GetRequiredSection(nameof(AppConfiguration)).Get<AppConfiguration>()!;
-
-        builder.Services.AddSingleton(appConfiguration);
-
-        var appData = FileSystem.Current.AppDataDirectory;
-        var folderPath =  Path.Combine(appData, appConfiguration.ApplicationName);
-        builder.Services.AddSingleton<IDataStore, FileDataStore>(t => new FileDataStore(folderPath, true));
-
-        builder.Services.AddSingleton(Connectivity.Current);
-        builder.Services.AddSingleton(t => ServiceLocator.Current);
-
-        builder.Services.AddLocalization();
-
-        builder.Services.ConfigureOpenVision(appConfiguration.OpenVisionWebSocketUrl);
-
-        builder.Services.AddCore();
-        builder.Services.AddApplication();
-        builder.Services.AddUI();
-
-        var mauiApp = builder.Build();
-
-        ServiceLocator.SetLocatorProvider(() => new AppServiceLocator(mauiApp.Services));
-
-        return mauiApp;
+        return configuration;
     }
+
+    private static IConfigurationBuilder AddJsonStreamPackageFile(this IConfigurationBuilder configuration, string fileName)
+    {
+        using var stream = FileSystem.OpenAppPackageFileAsync(fileName).ConfigureAwait(false).GetAwaiter().GetResult();
+        return configuration.AddJsonStream(stream);
+    }
+
+    private static MauiAppBuilder ConfigureServices(this MauiAppBuilder mauiAppBuilder, Action<IServiceCollection> configureDelegate)
+    {
+        configureDelegate.Invoke(mauiAppBuilder.Services);
+        return mauiAppBuilder;
+    }
+
+    #endregion
 }

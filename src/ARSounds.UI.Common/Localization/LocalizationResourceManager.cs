@@ -2,7 +2,7 @@
 using System.Globalization;
 using ARSounds.Localization.Properties;
 
-namespace ARSounds.UI.WinUI.Localization;
+namespace ARSounds.UI.Common.Localization;
 
 public class LocalizationResourceManager : INotifyPropertyChanged
 {

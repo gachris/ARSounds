@@ -1,11 +1,14 @@
 ﻿using System.Reflection;
 using ARSounds.Application.Services;
-using ARSounds.Localization.Properties;
 using ARSounds.UI.Common.Contracts;
+using ARSounds.UI.Common.Helpers;
 using ARSounds.UI.Common.Media;
-using DevToolbox.Wpf.Media;
+using ARSounds.UI.WinUI.Contracts;
+using ARSounds.UI.WinUI.Helpers;
+using Microsoft.UI.Xaml;
+using Windows.ApplicationModel;
 
-namespace ARSounds.UI.Wpf.Services;
+namespace ARSounds.UI.WinUI.Services;
 
 public class AppUISettings : IAppUISettings
 {
@@ -14,6 +17,7 @@ public class AppUISettings : IAppUISettings
     private const string SettingsKey = "AppBackgroundRequestedTheme";
 
     private readonly ILocalSettingsService _localSettingsService;
+    private readonly IThemeSelectorService _themeSelectorService;
 
     #endregion
 
@@ -23,8 +27,9 @@ public class AppUISettings : IAppUISettings
 
     #endregion
 
-    public AppUISettings(ILocalSettingsService localSettingsService)
+    public AppUISettings(ILocalSettingsService localSettingsService, IThemeSelectorService themeSelectorService)
     {
+        _themeSelectorService = themeSelectorService;
         _localSettingsService = localSettingsService;
     }
 
@@ -32,17 +37,16 @@ public class AppUISettings : IAppUISettings
 
     public async Task InitializeAsync()
     {
-        FontSizeManager.TextScaleEnabled = true;
-
         var themeName = await _localSettingsService.ReadSettingAsync<string>(SettingsKey);
 
         if (!Enum.TryParse(themeName, out ElementTheme cacheTheme))
         {
-            cacheTheme = ElementTheme.WindowsDefault;
+            cacheTheme = ElementTheme.Default;
         }
 
         Theme = ElementThemeToTheme(cacheTheme);
-        ThemeManager.RequestedTheme = ThemeToElementTheme(Theme);
+
+        await _themeSelectorService.SetThemeAsync(ThemeToElementTheme(Theme));
     }
 
     public async Task SetThemeAsync(Theme theme)
@@ -50,21 +54,32 @@ public class AppUISettings : IAppUISettings
         await _localSettingsService.SaveSettingAsync(SettingsKey, theme.ToString());
 
         Theme = theme;
-        ThemeManager.RequestedTheme = ThemeToElementTheme(Theme);
+
+        await _themeSelectorService.SetThemeAsync(ThemeToElementTheme(Theme));
     }
 
     public string GetVersionDescription()
     {
-        var version = Assembly.GetExecutingAssembly().GetName().Version!;
-        return $"{Resources.Application_title} - {version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
+        Version version;
+
+        if (RuntimeHelper.IsMSIX)
+        {
+            var packageVersion = Package.Current.Id.Version;
+            version = new(packageVersion.Major, packageVersion.Minor, packageVersion.Build, packageVersion.Revision);
+        }
+        else
+        {
+            version = Assembly.GetExecutingAssembly().GetName().Version!;
+        }
+
+        return $"{"AppDisplayName".GetLocalized()} - {version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
     }
 
-    private static Theme ElementThemeToTheme(ElementTheme elementTheme)
+    private static Theme ElementThemeToTheme(ElementTheme theme)
     {
-        return elementTheme switch
+        return theme switch
         {
             ElementTheme.Default => Theme.Default,
-            ElementTheme.WindowsDefault => Theme.Default,
             ElementTheme.Light => Theme.Light,
             ElementTheme.Dark => Theme.Dark,
             _ => throw new Exception(),
@@ -75,7 +90,7 @@ public class AppUISettings : IAppUISettings
     {
         return theme switch
         {
-            Theme.Default => ElementTheme.WindowsDefault,
+            Theme.Default => ElementTheme.Default,
             Theme.Light => ElementTheme.Light,
             Theme.Dark => ElementTheme.Dark,
             _ => throw new Exception(),

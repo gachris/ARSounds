@@ -3,12 +3,11 @@
     x:Class="ARSounds.UI.Maui.Views.SettingsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:app="clr-namespace:Microsoft.Maui.ApplicationModel;assembly=Microsoft.Maui.Essentials"
     xmlns:behaviors="clr-namespace:ARSounds.UI.Maui.Behavior"
     xmlns:converters="clr-namespace:ARSounds.UI.Maui.Converters"
     xmlns:loc="clr-namespace:ARSounds.UI.Maui.Localization"
-    xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
-    xmlns:viewModels="clr-namespace:ARSounds.UI.Maui.ViewModels"
+    xmlns:media="clr-namespace:ARSounds.UI.Common.Media;assembly=ARSounds.UI.Common"
+    xmlns:viewModels="clr-namespace:ARSounds.UI.Common.ViewModels;assembly=ARSounds.UI.Common"
     x:DataType="{x:Type viewModels:SettingsViewModel}">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -28,25 +27,25 @@
                 <VerticalStackLayout Margin="0,8,0,0">
                     <RadioButton
                         behaviors:RadioButtonCommandBehavior.Command="{Binding SwitchThemeCommand}"
-                        behaviors:RadioButtonCommandBehavior.CommandParameter="{x:Static app:AppTheme.Light}"
+                        behaviors:RadioButtonCommandBehavior.CommandParameter="{x:Static media:Theme.Light}"
                         Content="{loc:LocalizationResource Text=Light}"
                         FontSize="15"
                         GroupName="AppTheme"
-                        IsChecked="{Binding AppTheme, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light}" />
+                        IsChecked="{Binding Theme, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light}" />
                     <RadioButton
                         behaviors:RadioButtonCommandBehavior.Command="{Binding SwitchThemeCommand}"
-                        behaviors:RadioButtonCommandBehavior.CommandParameter="{x:Static app:AppTheme.Dark}"
+                        behaviors:RadioButtonCommandBehavior.CommandParameter="{x:Static media:Theme.Dark}"
                         Content="{loc:LocalizationResource Text=Dark}"
                         FontSize="15"
                         GroupName="AppTheme"
-                        IsChecked="{Binding AppTheme, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark}" />
+                        IsChecked="{Binding Theme, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark}" />
                     <RadioButton
                         behaviors:RadioButtonCommandBehavior.Command="{Binding SwitchThemeCommand}"
-                        behaviors:RadioButtonCommandBehavior.CommandParameter="{x:Static app:AppTheme.Unspecified}"
+                        behaviors:RadioButtonCommandBehavior.CommandParameter="{x:Static media:Theme.Default}"
                         Content="{loc:LocalizationResource Text=System_theme}"
                         FontSize="15"
                         GroupName="AppTheme"
-                        IsChecked="{Binding AppTheme, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Unspecified}" />
+                        IsChecked="{Binding Theme, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Default}" />
                 </VerticalStackLayout>
             </VerticalStackLayout>
             <Label FontSize="22" Text="{loc:LocalizationResource Text=About_application}" />

@@ -8,7 +8,7 @@ public partial class MainWindow : WindowEx
 {
     public MainWindow()
     {
-        Content = ServiceLocator.Current.GetInstance<ShellView>();
+        Content = ServiceLocator.Current.GetInstance<AppShellView>();
         InitializeComponent();
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using ARSounds.UI.Common.Localization;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Markup;
 

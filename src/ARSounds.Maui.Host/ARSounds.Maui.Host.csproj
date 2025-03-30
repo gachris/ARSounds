@@ -53,10 +53,11 @@
 		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" />
+		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\ARSounds.UI.Maui\ARSounds.UI.Maui.csproj" />
 	</ItemGroup>
-
+	
 </Project>

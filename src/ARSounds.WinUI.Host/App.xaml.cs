@@ -1,4 +1,5 @@
-﻿using ARSounds.UI.WinUI.Contracts;
+﻿using ARSounds.UI.Common.Contracts;
+using ARSounds.UI.WinUI.Contracts;
 using ARSounds.WinUI.Host.Helpers;
 using CommonServiceLocator;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +27,9 @@ public partial class App : Microsoft.UI.Xaml.Application
     protected async override void OnLaunched(LaunchActivatedEventArgs args)
     {
         base.OnLaunched(args);
+
+        var applicationManager = ServiceLocator.Current.GetInstance<IAppUISettings>();
+        await applicationManager.InitializeAsync();
 
         await ServiceLocator.Current.GetService<IActivationService>()!.ActivateAsync(args);
     }

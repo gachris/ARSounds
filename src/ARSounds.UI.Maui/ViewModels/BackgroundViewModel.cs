@@ -42,7 +42,7 @@ public partial class BackgroundViewModel : ObservableObject, IViewModelAware
     [RelayCommand]
     private void Skip()
     {
-        _navigationService.PushMain<AppShell>();
+        _navigationService.PushMain<AppShellPage>();
     }
 
     #endregion

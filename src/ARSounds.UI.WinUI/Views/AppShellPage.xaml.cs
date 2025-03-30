@@ -11,7 +11,7 @@ using Windows.UI.ViewManagement;
 
 namespace ARSounds.UI.WinUI.Views;
 
-public sealed partial class ShellPage : Page
+public sealed partial class AppShellPage : Page
 {
     #region Fields/Consts
 
@@ -28,7 +28,7 @@ public sealed partial class ShellPage : Page
 
     #endregion
 
-    public ShellPage(ShellViewModel viewModel, IAppWindowService appWindowService, INavigationService navigationService)
+    public AppShellPage(ShellViewModel viewModel, IAppWindowService appWindowService, INavigationService navigationService)
     {
         _appWindowService = appWindowService;
 

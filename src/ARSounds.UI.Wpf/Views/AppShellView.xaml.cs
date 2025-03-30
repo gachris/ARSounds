@@ -5,7 +5,7 @@ using ARSounds.UI.Wpf.ViewModels;
 
 namespace ARSounds.UI.Wpf.Views;
 
-public partial class ShellView : UserControl
+public partial class AppShellView : UserControl
 {
     #region Fields/Consts
 
@@ -13,7 +13,7 @@ public partial class ShellView : UserControl
 
     #endregion
 
-    public ShellView(ShellViewModel viewModel, INavigationService navigationService)
+    public AppShellView(ShellViewModel viewModel, INavigationService navigationService)
     {
         DataContext = viewModel;
         InitializeComponent();

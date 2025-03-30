@@ -1,5 +1,5 @@
 ﻿using ARSounds.UI.Common.Contracts;
-using ARSounds.UI.Common.ViewModel;
+using ARSounds.UI.Common.ViewModels;
 using MediatR;
 
 namespace ARSounds.UI.Maui.ViewModels;

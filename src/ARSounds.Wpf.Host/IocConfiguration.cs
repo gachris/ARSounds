@@ -4,7 +4,6 @@ using ARSounds.Core;
 using ARSounds.Core.Configuration;
 using ARSounds.UI.Common;
 using ARSounds.UI.Wpf;
-using ARSounds.UI.Wpf.Contracts;
 using CommonServiceLocator;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,23 +32,20 @@ public static class IocConfiguration
                .UseContentRoot(AppContext.BaseDirectory)
                .ConfigureServices((context, services) =>
                {
-                   if (SynchronizationContext.Current is not null)
-                   {
-                       services.AddSingleton(t => SynchronizationContext.Current);
-                   }
+                   services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
 
                    var appConfiguration = context.Configuration.GetRequiredSection(nameof(AppConfiguration)).Get<AppConfiguration>();
                    ArgumentNullException.ThrowIfNull(appConfiguration, nameof(appConfiguration));
 
                    services.AddSingleton(appConfiguration);
-
-                   // TODO: must moved to ApplicationModule
-                   services.AddSingleton<IDataStore, FileDataStore>(t => new FileDataStore(appConfiguration.ApplicationName));
-
-                   services.AddSingleton<IApplication>(sp => (App)System.Windows.Application.Current);
                    services.AddSingleton(t => ServiceLocator.Current);
-
+                   services.AddDataStore(appConfiguration.ApplicationName, false);
                    services.ConfigureOpenVision(appConfiguration.OpenVisionWebSocketUrl);
+
+                   if (SynchronizationContext.Current is not null)
+                   {
+                       services.AddSingleton(t => SynchronizationContext.Current);
+                   }
 
                    services.AddCore();
                    services.AddApplication();
