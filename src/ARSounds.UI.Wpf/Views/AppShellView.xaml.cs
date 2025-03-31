@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using ARSounds.UI.Common;
 using ARSounds.UI.Common.Contracts;
+using ARSounds.UI.Common.Data;
 using ARSounds.UI.Common.Extensions;
 using ARSounds.UI.Common.ViewModels;
 

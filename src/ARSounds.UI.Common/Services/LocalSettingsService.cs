@@ -1,5 +1,5 @@
 ﻿using ARSounds.UI.Common.Contracts;
-using ARSounds.UI.Common.Services.Extensions;
+using ARSounds.UI.Common.Extensions;
 using Microsoft.Extensions.Options;
 
 namespace ARSounds.UI.Common.Services;
@@ -35,7 +35,17 @@ public class LocalSettingsService : ILocalSettingsService
         _settings = [];
     }
 
-    #region ILocalSettingsService Implementation
+    #region Methods
+
+    private async Task InitializeAsync()
+    {
+        if (!_isInitialized)
+        {
+            _settings = await Task.Run(() => _fileService.Read<Dictionary<string, object>>(_applicationDataFolder, _localSettingsFile)) ?? [];
+
+            _isInitialized = true;
+        }
+    }
 
     public async Task<T?> ReadSettingAsync<T>(string key)
     {
@@ -51,20 +61,6 @@ public class LocalSettingsService : ILocalSettingsService
         _settings[key] = await Json.StringifyAsync(value);
 
         await Task.Run(() => _fileService.Save(_applicationDataFolder, _localSettingsFile, _settings));
-    }
-
-    #endregion
-
-    #region Methods
-
-    private async Task InitializeAsync()
-    {
-        if (!_isInitialized)
-        {
-            _settings = await Task.Run(() => _fileService.Read<Dictionary<string, object>>(_applicationDataFolder, _localSettingsFile)) ?? [];
-
-            _isInitialized = true;
-        }
     }
 
     #endregion

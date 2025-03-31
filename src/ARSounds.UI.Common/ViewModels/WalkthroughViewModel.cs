@@ -42,20 +42,20 @@ public partial class WalkthroughViewModel : ObservableObject, IViewModelAware
         _boardingsReadOnlyCollection = new ReadOnlyObservableCollection<WalkthroughBoarding>
         (
             [
-                new WalkthroughBoarding("walkthrough_01_image.jpg", Resources.StringWalkthroughTitleStep1, Resources.StringWalkthroughSubtitleStep1),
-                new WalkthroughBoarding("walkthrough_02_image.jpg", Resources.StringWalkthroughTitleStep2, Resources.StringWalkthroughSubtitleStep2),
-                new WalkthroughBoarding("walkthrough_03_image.jpg", Resources.StringWalkthroughTitleStep3, Resources.StringWalkthroughSubtitleStep3),
+                new WalkthroughBoarding("walkthrough_01_image.jpg", Resources.Walkthrough_title_step_1, Resources.Walkthrough_subtitle_step_1),
+                new WalkthroughBoarding("walkthrough_02_image.jpg", Resources.Walkthrough_title_step_2, Resources.Walkthrough_subtitle_step_2),
+                new WalkthroughBoarding("walkthrough_03_image.jpg", Resources.Walkthrough_title_step_3, Resources.Walkthrough_subtitle_step_3),
             ]
         );
     }
 
     #region Methods
 
-    public void OnNavigated()
+    public virtual void OnNavigated()
     {
     }
 
-    public void OnNavigatedAway()
+    public virtual void OnNavigatedAway()
     {
     }
 
@@ -85,7 +85,7 @@ public partial class WalkthroughViewModel : ObservableObject, IViewModelAware
     [RelayCommand]
     private async Task Skip()
     {
-        await _navigationService.NavigateToAsync(PageKeys.ShellPage, clearNavigation: true);
+        await _navigationService.NavigateToAsync(PageKeys.CameraPage, clearNavigation: true);
     }
 
     [RelayCommand]
@@ -96,7 +96,7 @@ public partial class WalkthroughViewModel : ObservableObject, IViewModelAware
             return;
         }
 
-        await _navigationService.NavigateToAsync(PageKeys.ShellPage, clearNavigation: true);
+        await _navigationService.NavigateToAsync(PageKeys.CameraPage, clearNavigation: true);
     }
 
     #endregion

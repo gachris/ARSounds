@@ -3,7 +3,6 @@ using ARSounds.Application.Configuration;
 using ARSounds.Core;
 using ARSounds.UI.Common;
 using ARSounds.UI.Common.Services;
-using ARSounds.UI.Wpf;
 using ARSounds.UI.Wpf.Browser;
 using CommonServiceLocator;
 using Microsoft.Extensions.Configuration;
@@ -33,24 +32,23 @@ public static class IocConfiguration
                .UseContentRoot(AppContext.BaseDirectory)
                .ConfigureServices((context, services) =>
                {
-                   services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
-
+                   var webAuthenticatorBrowser = new WebAuthenticatorBrowser();
+                   var localSettingsOptionsConfiguration = context.Configuration.GetSection(nameof(LocalSettingsOptions));
                    var appConfiguration = context.Configuration.GetRequiredSection(nameof(AppConfiguration)).Get<AppConfiguration>();
                    ArgumentNullException.ThrowIfNull(appConfiguration, nameof(appConfiguration));
 
+                   services.Configure<LocalSettingsOptions>(localSettingsOptionsConfiguration);
                    services.AddSingleton(appConfiguration);
                    services.AddSingleton(t => ServiceLocator.Current);
-                   services.AddClientOptions(appConfiguration.ApplicationName, false, new WebAuthenticatorBrowser(), appConfiguration);
-                   services.ConfigureOpenVision(appConfiguration.OpenVisionWebSocketUrl);
-
-                   if (SynchronizationContext.Current is not null)
-                   {
-                       services.AddSingleton(t => SynchronizationContext.Current);
-                   }
-
+                   services.AddSynchronizationContext();
                    services.AddCore();
                    services.AddApplication();
                    services.AddUI();
+                   services.AddClient(
+                       appConfiguration,
+                       webAuthenticatorBrowser,
+                       appConfiguration.ApplicationName,
+                       false);
                })
                .ConfigureLogging(logging =>
                {

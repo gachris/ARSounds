@@ -42,26 +42,25 @@ public static class MauiProgram
                 })
                 .ConfigureServices(services =>
                 {
-                    services.Configure<LocalSettingsOptions>(builder.Configuration.GetSection(nameof(LocalSettingsOptions)));
-
+                    var webAuthenticatorBrowser = new WebAuthenticatorBrowser();
+                    var localSettingsOptionsConfiguration = builder.Configuration.GetSection(nameof(LocalSettingsOptions));
                     var appConfiguration = builder.Configuration.GetRequiredSection(nameof(AppConfiguration)).Get<AppConfiguration>();
                     ArgumentNullException.ThrowIfNull(appConfiguration, nameof(appConfiguration));
 
                     var folderPath = Path.Combine(FileSystem.Current.AppDataDirectory, appConfiguration.ApplicationName);
 
+                    services.Configure<LocalSettingsOptions>(localSettingsOptionsConfiguration);
                     services.AddSingleton(appConfiguration);
                     services.AddSingleton(t => ServiceLocator.Current);
-                    services.AddClientOptions(folderPath, true, new WebAuthenticatorBrowser(), appConfiguration);
-                    services.ConfigureOpenVision(appConfiguration.OpenVisionWebSocketUrl);
-
-                    if (SynchronizationContext.Current is not null)
-                    {
-                        services.AddSingleton(t => SynchronizationContext.Current);
-                    }
-
+                    services.AddSynchronizationContext();
                     services.AddCore();
                     services.AddApplication();
                     services.AddUI();
+                    services.AddClient(
+                        appConfiguration,
+                        webAuthenticatorBrowser,
+                        folderPath,
+                        true);
                 });
 
             var mauiApp = builder.Build();
@@ -92,18 +91,6 @@ public static class MauiProgram
 #endif
 
         return configuration;
-    }
-
-    private static IConfigurationBuilder AddJsonStreamPackageFile(this IConfigurationBuilder configuration, string fileName)
-    {
-        using var stream = FileSystem.OpenAppPackageFileAsync(fileName).ConfigureAwait(false).GetAwaiter().GetResult();
-        return configuration.AddJsonStream(stream);
-    }
-
-    private static MauiAppBuilder ConfigureServices(this MauiAppBuilder mauiAppBuilder, Action<IServiceCollection> configureDelegate)
-    {
-        configureDelegate.Invoke(mauiAppBuilder.Services);
-        return mauiAppBuilder;
     }
 
     #endregion

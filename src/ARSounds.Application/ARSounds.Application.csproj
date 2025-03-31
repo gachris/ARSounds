@@ -15,10 +15,6 @@
 		<ProjectReference Include="..\ARSounds.Core\ARSounds.Core.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Services\" />
-	</ItemGroup>
-
 	<PropertyGroup Label="Sign Assembly">
 		<SignAssembly>true</SignAssembly>
 	</PropertyGroup>

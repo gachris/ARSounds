@@ -135,15 +135,6 @@
   <data name="ARSounds_account" xml:space="preserve">
     <value>ARSounds account</value>
   </data>
-  <data name="ButtonLogin" xml:space="preserve">
-    <value>LOGIN</value>
-  </data>
-  <data name="ButtonSkip" xml:space="preserve">
-    <value>SKIP</value>
-  </data>
-  <data name="ButtonTakeTour" xml:space="preserve">
-    <value>TAKE TOUR</value>
-  </data>
   <data name="Camera" xml:space="preserve">
     <value>Camera</value>
   </data>
@@ -183,44 +174,50 @@
   <data name="Sign_out" xml:space="preserve">
     <value>Sign out</value>
   </data>
+  <data name="Skip" xml:space="preserve">
+    <value>Skip</value>
+  </data>
   <data name="Stack_Trace" xml:space="preserve">
     <value>Stack Trace</value>
   </data>
-  <data name="StringAppWelcomeSubtitle" xml:space="preserve">
-    <value>Take your App to the next level with MAUI Kit.</value>
-  </data>
-  <data name="StringAppWelcomeTitle" xml:space="preserve">
-    <value>Ready made UI's for .NET MAUI and Xamarin.Forms.</value>
-  </data>
-  <data name="StringWalkthroughSubtitleStep1" xml:space="preserve">
-    <value>To a new world of possibilities,
-welcome to ARSounds.</value>
-  </data>
-  <data name="StringWalkthroughSubtitleStep2" xml:space="preserve">
-    <value>Save countless hours of UI Design.
-Focus on what you do best.</value>
-  </data>
-  <data name="StringWalkthroughSubtitleStep3" xml:space="preserve">
-    <value>Learn while you do. 
-MAUI Kit has ton of examples for you to play.</value>
-  </data>
-  <data name="StringWalkthroughTitleStep1" xml:space="preserve">
-    <value>Welcome</value>
-  </data>
-  <data name="StringWalkthroughTitleStep2" xml:space="preserve">
-    <value>Save Time</value>
-  </data>
-  <data name="StringWalkthroughTitleStep3" xml:space="preserve">
-    <value>Learn</value>
-  </data>
   <data name="System_theme" xml:space="preserve">
     <value>System Theme</value>
+  </data>
+  <data name="Take_tour" xml:space="preserve">
+    <value>Take Tour</value>
   </data>
   <data name="Theme" xml:space="preserve">
     <value>Theme</value>
   </data>
   <data name="Unhandled_exception" xml:space="preserve">
     <value>Unhandled exception</value>
+  </data>
+  <data name="Walkthrough_subtitle_step_1" xml:space="preserve">
+    <value>To a new world of possibilities,
+welcome to ARSounds.</value>
+  </data>
+  <data name="Walkthrough_subtitle_step_2" xml:space="preserve">
+    <value>Save countless hours of UI Design.
+Focus on what you do best.</value>
+  </data>
+  <data name="Walkthrough_subtitle_step_3" xml:space="preserve">
+    <value>Learn while you do. 
+MAUI Kit has ton of examples for you to play.</value>
+  </data>
+  <data name="Walkthrough_title_step_1" xml:space="preserve">
+    <value>Welcome</value>
+  </data>
+  <data name="Walkthrough_title_step_2" xml:space="preserve">
+    <value>Save Time</value>
+  </data>
+  <data name="Walkthrough_title_step_3" xml:space="preserve">
+    <value>Learn</value>
+  </data>
+  <data name="Welcome_subtitle" xml:space="preserve">
+    <value>Take your App to the next level with MAUI Kit.</value>
+  </data>
+  <data name="Welcome_title" xml:space="preserve">
+    <value>Ready made UI's for .NET MAUI and Xamarin.Forms.</value>
   </data>
   <data name="Windows_default" xml:space="preserve">
     <value>Windows Default</value>

@@ -1,4 +1,5 @@
 ﻿using ARSounds.UI.Common.Contracts;
+using ARSounds.UI.Common.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -19,11 +20,11 @@ public partial class BackgroundViewModel : ObservableObject, IViewModelAware
 
     #region Methods
 
-    public void OnNavigated()
+    public virtual void OnNavigated()
     {
     }
 
-    public void OnNavigatedAway()
+    public virtual void OnNavigatedAway()
     {
     }
 
@@ -40,7 +41,7 @@ public partial class BackgroundViewModel : ObservableObject, IViewModelAware
     [RelayCommand]
     private async Task Skip()
     {
-        await _navigationService.NavigateToAsync(PageKeys.ShellPage, clearNavigation: true);
+        await _navigationService.NavigateToAsync(PageKeys.CameraPage, clearNavigation: true);
     }
 
     #endregion

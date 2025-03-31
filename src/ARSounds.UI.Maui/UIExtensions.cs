@@ -1,14 +1,15 @@
 ﻿using ARSounds.UI.Common;
 using ARSounds.UI.Common.Contracts;
+using ARSounds.UI.Common.Data;
 using ARSounds.UI.Common.Services;
 using ARSounds.UI.Common.ViewModels;
 using ARSounds.UI.Maui.Services;
 using ARSounds.UI.Maui.Views;
-using CommunityToolkit.Maui;
+using Microsoft.Extensions.Configuration;
 
 namespace ARSounds.UI.Maui;
 
-public static class UIModule
+public static class UIExtensions
 {
     #region Methods
 
@@ -19,12 +20,11 @@ public static class UIModule
         services.AddSingleton<INavigationService, NavigationService>();
         services.AddSingleton<IFileService, FileService>();
         services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
-        services.AddIUIServices(typeof(UIModule).Assembly);
+        services.AddIUIServices(typeof(UIExtensions).Assembly);
 
         // Pages
         services.AddPageService(options =>
         {
-            options.Configure(PageKeys.ShellPage, typeof(AppShellPage));
             options.Configure(PageKeys.CameraPage, typeof(ARCameraPage));
             options.Configure(PageKeys.SettingsPage, typeof(SettingsPage));
             options.Configure(PageKeys.BackgroundPage, typeof(BackgroundPage));
@@ -32,7 +32,7 @@ public static class UIModule
         });
 
         // Controls
-        services.AddSingleton<AppShellPage>();
+        services.AddSingleton<AppShell>();
         services.AddSingleton<ARCameraPage>();
         services.AddSingleton<SettingsPage>();
         services.AddSingleton<BackgroundPage>();
@@ -47,7 +47,7 @@ public static class UIModule
         services.AddSingleton<WalkthroughViewModel>();
 
         // AutoMapper
-        services.AddAutoMapper(typeof(UIModule).Assembly);
+        services.AddAutoMapper(typeof(UIExtensions).Assembly);
     }
 
     public static void AddMaterialIcons(this IFontCollection fonts)
@@ -57,6 +57,18 @@ public static class UIModule
         fonts.AddFont("MaterialIconsRound-Regular.otf", "MaterialIconsRound");
         fonts.AddFont("MaterialIconsSharp-Regular.otf", "MaterialIconsSharp");
         fonts.AddFont("MaterialIconsTwoTone-Regular.otf", "MaterialIconsTwoTone");
+    }
+
+    public static IConfigurationBuilder AddJsonStreamPackageFile(this IConfigurationBuilder configuration, string fileName)
+    {
+        using var stream = FileSystem.OpenAppPackageFileAsync(fileName).ConfigureAwait(false).GetAwaiter().GetResult();
+        return configuration.AddJsonStream(stream);
+    }
+
+    public static MauiAppBuilder ConfigureServices(this MauiAppBuilder mauiAppBuilder, Action<IServiceCollection> configureDelegate)
+    {
+        configureDelegate.Invoke(mauiAppBuilder.Services);
+        return mauiAppBuilder;
     }
 
     #endregion

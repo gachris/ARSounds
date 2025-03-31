@@ -1,4 +1,4 @@
-﻿using ARSounds.UI.Common.Services.Extensions;
+﻿using ARSounds.UI.Common.Extensions;
 using Windows.Storage;
 using Windows.Storage.Streams;
 

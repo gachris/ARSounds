@@ -42,16 +42,16 @@ public class DialogService : IDialogService
             {
                 Spacing = 12,
                 Children =
-            {
-                new TextBlock
                 {
-                    Text = message,
-                    TextWrapping = TextWrapping.Wrap,
-                    FontSize = 16,
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    Margin = new Thickness(0, 0, 0, 16)
+                    new TextBlock
+                    {
+                        Text = message,
+                        TextWrapping = TextWrapping.Wrap,
+                        FontSize = 16,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        Margin = new Thickness(0, 0, 0, 16)
+                    }
                 }
-            }
             },
             PrimaryButtonText = okButtonText ?? Resources.OK,
             SecondaryButtonText = cancelButtonText ?? Resources.Cancel,

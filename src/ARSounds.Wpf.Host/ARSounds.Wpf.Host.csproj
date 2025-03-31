@@ -12,13 +12,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="appsettings.json">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
+	  <ProjectReference Include="..\ARSounds.UI.Wpf\ARSounds.UI.Wpf.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\ARSounds.UI.Wpf\ARSounds.UI.Wpf.csproj" />
+		<None Update="appsettings.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 
 	<PropertyGroup Label="Sign Assembly">

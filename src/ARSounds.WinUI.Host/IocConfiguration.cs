@@ -36,24 +36,23 @@ public static class IocConfiguration
                .UseContentRoot(AppContext.BaseDirectory)
                .ConfigureServices((context, services) =>
                {
-                   services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
-                   
+                   var webAuthenticatorBrowser = new WebAuthenticatorBrowser();
+                   var localSettingsOptionsConfiguration = context.Configuration.GetSection(nameof(LocalSettingsOptions));
                    var appConfiguration = context.Configuration.GetRequiredSection(nameof(AppConfiguration)).Get<AppConfiguration>();
                    ArgumentNullException.ThrowIfNull(appConfiguration, nameof(appConfiguration));
-                   
+
+                   services.Configure<LocalSettingsOptions>(localSettingsOptionsConfiguration);
                    services.AddSingleton(appConfiguration);
                    services.AddSingleton(t => ServiceLocator.Current);
-                   services.AddClientOptions(appConfiguration.ApplicationName, false, new WebAuthenticatorBrowser(), appConfiguration);
-                   services.ConfigureOpenVision(appConfiguration.OpenVisionWebSocketUrl);
-               
-                   if (SynchronizationContext.Current is not null)
-                   {
-                       services.AddSingleton(SynchronizationContext.Current);
-                   }
-
+                   services.AddSynchronizationContext();
                    services.AddCore();
                    services.AddApplication();
                    services.AddUI();
+                   services.AddClient(
+                       appConfiguration,
+                       webAuthenticatorBrowser,
+                       appConfiguration.ApplicationName,
+                       false);
                })
                .ConfigureLogging(logging =>
                {

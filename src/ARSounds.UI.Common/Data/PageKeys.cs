@@ -1,15 +1,10 @@
-﻿namespace ARSounds.UI.Common;
+﻿namespace ARSounds.UI.Common.Data;
 
 /// <summary>
 /// Defines keys for navigating between different pages in the application.
 /// </summary>
 public static class PageKeys
 {
-    /// <summary>
-    /// Key for navigating to the Shell page (main layout or container).
-    /// </summary>
-    public const string ShellPage = "Shell";
-
     /// <summary>
     /// Key for navigating to the Camera page.
     /// </summary>

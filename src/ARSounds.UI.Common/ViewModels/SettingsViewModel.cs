@@ -37,11 +37,11 @@ public partial class SettingsViewModel : ObservableObject, IViewModelAware
 
     #region Methods
 
-    public void OnNavigated()
+    public virtual void OnNavigated()
     {
     }
 
-    public void OnNavigatedAway()
+    public virtual void OnNavigatedAway()
     {
     }
 

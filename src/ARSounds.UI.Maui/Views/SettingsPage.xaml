@@ -15,10 +15,8 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ScrollView>
-        <VerticalStackLayout Padding="32,12">
-            <Label FontSize="24" Text="{loc:LocalizationResource Text=Settings}" />
+        <VerticalStackLayout Padding="22,0">
             <Label
-                Margin="0,12,0,0"
                 FontAttributes="Bold"
                 FontSize="22"
                 Text="{loc:LocalizationResource Text=Personalization}" />

@@ -7,7 +7,8 @@
     xmlns:controls="clr-namespace:ARSounds.UI.Maui.Controls"
     xmlns:openVision="http://openVision/winfx/2021/xaml/presentation"
     xmlns:viewModels="clr-namespace:ARSounds.UI.Common.ViewModels;assembly=ARSounds.UI.Common"
-    x:DataType="{x:Type viewModels:ARCameraViewModel}">
+    x:DataType="{x:Type viewModels:ARCameraViewModel}"
+    Shell.NavBarIsVisible="False">
     <Grid>
         <openVision:ARCamera>
             <openVision:ARCamera.Behaviors>
@@ -17,6 +18,27 @@
                     TrackLostCommand="{Binding TrackLostCommand}" />
             </openVision:ARCamera.Behaviors>
         </openVision:ARCamera>
+        <ImageButton
+            x:Name="FlyoutToggleButton"
+            Margin="6,4,0,0"
+            Padding="10"
+            BackgroundColor="Transparent"
+            Clicked="OnFlyoutToggleClicked"
+            HorizontalOptions="Start"
+            VerticalOptions="Start">
+            <ImageButton.IsVisible>
+                <OnPlatform x:TypeArguments="x:Boolean">
+                    <On Platform="WinUI" Value="False" />
+                    <On Platform="Android, iOS, MacCatalyst, Tizen" Value="True" />
+                </OnPlatform>
+            </ImageButton.IsVisible>
+            <ImageButton.Source>
+                <FontImageSource
+                    FontFamily="MaterialIconsOutlined"
+                    Glyph="&#xe5d2;"
+                    Size="16" />
+            </ImageButton.Source>
+        </ImageButton>
         <controls:LoadingIndicator
             HorizontalOptions="Center"
             IsBusy="{Binding IsBusy}"

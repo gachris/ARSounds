@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="ARSounds.UI.Maui.Views.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:loc="clr-namespace:ARSounds.UI.Maui.Localization"
+    xmlns:ui="clr-namespace:ARSounds.UI.Maui"
+    xmlns:viewModels="clr-namespace:ARSounds.UI.Common.ViewModels;assembly=ARSounds.UI.Common"
+    xmlns:views="clr-namespace:ARSounds.UI.Maui.Views;assembly=ARSounds.UI.Maui"
+    Title="{loc:LocalizationResource Text=Application_title}"
+    x:DataType="{x:Type viewModels:ShellViewModel}"
+    FlyoutHeaderBehavior="Fixed">
+    <Shell.Resources>
+        <ResourceDictionary Source="../ControlTemplates/AccountTemplate.xaml" />
+    </Shell.Resources>
+    <Shell.FlyoutHeader>
+        <ContentView BindingContext="{x:Static ui:ViewModelLocator.AccountViewModel}" ControlTemplate="{StaticResource AccountHeaderTemplate}" />
+    </Shell.FlyoutHeader>
+    <Shell.FlyoutFooter>
+        <ContentView BindingContext="{x:Static ui:ViewModelLocator.AccountViewModel}" ControlTemplate="{StaticResource AccountFooterTemplate}" />
+    </Shell.FlyoutFooter>
+    <FlyoutItem Title="{loc:LocalizationResource Text=Camera}" Route="Camera">
+        <FlyoutItem.Icon>
+            <FontImageSource
+                FontFamily="MaterialIconsOutlined"
+                Glyph="&#xe04b;"
+                Size="24" />
+        </FlyoutItem.Icon>
+        <ShellContent Title="{loc:LocalizationResource Text=Camera}" ContentTemplate="{DataTemplate views:ARCameraPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="{loc:LocalizationResource Text=Settings}" Route="Settings">
+        <FlyoutItem.Icon>
+            <FontImageSource
+                FontFamily="MaterialIconsOutlined"
+                Glyph="&#xe8b8;"
+                Size="24" />
+        </FlyoutItem.Icon>
+        <ShellContent Title="{loc:LocalizationResource Text=Settings}" ContentTemplate="{DataTemplate views:SettingsPage}" />
+    </FlyoutItem>
+</Shell>

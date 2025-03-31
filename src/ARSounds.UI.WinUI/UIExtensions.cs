@@ -1,5 +1,6 @@
 ﻿using ARSounds.UI.Common;
 using ARSounds.UI.Common.Contracts;
+using ARSounds.UI.Common.Data;
 using ARSounds.UI.Common.Services;
 using ARSounds.UI.Common.ViewModels;
 using ARSounds.UI.WinUI.Activation;
@@ -11,7 +12,7 @@ using Microsoft.UI.Xaml;
 
 namespace ARSounds.UI.WinUI;
 
-public static class UIModule
+public static class UIExtensions
 {
     #region Methods
 
@@ -26,7 +27,7 @@ public static class UIModule
         services.AddSingleton<INavigationService, NavigationService>();
         services.AddSingleton<IFileService, FileService>();
         services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
-        services.AddIUIServices(typeof(UIModule).Assembly);
+        services.AddIUIServices(typeof(UIExtensions).Assembly);
 
         // Pages
         services.AddPageService(options =>
@@ -50,7 +51,7 @@ public static class UIModule
         services.AddSingleton<SettingsViewModel>();
 
         // AutoMapper
-        services.AddAutoMapper(typeof(UIModule).Assembly);
+        services.AddAutoMapper(typeof(UIExtensions).Assembly);
     }
 
     #endregion

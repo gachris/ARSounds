@@ -27,8 +27,6 @@ public partial class ARCameraViewModel : ObservableObject, IViewModelAware
 
     private readonly IMediator _mediator;
 
-    private WaveOutEvent? _waveOut;
-
     private bool _isBusy;
 
     #endregion
@@ -37,13 +35,13 @@ public partial class ARCameraViewModel : ObservableObject, IViewModelAware
 
     public string ClientApiKey { get; }
 
-    protected WaveStream? WaveStream { get; private set; }
+    protected WaveStream? WaveStream { get; set; }
 
-    protected IEnumerable<Target>? Targets { get; private set; }
-
-    protected string? LastTargetId { get; set; }
+    protected WaveOutEvent? WaveOut { get; set; }
 
     protected Target? Target { get; set; }
+
+    protected IEnumerable<Target>? Targets { get; private set; }
 
 #if WINDOWS
     protected Image<Bgra, byte>? WaveformImage { get; set; }
@@ -84,23 +82,22 @@ public partial class ARCameraViewModel : ObservableObject, IViewModelAware
         }
 
         var targetMatchResult = e.TargetMatchResults.First();
+        var target = Targets?.FirstOrDefault(x => x.VisionTargetId?.ToString() == targetMatchResult.Id);
 
-        Target = Targets?.FirstOrDefault(x => x.VisionTargetId?.ToString() == targetMatchResult.Id);
-
-        if (Target == null)
+        if (target == null)
         {
             return;
         }
 
-        if (!targetMatchResult.Id.Equals(LastTargetId))
+        if (Target is null || !target.Id.Equals(Target.Id))
         {
-            LastTargetId = targetMatchResult.Id;
+            Target = target;
+            WaveformImage = ARCameraHelper.DecodeBase64(Target.ImageBase64!);
 
             var audioBase64 = Regex.Replace(Target.AudioBase64, "^data:audio/[^;]+;base64,", "");
             var audioBytes = Convert.FromBase64String(audioBase64);
+          
             PlayAudio(audioBytes);
-
-            WaveformImage = ARCameraHelper.DecodeBase64(Target.ImageBase64!);
         }
 
         var audioProgress = 0d;
@@ -122,7 +119,6 @@ public partial class ARCameraViewModel : ObservableObject, IViewModelAware
     private void TrackLost()
     {
         Target = null;
-        LastTargetId = null;
         WaveformImage = null;
 
         StopAudio();
@@ -146,18 +142,18 @@ public partial class ARCameraViewModel : ObservableObject, IViewModelAware
         StopAudio();
 
         WaveStream = new Mp3FileReader(new MemoryStream(audioBytes));
-        _waveOut = new WaveOutEvent();
-        _waveOut.Init(WaveStream);
-        _waveOut.Play();
+        WaveOut = new WaveOutEvent();
+        WaveOut.Init(WaveStream);
+        WaveOut.Play();
     }
 
     protected virtual void StopAudio()
     {
-        _waveOut?.Stop();
-        _waveOut?.Dispose();
+        WaveOut?.Stop();
+        WaveOut?.Dispose();
         WaveStream?.Dispose();
 
-        _waveOut = null;
+        WaveOut = null;
         WaveStream = null;
     }
 

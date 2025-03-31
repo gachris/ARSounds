@@ -7,8 +7,8 @@
     xmlns:loc="clr-namespace:ARSounds.UI.Maui.Localization"
     xmlns:viewModels="clr-namespace:ARSounds.UI.Common.ViewModels;assembly=ARSounds.UI.Common"
     x:DataType="{x:Type viewModels:WalkthroughViewModel}"
-    NavigationPage.HasNavigationBar="False"
-    Shell.NavBarIsVisible="False">
+    NavigationPage.HasBackButton="False"
+    NavigationPage.HasNavigationBar="False">
     <Grid RowDefinitions="*, Auto">
         <CarouselView
             FlowDirection="LeftToRight"
@@ -66,7 +66,6 @@
                 HorizontalOptions="Center"
                 IndicatorsShape="Circle"
                 SelectedIndicatorColor="{DynamicResource Primary}" />
-            <!--  Next button  -->
             <Button
                 Margin="30,20"
                 Command="{Binding NextCommand}"
@@ -80,12 +79,10 @@
                         TargetType="Button"
                         Value="True">
                         <Setter Property="Text" Value="NEXT" />
-                        <!--  Multiple Setter elements are allowed  -->
                     </DataTrigger>
                 </Button.Triggers>
             </Button>
         </StackLayout>
-        <!--  Skip button  -->
         <Button
             Margin="20"
             Padding="10,5"
@@ -94,7 +91,7 @@
             HeightRequest="26"
             HorizontalOptions="End"
             IsVisible="{Binding IsSkipButtonVisible, Mode=TwoWay}"
-            Text="{loc:LocalizationResource ButtonSkip}"
+            Text="{loc:LocalizationResource Skip}"
             VerticalOptions="StartAndExpand" />
     </Grid>
 </ContentPage>

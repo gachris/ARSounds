@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace ARSounds.UI.Common.Services.Extensions;
+namespace ARSounds.UI.Common.Extensions;
 
 public static class Json
 {

@@ -1,12 +1,13 @@
 ﻿using ARSounds.Application.Commands;
 using ARSounds.UI.Common.Contracts;
+using ARSounds.UI.Common.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MediatR;
 
 namespace ARSounds.UI.Common.ViewModels;
 
-public partial class ShellViewModel : ObservableObject, IViewModelAware
+public partial class ShellViewModel : ObservableObject
 {
     #region Fields/Consts
 
@@ -49,14 +50,6 @@ public partial class ShellViewModel : ObservableObject, IViewModelAware
     public virtual async Task InitializeAsync()
     {
         await _mediator.Send(new SignInSilentCommand());
-    }
-
-    public virtual void OnNavigated()
-    {
-    }
-
-    public virtual void OnNavigatedAway()
-    {
     }
 
     protected virtual async void OnSelectedViewItemChanged()

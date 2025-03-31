@@ -115,33 +115,6 @@ namespace ARSounds.Localization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LOGIN.
-        /// </summary>
-        public static string ButtonLogin {
-            get {
-                return ResourceManager.GetString("ButtonLogin", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SKIP.
-        /// </summary>
-        public static string ButtonSkip {
-            get {
-                return ResourceManager.GetString("ButtonSkip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to TAKE TOUR.
-        /// </summary>
-        public static string ButtonTakeTour {
-            get {
-                return ResourceManager.GetString("ButtonTakeTour", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Camera.
         /// </summary>
         public static string Camera {
@@ -259,6 +232,15 @@ namespace ARSounds.Localization.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Skip.
+        /// </summary>
+        public static string Skip {
+            get {
+                return ResourceManager.GetString("Skip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stack Trace.
         /// </summary>
         public static string Stack_Trace {
@@ -268,86 +250,20 @@ namespace ARSounds.Localization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Take your App to the next level with MAUI Kit..
-        /// </summary>
-        public static string StringAppWelcomeSubtitle {
-            get {
-                return ResourceManager.GetString("StringAppWelcomeSubtitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ready made UI&apos;s for .NET MAUI and Xamarin.Forms..
-        /// </summary>
-        public static string StringAppWelcomeTitle {
-            get {
-                return ResourceManager.GetString("StringAppWelcomeTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to To a new world of possibilities,
-        ///welcome to ARSounds..
-        /// </summary>
-        public static string StringWalkthroughSubtitleStep1 {
-            get {
-                return ResourceManager.GetString("StringWalkthroughSubtitleStep1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save countless hours of UI Design.
-        ///Focus on what you do best..
-        /// </summary>
-        public static string StringWalkthroughSubtitleStep2 {
-            get {
-                return ResourceManager.GetString("StringWalkthroughSubtitleStep2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Learn while you do. 
-        ///MAUI Kit has ton of examples for you to play..
-        /// </summary>
-        public static string StringWalkthroughSubtitleStep3 {
-            get {
-                return ResourceManager.GetString("StringWalkthroughSubtitleStep3", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Welcome.
-        /// </summary>
-        public static string StringWalkthroughTitleStep1 {
-            get {
-                return ResourceManager.GetString("StringWalkthroughTitleStep1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save Time.
-        /// </summary>
-        public static string StringWalkthroughTitleStep2 {
-            get {
-                return ResourceManager.GetString("StringWalkthroughTitleStep2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Learn.
-        /// </summary>
-        public static string StringWalkthroughTitleStep3 {
-            get {
-                return ResourceManager.GetString("StringWalkthroughTitleStep3", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to System Theme.
         /// </summary>
         public static string System_theme {
             get {
                 return ResourceManager.GetString("System_theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Take Tour.
+        /// </summary>
+        public static string Take_tour {
+            get {
+                return ResourceManager.GetString("Take_tour", resourceCulture);
             }
         }
         
@@ -366,6 +282,81 @@ namespace ARSounds.Localization.Properties {
         public static string Unhandled_exception {
             get {
                 return ResourceManager.GetString("Unhandled_exception", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To a new world of possibilities,
+        ///welcome to ARSounds..
+        /// </summary>
+        public static string Walkthrough_subtitle_step_1 {
+            get {
+                return ResourceManager.GetString("Walkthrough_subtitle_step_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save countless hours of UI Design.
+        ///Focus on what you do best..
+        /// </summary>
+        public static string Walkthrough_subtitle_step_2 {
+            get {
+                return ResourceManager.GetString("Walkthrough_subtitle_step_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Learn while you do. 
+        ///MAUI Kit has ton of examples for you to play..
+        /// </summary>
+        public static string Walkthrough_subtitle_step_3 {
+            get {
+                return ResourceManager.GetString("Walkthrough_subtitle_step_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome.
+        /// </summary>
+        public static string Walkthrough_title_step_1 {
+            get {
+                return ResourceManager.GetString("Walkthrough_title_step_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Time.
+        /// </summary>
+        public static string Walkthrough_title_step_2 {
+            get {
+                return ResourceManager.GetString("Walkthrough_title_step_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Learn.
+        /// </summary>
+        public static string Walkthrough_title_step_3 {
+            get {
+                return ResourceManager.GetString("Walkthrough_title_step_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Take your App to the next level with MAUI Kit..
+        /// </summary>
+        public static string Welcome_subtitle {
+            get {
+                return ResourceManager.GetString("Welcome_subtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ready made UI&apos;s for .NET MAUI and Xamarin.Forms..
+        /// </summary>
+        public static string Welcome_title {
+            get {
+                return ResourceManager.GetString("Welcome_title", resourceCulture);
             }
         }
         

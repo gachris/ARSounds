@@ -7,9 +7,8 @@
     xmlns:loc="clr-namespace:ARSounds.UI.Maui.Localization"
     xmlns:viewModels="clr-namespace:ARSounds.UI.Common.ViewModels;assembly=ARSounds.UI.Common"
     x:DataType="{x:Type viewModels:BackgroundViewModel}"
-    NavigationPage.HasNavigationBar="False"
-    Shell.NavBarIsVisible="False"
-    Shell.PresentationMode="Animated">
+    NavigationPage.HasBackButton="False"
+    NavigationPage.HasNavigationBar="False">
     <ContentPage.BackgroundImageSource>
         <OnPlatform x:TypeArguments="FileImageSource">
             <On Platform="Android, iOS" Value="bg_prim.png" />
@@ -46,11 +45,11 @@
                 FontAttributes="Bold"
                 FontSize="22"
                 HorizontalTextAlignment="Start"
-                Text="{loc:LocalizationResource StringAppWelcomeTitle}"
+                Text="{loc:LocalizationResource Welcome_title}"
                 TextColor="{DynamicResource White}" />
             <Label
                 HorizontalTextAlignment="Start"
-                Text="{loc:LocalizationResource StringAppWelcomeSubtitle}"
+                Text="{loc:LocalizationResource Welcome_subtitle}"
                 TextColor="{DynamicResource White}" />
             <Border
                 Padding="15,5"
@@ -78,13 +77,13 @@
                 CornerRadius="14"
                 FontAttributes="Bold"
                 HeightRequest="50"
-                Text="{loc:LocalizationResource ButtonTakeTour}"
+                Text="{loc:LocalizationResource Take_tour}"
                 TextColor="{StaticResource White}" />
             <Button
                 Command="{Binding SkipCommand}"
                 CornerRadius="14"
                 HeightRequest="50"
-                Text="{loc:LocalizationResource ButtonSkip}"
+                Text="{loc:LocalizationResource Skip}"
                 TextColor="{DynamicResource White}" />
         </VerticalStackLayout>
     </Grid>

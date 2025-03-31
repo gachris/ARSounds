@@ -25,25 +25,29 @@ public partial class App : Microsoft.Maui.Controls.Application
         const int width = 1200;
         const int height = 850;
 
-        Page mainPage;
+        Page page;
 
         if (AppUISettings.IsFirstLaunching)
         {
             AppUISettings.IsFirstLaunching = false;
 
-            var backgroundPage = IPlatformApplication.Current?.Services.GetService<BackgroundPage>()!;
-            mainPage = new NavigationPage(backgroundPage);
+            var backgroundPage = ServiceLocator.Current.GetInstance<BackgroundPage>();
+            page = new NavigationPage(backgroundPage);
         }
         else
         {
-            mainPage = IPlatformApplication.Current?.Services.GetService<AppShellPage>()!;
+            page = ServiceLocator.Current.GetInstance<AppShell>();
         }
 
-        var window = new Window(mainPage)
+        var window = new Window(page)
         {
+            Title = Localization.Properties.Resources.Application_title,
             Width = width,
             Height = height
         };
+
+        var navigationService = ServiceLocator.Current.GetInstance<INavigationService>();
+        navigationService.Frame = window;
 
         return window;
     }

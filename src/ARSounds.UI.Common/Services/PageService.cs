@@ -10,7 +10,7 @@ public class PageService : IPageService
 
     #endregion
 
-    #region IPageService Implementation
+    #region Methods
 
     public Type GetPageType(string key)
     {
@@ -25,10 +25,6 @@ public class PageService : IPageService
 
         return pageType;
     }
-
-    #endregion
-
-    #region Methods
 
     public void Configure(string key, Type type)
     {

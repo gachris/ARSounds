@@ -6,7 +6,7 @@ namespace ARSounds.UI.Common.Services;
 
 public class FileService : IFileService
 {
-    #region IFileService Implementation
+    #region Methods
 
     public T? Read<T>(string folderPath, string fileName)
     {
