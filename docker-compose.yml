@@ -30,7 +30,7 @@ services:
       - DockerConfiguration__UpdateCaCertificate=true
       - 'ApplicationConfiguration__ApiBaseUri=https://admin-api.arsounds.local'
       - 'ApplicationConfiguration__ApplicationBaseUri=https://admin.arsounds.local'
-      - 'ApplicationConfiguration__RedirectUri=https://admin.arsounds.local/signin-callback-oidc'
+      - 'ApplicationConfiguration__RedirectUri=https://admin.arsounds.local/signin-oidc'
       - 'ApplicationConfiguration__SilentRedirectUri=https://admin.arsounds.local/silent-callback-oidc'
       - 'ApplicationConfiguration__PostLogoutRedirectUri=https://admin.arsounds.local/signout-callback-oidc'
       - 'ApplicationConfiguration__ClientId=16c8fb9b-daec-4ffb-a91c-b78eec0ef07c'

@@ -10,18 +10,18 @@ export class AuthGuardService  {
 
   constructor(private authService: AuthService, private router: Router) { }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (this.authService.isLoggedIn()) {
-      return true;
-    }
-    else {
-      this.router.navigateByUrl('/login?return_url=' + state.url);
-      return false;
-    }
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+    return this.authService.isAuthenticated().then(loggedIn => {
+      if (loggedIn) {
+        return true;
+      } else {
+        this.router.navigateByUrl('/login?return_url=' + encodeURIComponent(state.url));
+        return false;
+      }
+    });
   }
 
   canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.canActivate(route, state);
   }
-
 }

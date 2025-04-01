@@ -7,12 +7,15 @@ import { AuthService } from '../../../services/auth/auth.service';
   template: ''
 })
 export class SignOutCallbackOidcComponent implements OnInit {
-
   constructor(private authService: AuthService, private router: Router) { }
 
-  ngOnInit() {
-    this.authService.completeSignOut().then((value) => {
+  async ngOnInit() {
+    try {
+      await this.authService.completeSignOut();
       this.router.navigateByUrl('/login');
-    });
+    } catch (error) {
+      console.error('Sign-out callback failed:', error);
+      this.router.navigateByUrl('/login');
+    }
   }
 }
