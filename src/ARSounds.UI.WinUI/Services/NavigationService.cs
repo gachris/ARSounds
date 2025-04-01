@@ -83,7 +83,7 @@ public class NavigationService : INavigationService
         var entry = new PageStackEntry(pageType, null, null);
 
         _frame.BackStack.Add(entry);
-        return await Task.FromResult(true); 
+        return await Task.FromResult(true);
     }
 
     public async Task<bool> GoBackAsync()

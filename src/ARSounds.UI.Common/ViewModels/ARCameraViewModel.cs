@@ -96,7 +96,7 @@ public partial class ARCameraViewModel : ObservableObject, IViewModelAware
 
             var audioBase64 = Regex.Replace(Target.AudioBase64, "^data:audio/[^;]+;base64,", "");
             var audioBytes = Convert.FromBase64String(audioBase64);
-          
+
             PlayAudio(audioBytes);
         }
 

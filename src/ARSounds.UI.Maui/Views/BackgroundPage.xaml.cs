@@ -5,11 +5,11 @@ namespace ARSounds.UI.Maui.Views;
 public partial class BackgroundPage : ContentPage
 {
     #region Fields/Consts
-    
+
     private readonly BackgroundViewModel _viewModel;
 
     #endregion
-    
+
     public BackgroundPage(BackgroundViewModel viewModel)
     {
         _viewModel = viewModel;
@@ -32,7 +32,7 @@ public partial class BackgroundPage : ContentPage
         base.OnNavigatedFrom(args);
 
         _viewModel.OnNavigatedAway();
-    } 
+    }
 
     #endregion
 }

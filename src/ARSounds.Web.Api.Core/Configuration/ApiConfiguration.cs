@@ -22,7 +22,7 @@ public class ApiConfiguration
 
     public bool CorsAllowAnyOrigin { get; set; } 
 
-    public string[] CorsOrigins { get; set; } = null!;
+    public string[] CorsAllowOrigins { get; set; } = null!;
 
     public string[] Scopes { get; set; } = null!;
 }

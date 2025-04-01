@@ -4,10 +4,10 @@ using ARSounds.ApiClient.DataStore;
 using ARSounds.Application.Configuration;
 using ARSounds.UI.Common.Contracts;
 using ARSounds.UI.Common.Services;
-using IdentityModel.OidcClient.Browser;
 using IdentityModel.OidcClient;
-using OpenVision.Core.Configuration;
+using IdentityModel.OidcClient.Browser;
 using Microsoft.Extensions.DependencyInjection;
+using OpenVision.Core.Configuration;
 
 namespace ARSounds.UI.Common;
 

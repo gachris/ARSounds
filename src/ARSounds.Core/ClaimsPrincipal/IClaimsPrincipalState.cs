@@ -7,6 +7,6 @@ public interface IClaimsPrincipalState
     void ClearEvents();
 
     void SetUserClaims(UserClaims userClaims);
-    
+
     void ClearUserClaims();
 }

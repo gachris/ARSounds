@@ -7,6 +7,8 @@
     <PackageVersion Include="Aspire.Hosting.SqlServer" Version="9.1.0" />
     <PackageVersion Include="Aspire.Microsoft.Data.SqlClient" Version="9.1.0" />
     <PackageVersion Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" Version="9.1.0" />
+    <PackageVersion Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.1.0" />
+    <PackageVersion Include="Aspire.Pomelo.EntityFrameworkCore.MySql" Version="9.1.0" />
     <PackageVersion Include="AutoMapper" Version="14.0.0" />
     <PackageVersion Include="CommonServiceLocator" Version="2.0.7" />
     <PackageVersion Include="CommunityToolkit.Maui" Version="11.2.0" />

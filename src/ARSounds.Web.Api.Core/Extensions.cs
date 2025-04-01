@@ -139,11 +139,6 @@ public static class Extensions
             options.Authority = apiConfiguration.Authority;
             options.RequireHttpsMetadata = apiConfiguration.RequireHttpsMetadata;
             options.Audience = apiConfiguration.Audience;
-
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateAudience = false
-            };
         });
 
         return services;
@@ -212,9 +207,9 @@ public static class Extensions
                     {
                         builder.AllowAnyOrigin();
                     }
-                    else if (apiConfiguration.CorsOrigins != null && apiConfiguration.CorsOrigins.Length > 0)
+                    else if (apiConfiguration.CorsAllowOrigins != null && apiConfiguration.CorsAllowOrigins.Length > 0)
                     {
-                        builder.WithOrigins(apiConfiguration.CorsOrigins);
+                        builder.WithOrigins(apiConfiguration.CorsAllowOrigins);
                     }
 
                     builder.AllowAnyHeader();
