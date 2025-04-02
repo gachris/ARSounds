@@ -12,7 +12,3 @@ services:
   arsounds.admin:
     volumes:
       - $APPDATA/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-
-  arsounds.admin.api:
-    volumes:
-      - $APPDATA/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro

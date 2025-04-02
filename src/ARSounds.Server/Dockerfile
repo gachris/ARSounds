@@ -19,28 +19,27 @@ RUN npm install -g @angular/cli
 FROM with-node AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["src/ARSounds.Web.App.Server/ARSounds.Web.App.Server.csproj", "ARSounds.Web.App.Server/"]
+COPY ["src/ARSounds.Server/ARSounds.Server.csproj", "ARSounds.Server/"]
 COPY ["src/arsounds.client/arsounds.client.esproj", "arsounds.client/"]
-COPY ["src/ARSounds.Web.ServiceDefaults/ARSounds.Web.ServiceDefaults.csproj", "src/ARSounds.Web.ServiceDefaults/"]
-COPY ["src/ARSounds.Web.Core/ARSounds.Web.Core.csproj", "src/ARSounds.Web.Core/"]
-COPY ["src/ARSounds.Web.Api.Core/ARSounds.Web.Api.Core.csproj", "src/ARSounds.Web.Api.Core/"]
-COPY ["src/ARSounds.Web.Api.EntityFramework.MySql/ARSounds.Web.Api.EntityFramework.MySql.csproj", "src/ARSounds.Web.Api.EntityFramework.MySql/"]
-COPY ["src/ARSounds.Web.Api.EntityFramework.PostgreSQL/ARSounds.Web.Api.EntityFramework.PostgreSQL.csproj", "src/ARSounds.Web.Api.EntityFramework.PostgreSQL/"]
-COPY ["src/ARSounds.Web.Api.EntityFramework.SqlServer/ARSounds.Web.Api.EntityFramework.SqlServer.csproj", "src/ARSounds.Web.Api.EntityFramework.SqlServer/"]
-COPY ["src/ARSounds.Web.Api.EntityFramework/ARSounds.Web.Api.EntityFramework.csproj", "src/ARSounds.Web.Api.EntityFramework/"]
-RUN dotnet restore "src/ARSounds.Web.App.Server/ARSounds.Web.App.Server.csproj"
+COPY ["src/ARSounds.Server.Core/ARSounds.Server.Core.csproj", "src/ARSounds.Server.Core/"]
+COPY ["src/ARSounds.Server.EntityFramework/ARSounds.Server.EntityFramework.csproj", "src/ARSounds.Server.EntityFramework/"]
+COPY ["src/ARSounds.Server.EntityFramework.MySql/ARSounds.Server.EntityFramework.MySql.csproj", "src/ARSounds.Server.EntityFramework.MySql/"]
+COPY ["src/ARSounds.Server.EntityFramework.PostgreSQL/ARSounds.Server.EntityFramework.PostgreSQL.csproj", "src/ARSounds.Server.EntityFramework.PostgreSQL/"]
+COPY ["src/ARSounds.Server.EntityFramework.SqlServer/ARSounds.Server.EntityFramework.SqlServer.csproj", "src/ARSounds.Server.EntityFramework.SqlServer/"]
+COPY ["src/ARSounds.ServiceDefaults/ARSounds.ServiceDefaults.csproj", "src/ARSounds.ServiceDefaults/"]
+RUN dotnet restore "src/ARSounds.Server/ARSounds.Server.csproj"
 COPY . .
-WORKDIR "/src/src/ARSounds.Web.App.Server"
-RUN dotnet build "ARSounds.Web.App.Server.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/src/ARSounds.Server"
+RUN dotnet build "ARSounds.Server.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "ARSounds.Web.App.Server.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "ARSounds.Server.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENV ASPNETCORE_FORWARDEDHEADERS_ENABLED=true
-ENTRYPOINT ["dotnet", "ARSounds.Web.App.Server.dll"]
+ENTRYPOINT ["dotnet", "ARSounds.Server.dll"]

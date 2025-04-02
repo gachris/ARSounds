@@ -31,8 +31,11 @@ public static class Extensions
     /// <param name="connectionString">Database connection string.</param>
     /// <param name="databaseProviderConfiguration">Database provider configuration.</param>
     /// <returns>The WebApplicationBuilder instance.</returns>
-    public static IHostApplicationBuilder AddApiServiceDefaults(this WebApplicationBuilder builder, ApiConfiguration apiConfiguration, string connectionString, DatabaseProviderConfiguration databaseProviderConfiguration)
+    public static IHostApplicationBuilder AddARSoundsServerDefaults(this WebApplicationBuilder builder, ApiConfiguration apiConfiguration, string connectionString, DatabaseProviderConfiguration databaseProviderConfiguration)
     {
+        // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+        builder.Services.AddOpenApi();
+
         // Add AutoMapper with MappingProfile
         builder.Services.AddAutoMapper(typeof(MappingProfile));
 
@@ -279,7 +282,7 @@ public static class Extensions
     /// <param name="app">The WebApplication instance.</param>
     /// <param name="apiConfiguration">API configuration settings.</param>
     /// <returns>The WebApplication instance.</returns>
-    public static IApplicationBuilder AddApplicationDefaults(this WebApplication app, ApiConfiguration apiConfiguration)
+    public static IApplicationBuilder AddARSoundsServerDefaults(this WebApplication app, ApiConfiguration apiConfiguration)
     {
         app.UseDefaultFiles();
         app.MapStaticAssets();

@@ -23,19 +23,11 @@ try
     var apiConfiguration = builder.Configuration.GetSection(nameof(ApiConfiguration)).Get<ApiConfiguration>()!;
 
     builder.AddServiceDefaults();
-    builder.AddApiServiceDefaults(apiConfiguration, connectionString, databaseProviderConfiguration);
-
-    // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-    builder.Services.AddOpenApi();
+    builder.AddARSoundsServerDefaults(apiConfiguration, connectionString, databaseProviderConfiguration);
 
     var app = builder.Build();
-
-    app.AddApplicationDefaults(apiConfiguration);
-
-    app.MapDefaultEndpoints();
-
+    app.AddARSoundsServerDefaults(apiConfiguration);
     app.MapFallbackToFile("/index.html");
-
     app.Run();
 }
 catch (Exception ex)
