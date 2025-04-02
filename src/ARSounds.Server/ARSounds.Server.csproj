@@ -9,7 +9,7 @@
 		<DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 		<DockerfileContext>..\..</DockerfileContext>
-		<SpaRoot>..\arsounds.web.app.client</SpaRoot>
+		<SpaRoot>..\arsounds.client</SpaRoot>
 		<SpaProxyLaunchCommand>npm start</SpaProxyLaunchCommand>
 		<SpaProxyServerUrl>https://localhost:44439</SpaProxyServerUrl>
 	</PropertyGroup>
@@ -30,7 +30,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\arsounds.web.app.client\arsounds.web.app.client.esproj">
+		<ProjectReference Include="..\arsounds.client\arsounds.client.esproj">
 			<ReferenceOutputAssembly>false</ReferenceOutputAssembly>
 		</ProjectReference>
 		<ProjectReference Include="..\ARSounds.Server.Core\ARSounds.Server.Core.csproj" />

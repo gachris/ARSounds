@@ -39,7 +39,7 @@ builder.AddProject<Projects.OpenVision_Server>("openvision-server")
        .WithEnvironment("DatabaseProvider", databaseProviderParameter)
        .WithReference(visionResourceBuilder);
 
-builder.AddProject<Projects.ARSounds_Web_App_Server>("arsounds-server")
+builder.AddProject<Projects.ARSounds_Server>("arsounds-server")
        .WithEnvironment("DatabaseProvider", databaseProviderParameter)
        .WithReference(arsoundsResourceBuilder);
 

@@ -30,9 +30,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.Server.EntityFrame
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.ServiceDefaults", "src\ARSounds.ServiceDefaults\ARSounds.ServiceDefaults.csproj", "{EF5011D3-2163-4B17-A053-B4863C60E814}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "arsounds.web.app.client", "src\arsounds.web.app.client\arsounds.web.app.client.esproj", "{1E6B3C8A-64F3-4D45-92DF-8F9C348E8010}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.Server", "src\ARSounds.Server\ARSounds.Server.csproj", "{65814CAF-C55C-464A-A5AB-EF048EEB6011}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.Web.App.Server", "src\ARSounds.Web.App.Server\ARSounds.Web.App.Server.csproj", "{08A1318D-7583-4062-A683-E28925DEE0ED}"
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "arsounds.client", "src\arsounds.client\arsounds.client.esproj", "{10F4F358-C298-4CF9-9A8F-9B71C472B2A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -80,16 +80,16 @@ Global
 		{EF5011D3-2163-4B17-A053-B4863C60E814}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF5011D3-2163-4B17-A053-B4863C60E814}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF5011D3-2163-4B17-A053-B4863C60E814}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1E6B3C8A-64F3-4D45-92DF-8F9C348E8010}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1E6B3C8A-64F3-4D45-92DF-8F9C348E8010}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1E6B3C8A-64F3-4D45-92DF-8F9C348E8010}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{1E6B3C8A-64F3-4D45-92DF-8F9C348E8010}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1E6B3C8A-64F3-4D45-92DF-8F9C348E8010}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1E6B3C8A-64F3-4D45-92DF-8F9C348E8010}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{08A1318D-7583-4062-A683-E28925DEE0ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{08A1318D-7583-4062-A683-E28925DEE0ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{08A1318D-7583-4062-A683-E28925DEE0ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{08A1318D-7583-4062-A683-E28925DEE0ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65814CAF-C55C-464A-A5AB-EF048EEB6011}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65814CAF-C55C-464A-A5AB-EF048EEB6011}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65814CAF-C55C-464A-A5AB-EF048EEB6011}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65814CAF-C55C-464A-A5AB-EF048EEB6011}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10F4F358-C298-4CF9-9A8F-9B71C472B2A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10F4F358-C298-4CF9-9A8F-9B71C472B2A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10F4F358-C298-4CF9-9A8F-9B71C472B2A4}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{10F4F358-C298-4CF9-9A8F-9B71C472B2A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10F4F358-C298-4CF9-9A8F-9B71C472B2A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10F4F358-C298-4CF9-9A8F-9B71C472B2A4}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

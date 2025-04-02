@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "arsounds.web.app.client": {
+    "arsounds.client": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -71,18 +71,18 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "arsounds.web.app.client:build"
+            "buildTarget": "arsounds.client:build"
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "arsounds.web.app.client:build:production"
+              "buildTarget": "arsounds.client:build:production"
             },
             "development": {
               "proxyConfig": "src/proxy.conf.js",
-              "buildTarget": "arsounds.web.app.client:build:development"
+              "buildTarget": "arsounds.client:build:development"
             }
           },
           "defaultConfiguration": "development"

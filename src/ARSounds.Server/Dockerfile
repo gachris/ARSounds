@@ -20,7 +20,7 @@ FROM with-node AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["src/ARSounds.Web.App.Server/ARSounds.Web.App.Server.csproj", "ARSounds.Web.App.Server/"]
-COPY ["src/arsounds.web.app.client/arsounds.web.app.client.esproj", "arsounds.web.app.client/"]
+COPY ["src/arsounds.client/arsounds.client.esproj", "arsounds.client/"]
 COPY ["src/ARSounds.Web.ServiceDefaults/ARSounds.Web.ServiceDefaults.csproj", "src/ARSounds.Web.ServiceDefaults/"]
 COPY ["src/ARSounds.Web.Core/ARSounds.Web.Core.csproj", "src/ARSounds.Web.Core/"]
 COPY ["src/ARSounds.Web.Api.Core/ARSounds.Web.Api.Core.csproj", "src/ARSounds.Web.Api.Core/"]

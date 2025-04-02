@@ -10,7 +10,7 @@
     "prestart": "node aspnetcore-https",
     "start:windows": "ng serve --port 44439 --ssl --ssl-cert %APPDATA%\\ASP.NET\\https\\%npm_package_name%.pem --ssl-key %APPDATA%\\ASP.NET\\https\\%npm_package_name%.key",
     "start:default": "ng serve --port 44439 --ssl --ssl-cert $HOME/.aspnet/https/${npm_package_name}.pem --ssl-key $HOME/.aspnet/https/${npm_package_name}.key",
-    "build:ssr": "ng run arsounds.web.app.client:server:dev"
+    "build:ssr": "ng run arsounds.client:server:dev"
   },
   "private": true,
   "dependencies": {

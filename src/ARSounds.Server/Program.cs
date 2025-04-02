@@ -1,4 +1,3 @@
-using ARSounds.Server.Core;
 using ARSounds.Server.Core.Configuration;
 using ARSounds.Server.Core.Helpers;
 using ARSounds.ServiceDefaults;
