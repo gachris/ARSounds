@@ -4,20 +4,22 @@
 		<TargetFramework>net9.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>46e4349e-013e-4df0-b1f8-023482ebe795</UserSecretsId>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 		<SpaRoot>..\arsounds.web.app.client</SpaRoot>
 		<SpaProxyLaunchCommand>npm start</SpaProxyLaunchCommand>
 		<SpaProxyServerUrl>https://localhost:44439</SpaProxyServerUrl>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\ARSounds.Web.ServiceDefaults\ARSounds.Web.ServiceDefaults.csproj" />
-		<ProjectReference Include="..\arsounds.web.app.client\arsounds.web.app.client.esproj">
-			<ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-		</ProjectReference>
+		<PackageReference Include="Microsoft.AspNetCore.SpaProxy" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.SpaProxy" />
+		<ProjectReference Include="..\arsounds.web.app.client\arsounds.web.app.client.esproj">
+			<ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+		</ProjectReference>
+		<ProjectReference Include="..\..\ARSounds.Web.ServiceDefaults\ARSounds.Web.ServiceDefaults.csproj" />
 	</ItemGroup>
 
 </Project>
