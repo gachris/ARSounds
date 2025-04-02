@@ -23,7 +23,7 @@
     "@angular/platform-browser-dynamic": "^18.1.0",
     "@angular/platform-server": "^18.1.0",
     "@angular/router": "^18.1.0",
-    "@ng-bootstrap/ng-bootstrap": "^13.1.1",
+    "@ng-bootstrap/ng-bootstrap": "^18.0.0",
     "@nguniversal/module-map-ngfactory-loader": "^8.2.6",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
