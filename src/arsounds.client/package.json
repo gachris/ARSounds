@@ -28,13 +28,13 @@
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
     "jquery": "^3.6.0",
-    "ngx-color-picker": "^13.0.0",
+    "ngx-color-picker": "^18.0.0",
     "oidc-client": "^1.11.5",
     "popper.js": "^2.0.0-next.4",
     "run-script-os": "^1.1.6",
     "rxjs": "~6.6.0",
     "tslib": "^2.1.0",
-    "wavesurfer.js": "^7.8.1",
+    "wavesurfer.js": "^7.9.4",
     "zone.js": "~0.14.7"
   },
   "devDependencies": {
