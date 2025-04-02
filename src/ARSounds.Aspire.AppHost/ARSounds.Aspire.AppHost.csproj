@@ -17,10 +17,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\ARSounds.Web.App.Server\ARSounds.Web.App.Server.csproj" />
 		<ProjectReference Include="..\OpenVision.Client\OpenVision.Client.csproj" />
 		<ProjectReference Include="..\OpenVision.Server\OpenVision.Server.csproj" />
-		<ProjectReference Include="..\ARSounds.Web.Api\ARSounds.Web.Api.csproj" />
-		<ProjectReference Include="..\ARSounds.Web.App\ARSounds.Web.App.Server\ARSounds.Web.App.Server.csproj" />
 	</ItemGroup>
 
 </Project>
