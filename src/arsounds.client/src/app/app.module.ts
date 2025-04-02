@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { TargetsModule } from './targets/targets.module';
 import { AuthModule } from './auth/auth.module';
@@ -30,7 +29,6 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     exports: [RouterModule],
     bootstrap: [AppComponent], imports: [BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
         BrowserModule,
-        BrowserAnimationsModule,
         FormsModule,
         TargetsModule,
         AuthModule,
