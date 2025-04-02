@@ -10,6 +10,7 @@ import WaveSurfer, * as wavesurferjs from 'wavesurfer.js';
 
 @Component({
   selector: 'app-target-detail-activate',
+  standalone: false,
   templateUrl: './target-detail-activate.component.html',
 })
 
@@ -151,7 +152,7 @@ export class TargetDetailActivateComponent implements AfterViewInit {
     this.wavesurfer.setOptions({ minPxPerSec: parseFloat(this.widthInputRef.nativeElement.value) });
   }
 
-  onResize(event) {
+  onResize() {
     var audioDuration = this.wavesurfer.getDuration();
     var offsetWidth = this.wavesurferRef.nativeElement.parentNode.offsetWidth;
     let max = offsetWidth / audioDuration as number;

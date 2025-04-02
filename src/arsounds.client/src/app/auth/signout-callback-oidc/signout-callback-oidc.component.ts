@@ -4,6 +4,7 @@ import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-signout-callback-oidc',
+  standalone: false,
   template: ''
 })
 export class SignOutCallbackOidcComponent implements OnInit {

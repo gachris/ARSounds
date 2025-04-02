@@ -8,6 +8,7 @@ export interface Alert {
 
 @Component({
   selector: 'app-notification',
+  standalone: false,
   templateUrl: './notification.component.html'
 })
 

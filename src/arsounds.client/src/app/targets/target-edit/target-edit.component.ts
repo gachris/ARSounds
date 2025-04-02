@@ -7,11 +7,12 @@ import { TargetResponse } from '../target.responses';
 
 @Component({
   selector: 'app-target-edit',
+  standalone: false,
   templateUrl: './target-edit.component.html',
 })
 
 export class TargetEditComponent implements OnInit {
-  targetId = null;
+  targetId: string = null;
   target = new UpdateTargetRequest();
   submitted = false;
   target$: Observable<TargetResponse>;

@@ -14,6 +14,7 @@ var noop = () => {
 
 @Directive({
   selector: "input[type=file][ngModel][observeFiles]",
+  standalone: false,
   host: {
     "(blur)": "onTouchedCallback()",
     "(change)": "handleChange( $event.target.files )"

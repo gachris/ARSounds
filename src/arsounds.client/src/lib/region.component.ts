@@ -13,6 +13,7 @@ export interface IRegionPositions {
  */
 @Component({
   selector: 'ng-waveform-region',
+  standalone: false,
   template: `
     <div class="wrapper" #wrapper>
       <div class="region" *ngIf="position.end > 0"

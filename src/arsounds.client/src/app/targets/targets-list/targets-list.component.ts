@@ -3,6 +3,7 @@ import { TargetModel } from '../target.models';
 
 @Component({
   selector: 'app-targets-list',
+  standalone: false,
   templateUrl: './targets-list.component.html'
 })
 

@@ -3,6 +3,7 @@ import { Directive, HostListener, Output, EventEmitter, ElementRef } from '@angu
 
 /** Directive to host drag and drop of region borders */
 @Directive({
+  standalone: false,
   selector: '[libDragDrop]'
 })
 export class DragDropDirective {

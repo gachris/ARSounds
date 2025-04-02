@@ -17,23 +17,27 @@ import { SecureComponent } from './layouts/secure/secure.component';
 import { NotificationComponent } from './notification/notification.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
-@NgModule({ declarations: [
-        AppComponent,
-        NavMenuComponent,
-        FooterComponent,
-        PublicComponent,
-        SecureComponent,
-        NotificationComponent,
-        PageNotFoundComponent,
-    ],
-    exports: [RouterModule],
-    bootstrap: [AppComponent], imports: [BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-        BrowserModule,
-        FormsModule,
-        TargetsModule,
-        AuthModule,
-        AppRoutingModule,
-        NgbModule], providers: [AuthGuardService, AuthService, provideHttpClient(withInterceptorsFromDi())] })
+@NgModule({
+  declarations: [
+    AppComponent,
+    NavMenuComponent,
+    FooterComponent,
+    PublicComponent,
+    SecureComponent,
+    NotificationComponent,
+    PageNotFoundComponent,
+  ],
+  exports: [RouterModule],
+  bootstrap: [AppComponent],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    TargetsModule,
+    AuthModule,
+    AppRoutingModule,
+    NgbModule
+  ], providers: [AuthGuardService, AuthService, provideHttpClient(withInterceptorsFromDi())]
+})
 export class AppModule {
   // Diagnostic only: inspect router configuration
   constructor(router: Router) {

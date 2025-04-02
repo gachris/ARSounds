@@ -8,13 +8,14 @@ import { TargetDetailComponent } from '../target-detail/target-detail.component'
 
 @Component({
   selector: 'app-target-edit-modal-container',
+  standalone: false,
   template: ''
 })
 
 export class TargetEditModalContainerComponent implements OnInit, OnDestroy {
   destroy = new Subject<void>();
   modalRef: NgbModalRef = null;
-  closeResult = null;
+  closeResult: any = null;
 
   constructor(@Inject(TargetDetailComponent) private targetDetailComponent: TargetDetailComponent, private ngbModalService: NgbModal, private router: Router, private route: ActivatedRoute) {
 
@@ -23,7 +24,7 @@ export class TargetEditModalContainerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.params.pipe(takeUntil(this.destroy)).subscribe(params => {
       this.modalRef = this.ngbModalService.open(TargetEditComponent);
-      this.modalRef.componentInstance.targetId = params.id;
+      this.modalRef.componentInstance.targetId = params['id'];
       this.modalRef.componentInstance.target.description = this.targetDetailComponent.target.description;
       this.modalRef.componentInstance.target.hex_color = this.targetDetailComponent.target.hex_color;
       this.modalRef.componentInstance.target.is_trackable = this.targetDetailComponent.target.is_trackable;
@@ -32,9 +33,9 @@ export class TargetEditModalContainerComponent implements OnInit, OnDestroy {
           this.targetDetailComponent.target = result;
         }
         this.closeResult = `Closed with: ${result}`;
-        this.router.navigateByUrl('/target/' + params.id);
+        this.router.navigateByUrl('/target/' + params['id']);
       }, reason => {
-        this.router.navigateByUrl('/target/' + params.id);
+        this.router.navigateByUrl('/target/' + params['id']);
         this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       });
     });

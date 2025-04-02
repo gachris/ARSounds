@@ -6,12 +6,13 @@ import { Alert } from '../../notification/notification.component';
 
 @Component({
   selector: 'app-target-delete',
+  standalone: false,
   templateUrl: './target-delete.component.html',
   styles: []
 })
 
 export class TargetDeleteComponent {
-  targetId;
+  targetId: string;
   submitted = false;
   deleted: boolean = false;
 

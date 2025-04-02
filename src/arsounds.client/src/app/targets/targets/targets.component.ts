@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-targets',
+  standalone: false,
   templateUrl: './targets.component.html'
 })
 

@@ -15,6 +15,7 @@ export interface ITimeUpdateEvent {
 
 @Component({
   selector: 'ng-waveform',
+  standalone: false,
   template: `
     <div #wrapperEl
       [ngStyle]="{
@@ -108,7 +109,6 @@ export class NgWaveformComponent implements OnInit, OnChanges, OnDestroy, AfterV
 
   ngOnInit() {
     // tslint:disable-next-line:no-string-literal
-    const AudioContext = window['AudioContext'] || window['webkitAudioContext'];
     this.audioCtx = new AudioContext();
 
     this._isPlaying$.pipe(

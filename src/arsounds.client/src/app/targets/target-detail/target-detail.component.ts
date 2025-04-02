@@ -7,6 +7,7 @@ import { TargetResponse } from '../target.responses';
 
 @Component({
   selector: 'app-target-detail',
+  standalone: false,
   templateUrl: './target-detail.component.html',
 })
 
