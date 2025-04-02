@@ -12,7 +12,7 @@ import { TargetDetailComponent } from '../target-detail/target-detail.component'
 })
 
 export class TargetEditModalContainerComponent implements OnInit, OnDestroy {
-  destroy = new Subject<any>();
+  destroy = new Subject<void>();
   modalRef: NgbModalRef = null;
   closeResult = null;
 

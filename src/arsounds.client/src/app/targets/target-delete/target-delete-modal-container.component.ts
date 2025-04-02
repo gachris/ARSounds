@@ -11,7 +11,7 @@ import { TargetDeleteComponent } from './target-delete.component';
 })
 
 export class TargetDeleteModalContainerComponent implements OnInit, OnDestroy {
-  destroy = new Subject<any>();
+  destroy = new Subject<void>();
   modalRef: NgbModalRef = null;
   closeResult = null;
 
