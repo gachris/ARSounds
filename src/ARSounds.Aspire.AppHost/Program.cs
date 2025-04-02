@@ -13,7 +13,6 @@ if (databaseProvider == "SqlServer")
 
     visionResourceBuilder = resource.AddDatabase("vision");
     arsoundsResourceBuilder = resource.AddDatabase("arsounds");
-
 }
 else if (databaseProvider == "MySql")
 {
