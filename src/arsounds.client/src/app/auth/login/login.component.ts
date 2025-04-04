@@ -1,26 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from '../../../services/auth/auth.service';
+import { AuthService } from '../../../lib/auth.service';
+import { NotificationService } from '../../../lib/notification.service';
+import { Alert } from '../../notification/notification.component';
 
 @Component({
   selector: 'app-login',
   standalone: false,
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.css'
 })
+export class LoginComponent {
+  constructor(
+    private route: ActivatedRoute,
+    private authService: AuthService,
+    private notificationService: NotificationService
+  ) { }
 
-export class LoginComponent implements OnInit {
-
-  constructor(private authService: AuthService, private route: ActivatedRoute) {
-
-  }
-
-  ngOnInit() {
-  }
-
-  onSubmit() {
-    this.route.queryParams.subscribe(params => {
-      let return_url = params['return_url'];
-      this.authService.signIn(return_url);
-    });
+  async onSubmit() {
+    try {
+      const returnUrl = this.route.snapshot.queryParams['return_url'] || '/';
+      await this.authService.signIn(returnUrl);
+    } catch (e) {
+      const alert: Alert = {
+        type: 'danger',
+        message: e instanceof Error ? e.message : 'An unexpected error occurred.'
+      };
+      this.notificationService.notify(alert);
+    }
   }
 }

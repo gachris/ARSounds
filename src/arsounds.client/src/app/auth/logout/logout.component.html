@@ -1,13 +1,12 @@
-<div class="row justify-content-center pt-6">
+<div class="d-flex flex-column align-items-center text-center">
   <div class="col-xl-4 col-lg-5 col-md-6">
-    <div class="text-center min-vh-20">
-      <h1 class="mb-1">Logout</h1>
-      <span>Would you like to logout of ARSounds?</span>
-    </div>
-    <form (ngSubmit)="onSubmit()" #targetForm="ngForm">
+    <h1 class="mb-2">Logout</h1>
+    <p class="mb-6">Would you like to logout of ARSounds?</p>
+
+    <form (ngSubmit)="onSubmit()">
       <div class="form-group col-xl-8 col-lg-8 col-md-8 m-auto">
-        <button class="btn-block btn btn-primary" type="submit">Continue</button>
-        <button class="btn-block btn btn-primary" type="button" (click)="back()">Back</button>
+        <button type="submit" class="btn-block btn btn-outline-primary">Continue</button>
+        <button type="button" class="btn-block btn btn-primary" (click)="back()">Back</button>
       </div>
     </form>
   </div>

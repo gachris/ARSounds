@@ -255,3 +255,7 @@ div.progress-audio input[type=range]::-webkit-slider-thumb {
     transition: opacity .1s linear;
     transition-delay: .1s;
 }
+
+.custom-audio-size {
+  width: 100% !important;
+}

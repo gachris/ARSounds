@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../../services/auth/auth.service';
+import { AuthService } from '../../../lib/auth.service';
 
 @Component({
   selector: 'app-silent-callback-oidc',
@@ -7,14 +7,13 @@ import { AuthService } from '../../../services/auth/auth.service';
   template: ''
 })
 export class SilentCallbackOidcComponent implements OnInit {
-
   constructor(private authService: AuthService) { }
 
-  async ngOnInit() {
+  async ngOnInit(): Promise<void> {
     try {
       await this.authService.completeSilentSignIn();
     } catch (error) {
-      console.error('Silent renew failed', error);
+      console.error('Silent renew failed:', error);
     }
   }
 }

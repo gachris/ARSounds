@@ -37,11 +37,12 @@ public class TargetsService : ITargetsService
     private readonly TargetService _service;
     private readonly TargetListResource _resource;
 
-    public TargetsService(ApiConfiguration apiConfiguration,
-                          ApplicationDbContext applicationContext,
-                          IHttpContextAccessor httpContextAccessor,
-                          IUriService uriService,
-                          IMapper mapper)
+    public TargetsService(
+        ApiConfiguration apiConfiguration,
+        ApplicationDbContext applicationContext,
+        IHttpContextAccessor httpContextAccessor,
+        IUriService uriService,
+        IMapper mapper)
     {
         _applicationContext = applicationContext;
         _httpContext = httpContextAccessor.HttpContext ?? throw new ArgumentNullException(nameof(httpContextAccessor));
@@ -70,7 +71,7 @@ public class TargetsService : ITargetsService
         var take = validFilter.Size;
         var skip = validFilter.Page - 1;
 
-        var targets = await _applicationContext.Target.Where(x => x.UserId == userId)
+        var targets = await _applicationContext.Target.Where(x => x.UserId == userId && (string.IsNullOrEmpty(query.Description) || x.Description.Contains(query.Description)))
             .Include(a => a.Audio)
             .Include(a => a.Image)
             .OrderBy(x => x.Created)

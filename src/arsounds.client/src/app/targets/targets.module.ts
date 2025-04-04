@@ -7,17 +7,19 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgWaveformModule } from '../../lib/ng-waveform.module';
 import { TargetsRoutingModule } from './targets-routing.module';
 
-import { TargetsComponent } from './targets/targets.component';
+import { TargetsComponent } from './targets.component';
 import { TargetsListComponent } from './targets-list/targets-list.component';
 import { TargetDetailComponent } from './target-detail/target-detail.component';
-import { TargetDetailActivateComponent } from './target-detail/target-detail-activate/target-detail-activate.component';
-import { TargetDetailDeactivateComponent } from './target-detail/target-detail-deactivate/target-detail-deactivate.component';
+import { TargetDetailActivateComponent } from './target-detail/target-detail-activate.component';
+import { TargetDetailDeactivateComponent } from './target-detail/target-detail-deactivate.component';
+import { TargetCreateComponent } from './target-create/target-create.component';
+import { TargetCreateModalContainerComponent } from './target-create/target-create-modal-container.component';
 import { TargetDeleteComponent } from './target-delete/target-delete.component';
 import { TargetDeleteModalContainerComponent } from './target-delete/target-delete-modal-container.component';
 import { TargetEditComponent } from './target-edit/target-edit.component';
 import { TargetEditModalContainerComponent } from './target-edit/target-edit-modal-container.component';
-import { ScrollTrackerDirective } from '../../core/scroll-tracker.directive';
-import { FileInputValueAccessor } from '../../core/file-input.accessor';
+import { ScrollTrackerDirective } from '../../lib/scroll-tracker.directive';
+import { FileInputValueAccessor } from '../../lib/file-input.accessor';
 
 @NgModule({
   imports: [
@@ -34,6 +36,8 @@ import { FileInputValueAccessor } from '../../core/file-input.accessor';
     TargetDetailComponent,
     TargetDetailActivateComponent,
     TargetDetailDeactivateComponent,
+    TargetCreateComponent,
+    TargetCreateModalContainerComponent,
     TargetDeleteComponent,
     TargetDeleteModalContainerComponent,
     TargetEditComponent,

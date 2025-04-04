@@ -9,7 +9,7 @@ var html = "\
     <div style='margin: auto 1.2rem;'>\
         <small class='audio-passedtime process-text'>0:00</small>\
     </div>\
-    <div class='progress-audio-container float-left align-content-center'>\
+    <div class='progress-audio-container'>\
     <div class='progress-audio'>\
         <input class='progress-audio-range' type='range' min='0' max='100' value='0' id='fader' step='0.1'>\
     </div>\

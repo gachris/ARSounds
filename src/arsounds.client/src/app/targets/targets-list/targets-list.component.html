@@ -1,17 +1,10 @@
 <div scrollTracker (scrollingFinished)="onScrollingFinished()">
   <div class="row">
-    <div *ngFor="let target of targets; let idx=index" class="col-md-6 col-lg-4 d-flex targets-list--option" data-aos="fade-up" data-aos-delay="200">
-      <a [routerLink]="['/target',target.id]" class="card card-body justify-content-between">
-        <div class="d-flex justify-content-between mb-3">
-          <div class="text-small d-flex" style="width:100%;">
-            <h5 class="mr-2 text-primary-3" style="width:inherit;">
-              {{ target.description }}
-            </h5>
-            <small class="m-1">
-              <span class="text-muted text-nowrap"> {{ target.created | date : 'medium' }} ago</span>
-            </small>
-          </div>
-        </div>
+    <div *ngFor="let target of targets; let idx=index" class="col-md-6 col-lg-4 d-flex" data-aos="fade-up" data-aos-delay="200">
+      <a [routerLink]="['/targets',target.id]" class="card card-body pl-3 pr-3 pt-2 pb-3">
+          <h5 class="text-primary">
+            {{ target.description }}
+          </h5>
         <div *ngIf="target.is_active; then image_template else waveform_template"></div>
         <ng-template #image_template>
           <img height="220" src="{{ target.image_base64 }}" />
@@ -25,10 +18,5 @@
         </ng-template>
       </a>
     </div>
-  </div>
-  <div class="mt-4 pt-3 text-center" data-aos="fade-up" data-aos-delay="200">
-    <button id="load-more-btn" style="display: none;" class="btn btn-round btn-outline-primary-3 mx-1" type="button">
-      <i class="fa fa-ellipsis-h"></i>
-    </button>
   </div>
 </div>

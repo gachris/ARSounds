@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
+import { SignInCallbackOidcComponent } from './signin-callback-oidc/signin-callback-oidc.component';
 import { SignOutCallbackOidcComponent } from './signout-callback-oidc/signout-callback-oidc.component';
-import { SignInOidcCallbackComponent } from './signin-callback-oidc/signin-callback-oidc.component';
 import { SilentCallbackOidcComponent } from './silent-callback-oidc/silent-callback-oidc.component';
 
 @NgModule({
@@ -17,7 +17,7 @@ import { SilentCallbackOidcComponent } from './silent-callback-oidc/silent-callb
     declarations: [
         LoginComponent,
         LogoutComponent,
-        SignInOidcCallbackComponent,
+        SignInCallbackOidcComponent,
         SignOutCallbackOidcComponent,
         SilentCallbackOidcComponent
     ]

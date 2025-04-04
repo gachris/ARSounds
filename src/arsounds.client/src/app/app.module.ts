@@ -2,14 +2,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { TargetsModule } from './targets/targets.module';
 import { AuthModule } from './auth/auth.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
-import { AuthGuardService } from '../services/auth/auth-guard.service';
-import { AuthService } from '../services/auth/auth.service';
+import { AuthGuardService } from '../lib/auth-guard.service';
+import { AuthService } from '../lib/auth.service';
 import { PublicComponent } from './layouts/public/public.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { FooterComponent } from './footer/footer.component';
@@ -38,12 +38,4 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     NgbModule
   ], providers: [AuthGuardService, AuthService, provideHttpClient(withInterceptorsFromDi())]
 })
-export class AppModule {
-  // Diagnostic only: inspect router configuration
-  constructor(router: Router) {
-    // Use a custom replacer to display function names in the route configs
-    // const replacer = (key, value) => (typeof value === 'function') ? value.name : value;
-
-    // console.log('Routes: ', JSON.stringify(router.config, replacer, 2));
-  }
-}
+export class AppModule { }

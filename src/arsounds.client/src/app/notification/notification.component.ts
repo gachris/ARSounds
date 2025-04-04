@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificationService } from '../../services/targets/notification.service';
+import { NotificationService } from '../../lib/notification.service';
 
 export interface Alert {
   type: string;
@@ -9,14 +9,13 @@ export interface Alert {
 @Component({
   selector: 'app-notification',
   standalone: false,
-  templateUrl: './notification.component.html'
+  templateUrl: './notification.component.html',
+  styleUrl: './notification.component.css'
 })
-
 export class NotificationComponent implements OnInit {
   alerts: Array<Alert> = [];
 
-  constructor(private notificationService: NotificationService) {
-  }
+  constructor(private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.notificationService.add.subscribe(alert => this.add(alert));

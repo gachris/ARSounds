@@ -5290,6 +5290,14 @@ a.badge-primary-3:focus, a.badge-primary-3.focus {
     color: inherit;
   }
 
+  .alert-dismissible .btn-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.75rem 1.25rem;
+    color: inherit;
+  }
+
 .alert-primary {
   color: #334eaf;
   background-color: #e7ebf7;
@@ -5867,14 +5875,37 @@ a.badge-primary-3:focus, a.badge-primary-3.focus {
   opacity: .5;
 }
 
-  .close:hover {
-    color: #000;
-    text-decoration: none;
-  }
+.btn-close::before {
+  content: "\00d7";
+}
 
-  .close:not(:disabled):not(.disabled):hover, .close:not(:disabled):not(.disabled):focus {
-    opacity: .75;
-  }
+.btn-close {
+  float: right;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: .5;
+}
+
+.close:hover {
+  color: #000;
+  text-decoration: none;
+}
+
+.btn-close:hover {
+  color: #000;
+  text-decoration: none;
+}
+
+.close:not(:disabled):not(.disabled):hover, .close:not(:disabled):not(.disabled):focus {
+  opacity: .75;
+}
+
+.btn-close:not(:disabled):not(.disabled):hover, .btn-close:not(:disabled):not(.disabled):focus {
+  opacity: .75;
+}
 
 button.close {
   padding: 0;
@@ -5885,7 +5916,20 @@ button.close {
   appearance: none;
 }
 
+button.btn-close {
+  padding: 0;
+  background-color: transparent;
+  border: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
 a.close.disabled {
+  pointer-events: none;
+}
+
+a.btn-close.disabled {
   pointer-events: none;
 }
 
@@ -6064,6 +6108,11 @@ a.close.disabled {
 }
 
   .modal-header .close {
+    padding: 1rem;
+    margin: -1rem -1rem -1rem auto;
+  }
+
+  .modal-header .btn-close {
     padding: 1rem;
     margin: -1rem -1rem -1rem auto;
   }
@@ -12288,51 +12337,6 @@ svg.bg-primary-3-alt * {
 
 .text-primary svg.icon:not([class*='bg-']) * {
   fill: #3755BE;
-}
-
-@font-face {
-  font-family: 'Inter UI';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  unicode-range: U+000-5FF;
-  src: url("../fonts/Inter-UI-upright.var.woff2") format("woff2-variations"), url("../fonts/Inter-UI-Regular.woff2") format("woff2"), url("../fonts/Inter-UI-Regular.woff") format("woff");
-}
-
-@font-face {
-  font-family: 'Inter UI';
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  unicode-range: U+000-5FF;
-  src: url("../fonts/Inter-UI.var.woff2") format("woff2-variations"), url("../fonts/Inter-UI-Italic.woff2") format("woff2"), url("../fonts/Inter-UI-Italic.woff") format("woff");
-}
-
-@font-face {
-  font-family: 'Inter UI';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  unicode-range: U+000-5FF;
-  src: url("../fonts/Inter-UI-upright.var.woff2") format("woff2-variations"), url("../fonts/Inter-UI-Medium.woff2") format("woff2"), url("../fonts/Inter-UI-Medium.woff") format("woff");
-}
-
-@font-face {
-  font-family: 'Inter UI';
-  font-style: italic;
-  font-weight: 500;
-  font-display: swap;
-  unicode-range: U+000-5FF;
-  src: url("../fonts/Inter-UI.var.woff2") format("woff2-variations"), url("../fonts/Inter-UI-MediumItalic.woff2") format("woff2"), url("../fonts/Inter-UI-MediumItalic.woff") format("woff");
-}
-
-@font-face {
-  font-family: 'Inter UI';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  unicode-range: U+000-5FF;
-  src: url("../fonts/Inter-UI-upright.var.woff2") format("woff2-variations"), url("../fonts/Inter-UI-Bold.woff2") format("woff2"), url("../fonts/Inter-UI-Bold.woff") format("woff");
 }
 
 html {
@@ -19812,33 +19816,12 @@ article table {
   cursor: pointer !important;
 }
 
-.country {
-  margin: 10px;
-  padding: 4px 6px;
-  border: 1px solid #999;
-  border-radius: 5px;
-  display: inline-block;
-  font-family: tahoma;
-  font-size: 12px
-}
-
-  .country i {
-    background: url(../img/flags.png) no-repeat;
-    display: inline-block;
-    width: 16px;
-    height: 11px;
-  }
-
 .section-bottom-sticky {
   width: 100% !important;
   position: fixed !important;
   bottom: 0 !important;
   left: 0 !important;
   z-index: 5;
-}
-
-.custom-audio-size {
-  width: 100% !important;
 }
 
 @media (min-width: 767.98px) {

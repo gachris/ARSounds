@@ -26,9 +26,7 @@
             "outputPath": "dist/arsounds.client",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": [ "src/polyfills.ts" ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/assets",
@@ -38,9 +36,44 @@
               }
             ],
             "styles": [
+              "src/assets/css/loaders/loader-typing.css",
+              "src/assets/css/maudio.css",
+              "src/assets/css/theme.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/scripts/lib/jquery-2.2.4.js",
+              "src/assets/scripts/lib/jquery.unobtrusive-ajax.js",
+              "src/assets/scripts/lib/jquery.validate.js",
+              "src/assets/scripts/lib/jquery.validate.unobtrusive.js",
+              "src/assets/scripts/lib/popper.min.js",
+              "src/assets/scripts/lib/bootstrap.js",
+              "src/assets/scripts/lib/aos.js",
+              "src/assets/scripts/lib/clipboard.js",
+              "src/assets/scripts/lib/jquery.fancybox.min.js",
+              "src/assets/scripts/lib/flatpickr.min.js",
+              "src/assets/scripts/lib/flickity.pkgd.min.js",
+              "src/assets/scripts/lib/ion.rangeSlider.min.js",
+              "src/assets/scripts/lib/isotope.pkgd.min.js",
+              "src/assets/scripts/lib/jarallax.min.js",
+              "src/assets/scripts/lib/jquery.initialize.min.js",
+              "src/assets/scripts/lib/jarallax-video.min.js",
+              "src/assets/scripts/lib/jarallax-element.min.js",
+              "src/assets/scripts/lib/jquery.countdown.min.js",
+              "src/assets/scripts/lib/jquery.smartWizard.min.js",
+              "src/assets/scripts/lib/plyr.polyfilled.min.js",
+              "src/assets/scripts/lib/prism.js",
+              "src/assets/scripts/lib/scrollMonitor.js",
+              "src/assets/scripts/lib/smooth-scroll.polyfills.min.js",
+              "src/assets/scripts/lib/svg-injector.umd.production.js",
+              "src/assets/scripts/lib/twitterFetcher_min.js",
+              "src/assets/scripts/lib/typed.min.js",
+              "src/assets/scripts/lib/theme.js",
+              "src/assets/scripts/lib/bootstrap-notify.min.js",
+              "src/assets/scripts/lib/fontawesome-all.js",
+              "src/assets/scripts/lib/maudio.js",
+              "src/assets/scripts/lib/main.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -94,10 +127,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": [ "src/polyfills.ts" ],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
               {

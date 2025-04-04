@@ -1,67 +1,48 @@
 <form (ngSubmit)="onSubmit()" #targetForm="ngForm">
-  <div class="modal-header">
-    <div class="text-center">
-      <h4 class="h3 mb-1">Edit track</h4>
-      <span>
-        Customize audio data.
-      </span>
-    </div>
+  <div class="modal-header border-0">
+    <h5 class="modal-title">Edit track</h5>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">&times;</button>
   </div>
   <div class="modal-body">
-    <div [hidden]="submitted">
-      <div class="form-group">
-        <label for="description" class="text-primary-3">
-          Description
-        </label>
-        <input type="text"
-               class="form-control"
-               id="description"
-               required
-               [(ngModel)]="target.description"
-               name="description"
-               #description="ngModel">
-        <div [hidden]="description.valid || description.pristine"
-             class="text-small">
-          Description is required
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="hex_color" class="text-primary-3">
-          Color
-        </label>
-        <input type="color" class="form-control"
-               id="hex_color"
-               [(ngModel)]="target.hex_color"
-               name="hex_color"
-               #hex_color="ngModel" />
-        <div [hidden]="hex_color.valid || hex_color.pristine"
-             class="text-small">
-          Color is required
-        </div>
-      </div>
-
-      <div class="form-group mb-4">
-        <label for="is_trackable" class="mr-2 text-primary-3 text-small">
-          Is Trackable
-        </label>
-        <input type="checkbox"
-               id="is_trackable"
-               [(ngModel)]="target.is_trackable"
-               name="is_trackable"
-               #description="ngModel">
-      </div>
+    <div class="form-group">
+      <label for="description">
+        Description
+      </label>
+      <input type="text"
+             class="form-control"
+             id="description"
+             required
+             [(ngModel)]="target.description"
+             name="description"
+             #description="ngModel">
+      <small [hidden]="description.valid || description.pristine" class="text-danger">
+        Description is required
+      </small>
+    </div>
+    <div class="form-group">
+      <label for="hex_color">
+        Color
+      </label>
+      <input type="color"
+             class="form-control"
+             id="hex_color"
+             [(ngModel)]="target.hex_color"
+             name="hex_color"
+             #hex_color="ngModel" />
+    </div>
+    <div class="form-group mb-0">
+      <label for="is_trackable" class="mr-2">
+        Is Trackable
+      </label>
+      <input type="checkbox"
+             id="is_trackable"
+             [(ngModel)]="target.is_trackable"
+             name="is_trackable"
+             #is_trackable="ngModel">
     </div>
   </div>
-  <div class="modal-footer">
-    <div class="row m-auto mb-0 justify-content-center">
-      <div class="form-group m-0">
-        <button type="button" class="btn btn-block btn-secondary p-1 mr-2" (click)="modal.close('Cancel click')">Cancel</button>
-      </div>
-      <div class="form-group m-0">
-        <button class="btn btn-block btn-primary p-1 ml-2" type="submit" [disabled]="!targetForm.form.valid">Submit</button>
-      </div>
-    </div>
+  <div class="modal-footer border-0">
+    <button type="button" class="btn btn-outline-primary" (click)="modal.dismiss('Cancel')">Cancel</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!targetForm.form.valid || submitted">Save</button>
   </div>
 </form>
