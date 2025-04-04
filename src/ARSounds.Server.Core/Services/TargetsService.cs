@@ -2,7 +2,6 @@
 using System.Data;
 using System.Security.Claims;
 using ARSounds.Server.Core.Configuration;
-using ARSounds.Server.Core.Enums;
 using ARSounds.Server.Core.Filters;
 using ARSounds.Server.Core.Properties;
 using ARSounds.Server.Core.Requests;
@@ -244,7 +243,7 @@ public class TargetsService : ITargetsService
             Updated = DateTime.Now
         };
 
-        var imageBytes = body.PngBase64!.Base64ImgToByteArray(ImageType.Png);
+        var imageBytes = body.PngBase64!.Base64IByteArray("image/png");
 
         // Decode the original PNG with alpha
         var matImage = new Mat();

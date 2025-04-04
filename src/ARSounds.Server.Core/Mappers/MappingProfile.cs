@@ -1,5 +1,4 @@
-﻿using ARSounds.Server.Core.Enums;
-using ARSounds.Server.Core.Responses;
+﻿using ARSounds.Server.Core.Responses;
 using ARSounds.Server.Core.Utils;
 using ARSounds.Server.EntityFramework.Entities;
 using AutoMapper;
@@ -23,13 +22,10 @@ internal class MappingProfile : Profile
                 src.Description,
                 src.Audio.Filename,
                 src.Audio.AudioType,
-                src.Audio.AudioBytes.GetAudioAsBase64(
-                    (AudioType)src.Audio.AudioType.ToAudioType()!,
-                    true
-                ),
+                src.Audio.AudioBytes.GetAsBase64(src.Audio.AudioType),
                 src.Image == null
                     ? null
-                    : src.Image.Buffer.GetImageAsBase64(ImageType.Jpeg, true),
+                    : src.Image.Buffer.GetAsBase64("image/jpeg"),
                 src.Image == null
                     ? null
                     : src.Image.VisionTargetId,
