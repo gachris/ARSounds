@@ -2,10 +2,11 @@
 using System.Text.Json.Serialization;
 using ARSounds.Server.Core.Auth;
 using ARSounds.Server.Core.Configuration;
+using ARSounds.Server.Core.Contracts;
 using ARSounds.Server.Core.Mappers;
 using ARSounds.Server.Core.Services;
 using ARSounds.Server.Core.Utils;
-using ARSounds.Server.EntityFramework.DbContexts;
+using ARSounds.EntityFramework.DbContexts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -15,6 +16,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using ARSounds.Server.Core.Middlewares;
+using Microsoft.AspNetCore.Diagnostics;
+using OpenVision.Shared.Exceptions;
+using OpenVision.Shared.Responses;
+using OpenVision.Shared;
+using System.Net;
+using ARSounds.Server.Core.Filters;
 
 namespace Microsoft.Extensions.Hosting;
 
@@ -31,16 +39,19 @@ public static class Extensions
     /// <param name="connectionString">Database connection string.</param>
     /// <param name="databaseProviderConfiguration">Database provider configuration.</param>
     /// <returns>The WebApplicationBuilder instance.</returns>
-    public static IHostApplicationBuilder AddARSoundsServerDefaults(this WebApplicationBuilder builder, ApiConfiguration apiConfiguration, string connectionString, DatabaseProviderConfiguration databaseProviderConfiguration)
+    public static IHostApplicationBuilder AddARSoundsServerDefaults(
+        this WebApplicationBuilder builder,
+        ApiConfiguration apiConfiguration,
+        string connectionString,
+        DatabaseProviderConfiguration databaseProviderConfiguration,
+        OidcOptions oidcOptions, 
+        OpenVisionResourcesOptions openVisionOptions)
     {
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
 
         // Add AutoMapper with MappingProfile
         builder.Services.AddAutoMapper(typeof(MappingProfile));
-
-        // Register API configuration as singleton
-        builder.Services.AddSingleton(apiConfiguration);
 
         // Add transient services
         builder.Services.AddTransient<ITargetsService, TargetsService>();
@@ -51,14 +62,22 @@ public static class Extensions
         // Add HttpContextAccessor
         builder.Services.AddHttpContextAccessor();
 
+        // Add AddOpenVisionResourceFactory
+        builder.Services.AddOpenVisionResources(options =>
+        {
+            options.ApplicationName = openVisionOptions.ApplicationName;
+            options.ServerUrl = openVisionOptions.ServerUrl;
+            options.DatabaseApiKey = openVisionOptions.DatabaseApiKey;
+        });
+
         // Add UriService
         builder.Services.AddUriService();
 
         // Add authentication services
-        builder.Services.AddAuthentication(apiConfiguration);
+        builder.Services.AddAuthentication(oidcOptions);
 
         // Add authorization policies
-        builder.Services.AddAuthorizationPolicy(apiConfiguration);
+        builder.Services.AddAuthorizationPolicy(oidcOptions);
 
         // Add CORS policies
         builder.Services.AddCors(apiConfiguration);
@@ -70,9 +89,20 @@ public static class Extensions
         builder.Services.AddEndpointsApiExplorer();
 
         // Add Swagger generation
-        builder.Services.AddSwaggerGen(apiConfiguration);
+        builder.Services.AddSwaggerGen(apiConfiguration, oidcOptions);
 
         return builder;
+    }
+
+    public static IServiceCollection AddOpenVisionResources(this IServiceCollection services, Action<OpenVisionResourcesOptions> configureOptions)
+    {
+        ArgumentNullException.ThrowIfNull(services);
+        ArgumentNullException.ThrowIfNull(configureOptions);
+
+        services.AddSingleton<IOpenVisionResources, OpenVisionResources>();
+        services.Configure(configureOptions);
+
+        return services;
     }
 
     /// <summary>
@@ -125,7 +155,7 @@ public static class Extensions
     /// <param name="services">The IServiceCollection instance.</param>
     /// <param name="apiConfiguration">API configuration settings.</param>
     /// <returns>The IServiceCollection instance.</returns>
-    public static IServiceCollection AddAuthentication(this IServiceCollection services, ApiConfiguration apiConfiguration)
+    public static IServiceCollection AddAuthentication(this IServiceCollection services, OidcOptions oidcOptions)
     {
         services.AddAuthentication(options =>
         {
@@ -137,9 +167,9 @@ public static class Extensions
         })
         .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
         {
-            options.Authority = apiConfiguration.Authority;
-            options.RequireHttpsMetadata = apiConfiguration.RequireHttpsMetadata;
-            options.Audience = apiConfiguration.Audience;
+            options.Authority = oidcOptions.Authority;
+            options.RequireHttpsMetadata = oidcOptions.RequireHttpsMetadata;
+            options.Audience = oidcOptions.Audience;
         });
 
         return services;
@@ -149,24 +179,21 @@ public static class Extensions
     /// Adds authorization policies based on API configuration settings.
     /// </summary>
     /// <param name="services">The IServiceCollection instance.</param>
-    /// <param name="apiConfiguration">API configuration settings.</param>
+    /// <param name="oidcOptions">API configuration settings.</param>
     /// <returns>The IServiceCollection instance.</returns>
-    public static IServiceCollection AddAuthorizationPolicy(this IServiceCollection services, ApiConfiguration apiConfiguration)
+    public static IServiceCollection AddAuthorizationPolicy(this IServiceCollection services, OidcOptions oidcOptions)
     {
-        services.AddAuthorization(options =>
-        {
-            // Bearer token policy
-            options.AddPolicy(AuthorizationConsts.BearerPolicy, policy =>
+        services.AddAuthorizationBuilder()
+            .AddPolicy(AuthorizationConsts.BearerPolicy, policy =>
             {
                 policy.RequireAuthenticatedUser();
                 policy.RequireScope();
-                foreach (var scope in apiConfiguration.Scopes)
+                foreach (var scope in oidcOptions.Scopes)
                 {
                     policy.RequireClaim("scope", scope);
                 }
                 policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
             });
-        });
 
         return services;
     }
@@ -248,11 +275,12 @@ public static class Extensions
     /// <param name="services">The IServiceCollection instance.</param>
     /// <param name="apiConfiguration">API configuration settings.</param>
     /// <returns>The IServiceCollection instance.</returns>
-    public static IServiceCollection AddSwaggerGen(this IServiceCollection services, ApiConfiguration apiConfiguration)
+    public static IServiceCollection AddSwaggerGen(this IServiceCollection services, ApiConfiguration apiConfiguration, OidcOptions oidcOptions)
     {
         services.AddSwaggerGen(options =>
         {
-            options.SwaggerDoc(apiConfiguration.ApiVersion, new OpenApiInfo { Title = apiConfiguration.ApiName, Version = apiConfiguration.ApiVersion });
+            var openApiInfo = new OpenApiInfo { Title = apiConfiguration.Name, Version = apiConfiguration.Version };
+            options.SwaggerDoc(apiConfiguration.Version, openApiInfo);
 
             // Define OAuth2 security scheme for Swagger UI
             options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
@@ -262,9 +290,9 @@ public static class Extensions
                 {
                     AuthorizationCode = new OpenApiOAuthFlow
                     {
-                        AuthorizationUrl = new Uri($"{apiConfiguration.Authority}/connect/authorize"),
-                        TokenUrl = new Uri($"{apiConfiguration.Authority}/connect/token"),
-                        Scopes = apiConfiguration.Scopes.ToDictionary(x => x, y => y)
+                        AuthorizationUrl = new Uri($"{oidcOptions.Authority}/connect/authorize"),
+                        TokenUrl = new Uri($"{oidcOptions.Authority}/connect/token"),
+                        Scopes = oidcOptions.Scopes.ToDictionary(x => x, y => y)
                     }
                 }
             });
@@ -282,9 +310,10 @@ public static class Extensions
     /// <param name="app">The WebApplication instance.</param>
     /// <param name="apiConfiguration">API configuration settings.</param>
     /// <returns>The WebApplication instance.</returns>
-    public static IApplicationBuilder AddARSoundsServerDefaults(this WebApplication app, ApiConfiguration apiConfiguration)
+    public static IApplicationBuilder AddARSoundsServerDefaults(this WebApplication app, ApiConfiguration apiConfiguration, OidcOptions oidcOptions)
     {
         app.UseDefaultFiles();
+
         app.MapStaticAssets();
 
         // Add headers forwarding configuration
@@ -294,7 +323,7 @@ public static class Extensions
         app.ConfigureDevelopmentEnvironment();
 
         // Use Swagger and Swagger UI
-        app.UseSwagger(apiConfiguration);
+        app.UseSwagger(apiConfiguration, oidcOptions);
 
         // Configure exception handling middleware
         app.ConfigureExceptionHandler();
@@ -368,16 +397,15 @@ public static class Extensions
     /// <param name="app">The WebApplication instance.</param>
     /// <param name="apiConfiguration">API configuration settings.</param>
     /// <returns>The WebApplication instance.</returns>
-    public static IApplicationBuilder UseSwagger(this WebApplication app, ApiConfiguration apiConfiguration)
+    public static IApplicationBuilder UseSwagger(this WebApplication app, ApiConfiguration apiConfiguration, OidcOptions oidcOptions)
     {
         app.UseSwagger();
         app.UseSwaggerUI(c =>
         {
-            c.SwaggerEndpoint($"{apiConfiguration.ApiBaseUrl}/swagger/v1/swagger.json", apiConfiguration.ApiName);
+            c.SwaggerEndpoint(apiConfiguration.SwaggerEndpoint, apiConfiguration.Name);
 
-            // Configure OAuth settings for Swagger UI
-            c.OAuthClientId(apiConfiguration.OidcSwaggerUIClientId);
-            c.OAuthAppName(apiConfiguration.ApiName);
+            c.OAuthClientId(oidcOptions.SwaggerUIClientId);
+            c.OAuthAppName(apiConfiguration.Name);
             c.OAuthUsePkce();
         });
 
@@ -397,5 +425,64 @@ public static class Extensions
         context.Database.Migrate();
 
         return app;
+    }
+
+    /// <summary>
+    /// Configures global exception handling middleware to handle and log exceptions.
+    /// </summary>
+    /// <param name="app">The application builder instance.</param>
+    public static void ConfigureExceptionHandler(this IApplicationBuilder app)
+    {
+        const string ContentType = "application/json";
+
+        var JsonSerializerOptions = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            Converters =
+            {
+                new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)
+            }
+        };
+
+        app.UseExceptionHandler(appError =>
+        {
+            appError.Run(async context =>
+            {
+                var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+                if (contextFeature != null)
+                {
+                    context.Response.ContentType = "application/json";
+                    if (contextFeature.Error is HttpException exception)
+                    {
+                        // Handle known HTTP exceptions
+                        context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+
+                        var result = JsonSerializer.Serialize(exception.ErrorResponseMessage, JsonSerializerOptions);
+
+                        await context.Response.WriteAsync(result);
+                    }
+                    else
+                    {
+                        // Handle other unexpected exceptions
+                        var errorCollection = new List<Error>();
+
+                        var error = new Error(ResultCode.InternalServerError, contextFeature.Error.Message);
+
+                        errorCollection.Add(error);
+
+                        var response = new ResponseMessage(Guid.NewGuid(), StatusCode.Failed, errorCollection);
+
+                        var result = JsonSerializer.Serialize(response, JsonSerializerOptions);
+
+                        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+
+                        context.Response.ContentType = ContentType;
+
+                        await context.Response.WriteAsync(result);
+                    }
+                }
+            });
+        });
     }
 }

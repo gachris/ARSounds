@@ -1,24 +1,19 @@
 ﻿using System.Collections.ObjectModel;
 using System.Data;
 using System.Security.Claims;
-using ARSounds.Server.Core.Configuration;
-using ARSounds.Server.Core.Filters;
+using ARSounds.Server.Core.Contracts;
 using ARSounds.Server.Core.Properties;
 using ARSounds.Server.Core.Requests;
 using ARSounds.Server.Core.Utils;
-using ARSounds.Server.EntityFramework.DbContexts;
-using ARSounds.Server.EntityFramework.Entities;
+using ARSounds.EntityFramework.DbContexts;
+using ARSounds.EntityFramework.Entities;
 using AutoMapper;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using OpenVision.Api.Auth;
-using OpenVision.Api.Core;
-using OpenVision.Api.Core.Types;
 using OpenVision.Api.Target.Resources;
-using OpenVision.Api.Target.Services;
 using OpenVision.Shared;
 using OpenVision.Shared.Requests;
 using OpenVision.Shared.Responses;
@@ -29,34 +24,32 @@ namespace ARSounds.Server.Core.Services;
 
 public class TargetsService : ITargetsService
 {
+    #region Fields/Consts
+
     private readonly ApplicationDbContext _applicationContext;
     private readonly IUriService _uriService;
     private readonly IMapper _mapper;
     private readonly HttpContext _httpContext;
-    private readonly TargetService _service;
     private readonly TargetListResource _resource;
 
+    #endregion
+
     public TargetsService(
-        ApiConfiguration apiConfiguration,
         ApplicationDbContext applicationContext,
         IHttpContextAccessor httpContextAccessor,
         IUriService uriService,
-        IMapper mapper)
+        IMapper mapper,
+        IOpenVisionResources openVisionResourceFactory)
     {
         _applicationContext = applicationContext;
         _httpContext = httpContextAccessor.HttpContext ?? throw new ArgumentNullException(nameof(httpContextAccessor));
         _uriService = uriService;
         _mapper = mapper;
 
-        _service = new TargetService(new BaseClientService.Initializer()
-        {
-            ApplicationName = apiConfiguration.ApiName,
-            HttpClientInitializer = new UserCredential(new DatabaseApiKey(apiConfiguration.VisionApiKey)),
-            ServerUrl = "https://localhost:44320"
-        });
-
-        _resource = new TargetListResource(_service);
+        _resource = openVisionResourceFactory.GetTargetListResource();
     }
+
+    #region Methods
 
     public async Task<IPagedResponse<IEnumerable<TargetResponse>>> GetAsync(TargetBrowserQuery query, CancellationToken cancellationToken)
     {
@@ -66,7 +59,7 @@ public class TargetsService : ITargetsService
         var route = _httpContext.Request.Path.Value;
         route.ThrowIfNullOrEmpty(ResultCode.InvalidRequest, ErrorMessages.RouteNotFound);
 
-        var validFilter = new PaginationFilter(query.Page, query.Size);
+        var validFilter = new BrowserQuery(query.Page, query.Size);
         var take = validFilter.Size;
         var skip = validFilter.Page - 1;
 
@@ -85,14 +78,14 @@ public class TargetsService : ITargetsService
         var roundedTotalPages = Convert.ToInt32(Math.Ceiling(totalPages));
         var nextPage =
             validFilter.Page >= 1 && validFilter.Page < roundedTotalPages
-            ? _uriService.GetPageUri(new PaginationFilter(validFilter.Page + 1, validFilter.Size), route)
+            ? _uriService.GetPageUri(new BrowserQuery(validFilter.Page + 1, validFilter.Size), route)
             : null;
         var previousPage =
             validFilter.Page - 1 >= 1 && validFilter.Page <= roundedTotalPages
-            ? _uriService.GetPageUri(new PaginationFilter(validFilter.Page - 1, validFilter.Size), route)
+            ? _uriService.GetPageUri(new BrowserQuery(validFilter.Page - 1, validFilter.Size), route)
             : null;
-        var firstPage = _uriService.GetPageUri(new PaginationFilter(1, validFilter.Size), route);
-        var lastPage = _uriService.GetPageUri(new PaginationFilter(roundedTotalPages, validFilter.Size), route);
+        var firstPage = _uriService.GetPageUri(new BrowserQuery(1, validFilter.Size), route);
+        var lastPage = _uriService.GetPageUri(new BrowserQuery(roundedTotalPages, validFilter.Size), route);
 
         var response = new PagedResponse<IEnumerable<TargetResponse>>(
             validFilter.Page,
@@ -111,7 +104,7 @@ public class TargetsService : ITargetsService
         return response;
     }
 
-    public async Task<IResponseMessage<TargetResponse>> Get(Guid id, CancellationToken cancellationToken)
+    public async Task<IResponseMessage<TargetResponse>> GetAsync(Guid id, CancellationToken cancellationToken)
     {
         var userId = _httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         userId.ThrowIfNullOrEmpty(ResultCode.InvalidRequest, ErrorMessages.UserNotFound);
@@ -136,12 +129,11 @@ public class TargetsService : ITargetsService
         return Success(targetResponse);
     }
 
-    public async Task<IResponseMessage<Guid>> Create(CreateTargetRequest body, CancellationToken cancellationToken)
+    public async Task<IResponseMessage<Guid>> CreateAsync(CreateTargetRequest body, CancellationToken cancellationToken)
     {
         var audioId = Guid.NewGuid();
         var targetId = Guid.NewGuid();
 
-        var route = _httpContext.Request.Path.Value;
         var userId = _httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         userId.ThrowIfNullOrEmpty(ResultCode.InvalidRequest, ErrorMessages.UserNotFound);
 
@@ -154,7 +146,7 @@ public class TargetsService : ITargetsService
             Metadata = "",
             AudioId = audioId,
             Created = DateTime.Now,
-            Updated = DateTime.Now,
+            Updated = DateTime.Now
         };
 
         var audio = new Audio
@@ -163,13 +155,11 @@ public class TargetsService : ITargetsService
             Filename = body.Filename,
             AudioType = body.AudioType,
             FileExtension = Path.GetExtension(body.Filename),
+            AudioBytes = body.AudioBase64.Base64ToByteArray(body.AudioType),
             Created = DateTime.Now,
-            Updated = DateTime.Now,
+            Updated = DateTime.Now
         };
 
-        var audioBase64 = body.AudioBase64;
-        if (audioBase64.Contains(',')) audioBase64 = audioBase64[(body.AudioBase64.IndexOf(",") + 1)..];
-        audio.AudioBytes = Convert.FromBase64String(audioBase64);
         target.Audio = audio;
 
         await _applicationContext.Target.AddAsync(target, cancellationToken);
@@ -178,7 +168,7 @@ public class TargetsService : ITargetsService
         return Success(targetId);
     }
 
-    public async Task<IResponseMessage> Edit(Guid id, UpdateTargetRequest body, CancellationToken cancellationToken)
+    public async Task<IResponseMessage> EditAsync(Guid id, UpdateTargetRequest body, CancellationToken cancellationToken)
     {
         var userId = _httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         userId.ThrowIfNullOrEmpty(ResultCode.InvalidRequest, ErrorMessages.UserNotFound);
@@ -223,7 +213,7 @@ public class TargetsService : ITargetsService
         return Success();
     }
 
-    public async Task<IResponseMessage> Activate(Guid id, ActivateTargetRequest body, CancellationToken cancellationToken)
+    public async Task<IResponseMessage> ActivateAsync(Guid id, ActivateTargetRequest body, CancellationToken cancellationToken)
     {
         var userId = _httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         userId.ThrowIfNullOrEmpty(ResultCode.InvalidRequest, ErrorMessages.UserNotFound);
@@ -243,7 +233,7 @@ public class TargetsService : ITargetsService
             Updated = DateTime.Now
         };
 
-        var imageBytes = body.PngBase64!.Base64IByteArray("image/png");
+        var imageBytes = body.PngBase64!.Base64ToByteArray("image/png");
 
         // Decode the original PNG with alpha
         var matImage = new Mat();
@@ -326,7 +316,7 @@ public class TargetsService : ITargetsService
         return Success();
     }
 
-    public async Task<IResponseMessage> Deactivate(Guid id, CancellationToken cancellationToken)
+    public async Task<IResponseMessage> DeactivateAsync(Guid id, CancellationToken cancellationToken)
     {
         var userId = _httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         userId.ThrowIfNullOrEmpty(ResultCode.InvalidRequest, ErrorMessages.UserNotFound);
@@ -358,7 +348,7 @@ public class TargetsService : ITargetsService
         return Success();
     }
 
-    public async Task<IResponseMessage> Delete(Guid id, CancellationToken cancellationToken)
+    public async Task<IResponseMessage> DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
         var userId = _httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         userId.ThrowIfNullOrEmpty(ResultCode.InvalidRequest, ErrorMessages.UserNotFound);
@@ -402,6 +392,8 @@ public class TargetsService : ITargetsService
         return Success();
     }
 
+    #endregion
+
     #region Helpers
 
     /// <summary>
@@ -410,7 +402,7 @@ public class TargetsService : ITargetsService
     /// <returns>A success response message with no result.</returns>
     protected static IResponseMessage Success()
     {
-        return new ResponseMessage(Guid.NewGuid(), StatusCode.Success, new ReadOnlyCollection<Error>(new List<Error>()));
+        return new ResponseMessage(Guid.NewGuid(), StatusCode.Success, new ReadOnlyCollection<Error>([]));
     }
 
     /// <summary>
@@ -421,7 +413,7 @@ public class TargetsService : ITargetsService
     /// <returns>A success response message with the specified result.</returns>
     protected static IResponseMessage<TResult> Success<TResult>(TResult result)
     {
-        return new ResponseMessage<TResult>(new ResponseDoc<TResult>(result), Guid.NewGuid(), StatusCode.Success, new ReadOnlyCollection<Error>(new List<Error>()));
+        return new ResponseMessage<TResult>(new ResponseDoc<TResult>(result), Guid.NewGuid(), StatusCode.Success, new ReadOnlyCollection<Error>([]));
     }
 
     #endregion

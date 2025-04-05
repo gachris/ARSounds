@@ -1,4 +1,5 @@
-﻿using ARSounds.Server.Core.Filters;
+﻿using ARSounds.Server.Core.Contracts;
+using ARSounds.Server.Core.Requests;
 using Microsoft.AspNetCore.WebUtilities;
 
 namespace ARSounds.Server.Core.Services;
@@ -26,18 +27,12 @@ public class UriService : IUriService
     #region IUriService Implementation
 
     /// <inheritdoc/>
-    public Uri GetPageUri(PaginationFilter filter, string route)
+    public Uri GetPageUri(BrowserQuery filter, string route)
     {
-        var enpointUri = new Uri(string.Concat(_baseUri, route));
-        var modifiedUri = QueryHelpers.AddQueryString(enpointUri.ToString(), "page", filter.Page.ToString());
+        var endpointUri = new Uri(string.Concat(_baseUri, route));
+        var modifiedUri = QueryHelpers.AddQueryString(endpointUri.ToString(), "page", filter.Page.ToString());
         modifiedUri = QueryHelpers.AddQueryString(modifiedUri, "size", filter.Size.ToString());
         return new Uri(modifiedUri);
-    }
-
-    /// <inheritdoc/>
-    public Uri GetDetailsUri(Guid id, string route)
-    {
-        return new Uri(string.Concat(_baseUri, route, id.ToString()));
     }
 
     #endregion

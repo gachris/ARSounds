@@ -1,6 +1,6 @@
 ﻿using ARSounds.Server.Core.Responses;
 using ARSounds.Server.Core.Utils;
-using ARSounds.Server.EntityFramework.Entities;
+using ARSounds.EntityFramework.Entities;
 using AutoMapper;
 
 namespace ARSounds.Server.Core.Mappers;

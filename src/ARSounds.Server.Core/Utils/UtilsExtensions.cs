@@ -10,7 +10,7 @@ public static class UtilsExtensions
         return Convert.ToBase64String(plainTextBytes);
     }
 
-    public static byte[] Base64IByteArray(this string base64, string type)
+    public static byte[] Base64ToByteArray(this string base64, string type)
     {
         ArgumentException.ThrowIfNullOrEmpty(base64);
 

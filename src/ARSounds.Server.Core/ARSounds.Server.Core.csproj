@@ -19,9 +19,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\ARSounds.Server.EntityFramework.MySql\ARSounds.Server.EntityFramework.MySql.csproj" />
-		<ProjectReference Include="..\ARSounds.Server.EntityFramework.PostgreSQL\ARSounds.Server.EntityFramework.PostgreSQL.csproj" />
-		<ProjectReference Include="..\ARSounds.Server.EntityFramework.SqlServer\ARSounds.Server.EntityFramework.SqlServer.csproj" />
+		<ProjectReference Include="..\ARSounds.EntityFramework.MySql\ARSounds.EntityFramework.MySql.csproj" />
+		<ProjectReference Include="..\ARSounds.EntityFramework.PostgreSQL\ARSounds.EntityFramework.PostgreSQL.csproj" />
+		<ProjectReference Include="..\ARSounds.EntityFramework.SqlServer\ARSounds.EntityFramework.SqlServer.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

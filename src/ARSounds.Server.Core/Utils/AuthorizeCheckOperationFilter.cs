@@ -1,5 +1,6 @@
 ﻿using ARSounds.Server.Core.Configuration;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -10,16 +11,22 @@ namespace ARSounds.Server.Core.Utils;
 /// </summary>
 public class AuthorizeCheckOperationFilter : IOperationFilter
 {
-    private readonly ApiConfiguration _apiConfiguration;
+    #region Fields/Consts
+
+    private readonly OidcOptions _oidcOptions;
+    
+    #endregion
 
     /// <summary>
     /// Constructor for the AuthorizeCheckOperationFilter class.
     /// </summary>
     /// <param name="apiConfiguration">The API configuration containing security settings.</param>
-    public AuthorizeCheckOperationFilter(ApiConfiguration apiConfiguration)
+    public AuthorizeCheckOperationFilter(IOptions<OidcOptions> options)
     {
-        _apiConfiguration = apiConfiguration;
+        _oidcOptions = options.Value;
     }
+
+    #region Methods
 
     /// <summary>
     /// Applies security requirements to the Swagger operation based on Authorize attributes.
@@ -30,8 +37,8 @@ public class AuthorizeCheckOperationFilter : IOperationFilter
     {
         // Check if the method or its declaring type has the Authorize attribute
         var hasAuthorize = context.MethodInfo.DeclaringType != null &&
-                            (context.MethodInfo.DeclaringType.GetCustomAttributes(true).OfType<AuthorizeAttribute>().Any()
-                             || context.MethodInfo.GetCustomAttributes(true).OfType<AuthorizeAttribute>().Any());
+            (context.MethodInfo.DeclaringType.GetCustomAttributes(true).OfType<AuthorizeAttribute>().Any()
+            || context.MethodInfo.GetCustomAttributes(true).OfType<AuthorizeAttribute>().Any());
 
         if (hasAuthorize)
         {
@@ -54,9 +61,11 @@ public class AuthorizeCheckOperationFilter : IOperationFilter
                             }
                         }
                     ]
-                    = [_apiConfiguration.Audience] // Use audience from API configuration
+                    = [_oidcOptions.Audience] // Use audience from API configuration
                 }
             ];
         }
     }
+
+    #endregion
 }

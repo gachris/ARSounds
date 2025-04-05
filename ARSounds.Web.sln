@@ -20,19 +20,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.Aspire.AppHost", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.Server.Core", "src\ARSounds.Server.Core\ARSounds.Server.Core.csproj", "{9494CA28-663F-4CA7-BDD0-7AF4C0A5A34E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.Server.EntityFramework", "src\ARSounds.Server.EntityFramework\ARSounds.Server.EntityFramework.csproj", "{7551FEDF-114C-4002-8BCF-2EE68988C9E9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.Server.EntityFramework.MySql", "src\ARSounds.Server.EntityFramework.MySql\ARSounds.Server.EntityFramework.MySql.csproj", "{91D8BC37-62DC-4842-A94F-DB7EAA5C9D96}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.Server.EntityFramework.PostgreSQL", "src\ARSounds.Server.EntityFramework.PostgreSQL\ARSounds.Server.EntityFramework.PostgreSQL.csproj", "{551219D5-ADD7-49A3-BEAD-2C0A91D941C2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.Server.EntityFramework.SqlServer", "src\ARSounds.Server.EntityFramework.SqlServer\ARSounds.Server.EntityFramework.SqlServer.csproj", "{80AC6BC7-BD43-49AD-A6A0-6DF3EB996278}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.ServiceDefaults", "src\ARSounds.ServiceDefaults\ARSounds.ServiceDefaults.csproj", "{EF5011D3-2163-4B17-A053-B4863C60E814}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.Server", "src\ARSounds.Server\ARSounds.Server.csproj", "{65814CAF-C55C-464A-A5AB-EF048EEB6011}"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "arsounds.client", "src\arsounds.client\arsounds.client.esproj", "{10F4F358-C298-4CF9-9A8F-9B71C472B2A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.EntityFramework", "src\ARSounds.EntityFramework\ARSounds.EntityFramework.csproj", "{C3A2C90C-3216-E208-E91D-B4BFD643AD34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.EntityFramework.MySql", "src\ARSounds.EntityFramework.MySql\ARSounds.EntityFramework.MySql.csproj", "{4B88580B-5ADB-24E5-D98C-7C506D40D1D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.EntityFramework.PostgreSQL", "src\ARSounds.EntityFramework.PostgreSQL\ARSounds.EntityFramework.PostgreSQL.csproj", "{FED8F034-522D-3C4F-C44E-7E6E518256EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.EntityFramework.SqlServer", "src\ARSounds.EntityFramework.SqlServer\ARSounds.EntityFramework.SqlServer.csproj", "{7250DCD8-8EBA-7553-AF39-5AEB22754758}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,22 +60,6 @@ Global
 		{9494CA28-663F-4CA7-BDD0-7AF4C0A5A34E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9494CA28-663F-4CA7-BDD0-7AF4C0A5A34E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9494CA28-663F-4CA7-BDD0-7AF4C0A5A34E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7551FEDF-114C-4002-8BCF-2EE68988C9E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7551FEDF-114C-4002-8BCF-2EE68988C9E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7551FEDF-114C-4002-8BCF-2EE68988C9E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7551FEDF-114C-4002-8BCF-2EE68988C9E9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{91D8BC37-62DC-4842-A94F-DB7EAA5C9D96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{91D8BC37-62DC-4842-A94F-DB7EAA5C9D96}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{91D8BC37-62DC-4842-A94F-DB7EAA5C9D96}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{91D8BC37-62DC-4842-A94F-DB7EAA5C9D96}.Release|Any CPU.Build.0 = Release|Any CPU
-		{551219D5-ADD7-49A3-BEAD-2C0A91D941C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{551219D5-ADD7-49A3-BEAD-2C0A91D941C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{551219D5-ADD7-49A3-BEAD-2C0A91D941C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{551219D5-ADD7-49A3-BEAD-2C0A91D941C2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{80AC6BC7-BD43-49AD-A6A0-6DF3EB996278}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{80AC6BC7-BD43-49AD-A6A0-6DF3EB996278}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{80AC6BC7-BD43-49AD-A6A0-6DF3EB996278}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{80AC6BC7-BD43-49AD-A6A0-6DF3EB996278}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EF5011D3-2163-4B17-A053-B4863C60E814}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EF5011D3-2163-4B17-A053-B4863C60E814}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF5011D3-2163-4B17-A053-B4863C60E814}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -90,6 +74,22 @@ Global
 		{10F4F358-C298-4CF9-9A8F-9B71C472B2A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10F4F358-C298-4CF9-9A8F-9B71C472B2A4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{10F4F358-C298-4CF9-9A8F-9B71C472B2A4}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{C3A2C90C-3216-E208-E91D-B4BFD643AD34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3A2C90C-3216-E208-E91D-B4BFD643AD34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3A2C90C-3216-E208-E91D-B4BFD643AD34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3A2C90C-3216-E208-E91D-B4BFD643AD34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B88580B-5ADB-24E5-D98C-7C506D40D1D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B88580B-5ADB-24E5-D98C-7C506D40D1D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B88580B-5ADB-24E5-D98C-7C506D40D1D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B88580B-5ADB-24E5-D98C-7C506D40D1D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FED8F034-522D-3C4F-C44E-7E6E518256EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FED8F034-522D-3C4F-C44E-7E6E518256EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FED8F034-522D-3C4F-C44E-7E6E518256EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FED8F034-522D-3C4F-C44E-7E6E518256EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7250DCD8-8EBA-7553-AF39-5AEB22754758}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7250DCD8-8EBA-7553-AF39-5AEB22754758}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7250DCD8-8EBA-7553-AF39-5AEB22754758}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7250DCD8-8EBA-7553-AF39-5AEB22754758}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -22,10 +22,10 @@ WORKDIR /src
 COPY ["src/ARSounds.Server/ARSounds.Server.csproj", "ARSounds.Server/"]
 COPY ["src/arsounds.client/arsounds.client.esproj", "arsounds.client/"]
 COPY ["src/ARSounds.Server.Core/ARSounds.Server.Core.csproj", "src/ARSounds.Server.Core/"]
-COPY ["src/ARSounds.Server.EntityFramework/ARSounds.Server.EntityFramework.csproj", "src/ARSounds.Server.EntityFramework/"]
-COPY ["src/ARSounds.Server.EntityFramework.MySql/ARSounds.Server.EntityFramework.MySql.csproj", "src/ARSounds.Server.EntityFramework.MySql/"]
-COPY ["src/ARSounds.Server.EntityFramework.PostgreSQL/ARSounds.Server.EntityFramework.PostgreSQL.csproj", "src/ARSounds.Server.EntityFramework.PostgreSQL/"]
-COPY ["src/ARSounds.Server.EntityFramework.SqlServer/ARSounds.Server.EntityFramework.SqlServer.csproj", "src/ARSounds.Server.EntityFramework.SqlServer/"]
+COPY ["src/ARSounds.EntityFramework/ARSounds.EntityFramework.csproj", "src/ARSounds.EntityFramework/"]
+COPY ["src/ARSounds.EntityFramework.MySql/ARSounds.EntityFramework.MySql.csproj", "src/ARSounds.EntityFramework.MySql/"]
+COPY ["src/ARSounds.EntityFramework.PostgreSQL/ARSounds.EntityFramework.PostgreSQL.csproj", "src/ARSounds.EntityFramework.PostgreSQL/"]
+COPY ["src/ARSounds.EntityFramework.SqlServer/ARSounds.EntityFramework.SqlServer.csproj", "src/ARSounds.EntityFramework.SqlServer/"]
 COPY ["src/ARSounds.ServiceDefaults/ARSounds.ServiceDefaults.csproj", "src/ARSounds.ServiceDefaults/"]
 RUN dotnet restore "src/ARSounds.Server/ARSounds.Server.csproj"
 COPY . .

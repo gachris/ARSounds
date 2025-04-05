@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
-using MySqlMigrationAssembly = ARSounds.Server.EntityFramework.MySql.Helpers.MigrationAssembly;
-using PostgreSQLMigrationAssembly = ARSounds.Server.EntityFramework.PostgreSQL.Helpers.MigrationAssembly;
-using SqlMigrationAssembly = ARSounds.Server.EntityFramework.SqlServer.Helpers.MigrationAssembly;
+using MySqlMigrationAssembly = ARSounds.EntityFramework.MySql.Helpers.MigrationAssembly;
+using PostgreSQLMigrationAssembly = ARSounds.EntityFramework.PostgreSQL.Helpers.MigrationAssembly;
+using SqlMigrationAssembly = ARSounds.EntityFramework.SqlServer.Helpers.MigrationAssembly;
 
 namespace ARSounds.Server.Core.Configuration;
 
