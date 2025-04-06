@@ -1,10 +1,9 @@
 ﻿using System.Net;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using ARSounds.Server.Core.Properties;
+using ARSounds.Server.Core.Responses;
 using Microsoft.AspNetCore.Http;
-using OpenVision.Shared;
-using OpenVision.Shared.Responses;
+using Error = ARSounds.Server.Core.Responses.Error;
 
 namespace ARSounds.Server.Core.Middlewares;
 
@@ -41,13 +40,15 @@ public class ChallengeMiddleware
         _request = requestDelegate ?? throw new ArgumentNullException(nameof(requestDelegate), "Request delegate is required");
     }
 
+    #region Methods
+
     /// <summary>
     /// Invokes the middleware to handle the HTTP request.
     /// </summary>
     /// <param name="context">The HTTP context for the request.</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="context"/> is null.</exception>
-    public async Task InvokeAsync(HttpContext context)
+    public virtual async Task InvokeAsync(HttpContext context)
     {
         if (context == null)
         {
@@ -60,11 +61,13 @@ public class ChallengeMiddleware
         // Check the response status code and handle specific cases
         if (context.Response.StatusCode == (int)HttpStatusCode.Unauthorized)
         {
-            await WriteErrorAsync(context, ResultCode.Unauthorized, ErrorMessages.Unauthorized);
+            // Return a more descriptive message for unauthorized requests.
+            await WriteErrorAsync(context, ResultCode.Unauthorized, "Authentication is required. Please provide valid credentials and try again.");
         }
         else if (context.Response.StatusCode == (int)HttpStatusCode.Forbidden)
         {
-            await WriteErrorAsync(context, ResultCode.Forbidden, ErrorMessages.Forbidden);
+            // Return a more descriptive message for forbidden requests.
+            await WriteErrorAsync(context, ResultCode.Forbidden, "Access denied. You do not have permission to access this resource.");
         }
     }
 
@@ -91,4 +94,6 @@ public class ChallengeMiddleware
 
         await context.Response.WriteAsync(result);
     }
+
+    #endregion
 }

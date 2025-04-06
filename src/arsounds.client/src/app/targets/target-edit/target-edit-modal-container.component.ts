@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TargetEditComponent } from './target-edit.component';
 import { TargetService } from '../../../lib/target.service';
-import { TargetModel } from '../../../lib/target.models';
+import { Target } from '../../../lib/target.models';
 import { TargetUpdateService } from '../target-detail/target-detail.component';
 
 @Component({
@@ -30,7 +30,7 @@ export class TargetEditModalContainerComponent implements OnInit, OnDestroy {
     this.route.params.pipe(takeUntil(this.destroy)).subscribe(params => {
       const targetId = params['id'];
       this.targetService.get(targetId).subscribe(response => {
-        const targetData: TargetModel = response.response.result;
+        const targetData: Target = response.response.result;
 
         this.modalRef = this.ngbModalService.open(TargetEditComponent);
         this.modalRef.componentInstance.targetId = targetId;

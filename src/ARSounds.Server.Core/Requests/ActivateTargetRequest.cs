@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace ARSounds.Server.Core.Requests;
 
 /// <summary>
-/// Represents a request to activate a target, including the image data and optional color settings.
+/// Represents a request to activate a target.
+/// This request includes the target's PNG image (encoded in base64 format) and an optional hexadecimal color code.
 /// </summary>
 public class ActivateTargetRequest
 {
@@ -12,13 +12,11 @@ public class ActivateTargetRequest
     /// Gets or sets the PNG image encoded in base64 format.
     /// The image must be in PNG format.
     /// </summary>
-    [JsonPropertyName("png_base64")]
-    [Required(ErrorMessage = "Image base64 required. The image must be png.")]
-    public string? PngBase64 { get; set; }
+    [Required(ErrorMessage = "A base64-encoded PNG image is required.")]
+    public virtual required string Image { get; set; }
 
     /// <summary>
-    /// Gets or sets the hexadecimal color code associated with the target.
+    /// Gets or sets the optional hexadecimal color code associated with the target.
     /// </summary>
-    [JsonPropertyName("hex_color")]
-    public string? HexColor { get; set; }
+    public virtual string? Color { get; set; }
 }

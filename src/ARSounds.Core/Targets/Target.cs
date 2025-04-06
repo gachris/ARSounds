@@ -2,15 +2,13 @@
 
 public record Target(
     Guid Id,
-    string Description,
-    string Title,
-    string AudioType,
-    string AudioBase64,
-    string? ImageBase64,
-    Guid? VisionTargetId,
+    string Name,
+    string Audio,
     bool IsActive,
+    string? Image,
+    Guid? OpenVisionId,
     bool IsTrackable,
-    string? HexColor,
+    string? Color,
     int? Rate,
-    DateTime Created,
-    DateTime Updated);
+    DateTimeOffset Created,
+    DateTimeOffset Updated);

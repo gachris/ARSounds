@@ -28,18 +28,18 @@
       </div>
     </div>
     <div class="form-group mb-0">
-      <label for="description">
+      <label for="name">
         Name
       </label>
       <input type="text"
              class="form-control"
-             id="description"
+             id="name"
              required
-             [(ngModel)]="target.description"
+             [(ngModel)]="target.name"
              name="name"
-             #description="ngModel">
-      <small [hidden]="description.valid || description.pristine" class="text-danger">
-        Description is required
+             #name="ngModel">
+      <small [hidden]="name.valid || name.pristine" class="text-danger">
+        Name is required
       </small>
     </div>
   </div>

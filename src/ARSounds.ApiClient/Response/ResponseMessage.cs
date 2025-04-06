@@ -1,27 +1,64 @@
-﻿using Newtonsoft.Json;
+﻿namespace ARSounds.ApiClient.Response;
 
-namespace ARSounds.ApiClient.Response;
-
+/// <summary>
+/// Represents the base class for all API response messages.
+/// </summary>
 public class ResponseMessage : IResponseMessage
 {
-    [JsonProperty("transaction_id")]
-    public Guid TransactionId { get; }
+    /// <summary>
+    /// Gets the unique identifier for the API transaction.
+    /// </summary>
+    public virtual Guid TransactionId { get; }
 
-    [JsonProperty("status_code")]
-    public StatusCode StatusCode { get; set; }
+    /// <summary>
+    /// Gets the status code that indicates the success or failure of the API transaction.
+    /// </summary>
+    public virtual StatusCode StatusCode { get; }
 
-    public ResponseMessage()
+    /// <summary>
+    /// Gets the list of errors associated with the response.
+    /// </summary>
+    public virtual IReadOnlyCollection<Error> Errors { get; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ResponseMessage"/> class with the specified transaction ID and status code.
+    /// </summary>
+    /// <param name="transactionId">The unique identifier for the API transaction.</param>
+    /// <param name="statusCode">The status code that indicates the success or failure of the API transaction.</param>
+    /// <param name="errors">The list of errors associated with the response.</param>
+    public ResponseMessage(
+        Guid transactionId,
+        StatusCode statusCode,
+        IReadOnlyCollection<Error> errors)
     {
-        TransactionId = Guid.NewGuid();
+        TransactionId = transactionId;
+        StatusCode = statusCode;
+        Errors = errors;
     }
 }
 
+/// <summary>
+/// Represents an API response message that contains a response payload of type <typeparamref name="TResult"/>.
+/// </summary>
+/// <typeparam name="TResult">The type of the response data.</typeparam>
 public class ResponseMessage<TResult> : ResponseMessage, IResponseMessage, IResponseMessage<TResult>
 {
-    [JsonProperty("response")]
-    public ResponseDoc<TResult> Response { get; }
+    /// <summary>
+    /// Gets the response payload of type <typeparamref name="TResult"/>.
+    /// </summary>
+    public virtual ResponseDoc<TResult> Response { get; }
 
-    public ResponseMessage(ResponseDoc<TResult> response)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ResponseMessage{TResult}"/> class with the specified response payload, transaction ID, and status code.
+    /// </summary>
+    /// <param name="response">The response payload of type <typeparamref name="TResult"/>.</param>
+    /// <param name="transactionId">The unique identifier for the API transaction.</param>
+    /// <param name="statusCode">The status code that indicates the success or failure of the API transaction.</param>
+    /// <param name="errors">The list of errors associated with the response.</param>
+    public ResponseMessage(ResponseDoc<TResult> response,
+                           Guid transactionId,
+                           StatusCode statusCode,
+                           IReadOnlyCollection<Error> errors) : base(transactionId, statusCode, errors)
     {
         Response = response;
     }

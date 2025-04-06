@@ -5,40 +5,40 @@
   </div>
   <div class="modal-body">
     <div class="form-group">
-      <label for="description">
-        Description
+      <label for="name">
+        Name
       </label>
       <input type="text"
              class="form-control"
-             id="description"
+             id="name"
              required
-             [(ngModel)]="target.description"
-             name="description"
-             #description="ngModel">
-      <small [hidden]="description.valid || description.pristine" class="text-danger">
-        Description is required
+             [(ngModel)]="target.name"
+             name="name"
+             #name="ngModel">
+      <small [hidden]="name.valid || name.pristine" class="text-danger">
+        Name is required
       </small>
     </div>
     <div class="form-group">
-      <label for="hex_color">
+      <label for="color">
         Color
       </label>
       <input type="color"
              class="form-control"
-             id="hex_color"
-             [(ngModel)]="target.hex_color"
-             name="hex_color"
-             #hex_color="ngModel" />
+             id="color"
+             [(ngModel)]="target.color"
+             name="color"
+             #color="ngModel" />
     </div>
     <div class="form-group mb-0">
-      <label for="is_trackable" class="mr-2">
+      <label for="isTrackable" class="mr-2">
         Is Trackable
       </label>
       <input type="checkbox"
-             id="is_trackable"
-             [(ngModel)]="target.is_trackable"
-             name="is_trackable"
-             #is_trackable="ngModel">
+             id="isTrackable"
+             [(ngModel)]="target.isTrackable"
+             name="isTrackable"
+             #isTrackable="ngModel">
     </div>
   </div>
   <div class="modal-footer border-0">

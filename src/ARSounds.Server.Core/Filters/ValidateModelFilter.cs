@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ARSounds.Server.Core.Responses;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using OpenVision.Shared;
-using OpenVision.Shared.Responses;
 
 namespace ARSounds.Server.Core.Filters;
 
@@ -24,15 +23,13 @@ public class ValidateModelFilter : ActionFilterAttribute
 
         if (!context.ModelState.IsValid)
         {
-            var errorCollection = new List<Error>();
-
+            var errorCollection = new List<Responses.Error>();
             var errors = context.ModelState.Where(state => state.Value is not null && state.Value.ValidationState == ModelValidationState.Invalid)
                                            .Select(state => GetValidationError(state!));
 
             errorCollection.AddRange(errors);
 
             var response = new ResponseMessage(Guid.NewGuid(), StatusCode.Failed, errorCollection);
-
             context.Result = new BadRequestObjectResult(response);
         }
     }
@@ -42,14 +39,12 @@ public class ValidateModelFilter : ActionFilterAttribute
     /// </summary>
     /// <param name="state">The KeyValuePair containing the property name and model state entry.</param>
     /// <returns>An Error object containing the validation error details.</returns>
-    private static Error GetValidationError(KeyValuePair<string, ModelStateEntry> state)
+    private static Responses.Error GetValidationError(KeyValuePair<string, ModelStateEntry> state)
     {
         var propertyName = state.Key;
         var errorMessages = string.Join(Environment.NewLine, state.Value.Errors.Select(error => error.ErrorMessage));
-
-        string message = string.IsNullOrEmpty(errorMessages) ? "invalid body." : $"{errorMessages}";
-
-        return new Error(ResultCode.ValidationError, message);
+        var message = string.IsNullOrEmpty(errorMessages) ? "invalid body." : $"{errorMessages}";
+        return new Responses.Error(ResultCode.ValidationError, message);
     }
 
     #endregion

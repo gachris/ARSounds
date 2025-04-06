@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, ViewChild, ChangeDetectorRef, Renderer2, EventEmitter, Output, AfterViewInit } from '@angular/core';
-import { TargetResponse, TargetModel, TargetActivateRequest } from '../../../lib/target.models';
+import { TargetResponse, Target, ActivateTargetRequest } from '../../../lib/target.models';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { TargetService } from '../../../lib/target.service';
@@ -14,7 +14,7 @@ import WaveSurfer, * as wavesurferjs from 'wavesurfer.js';
   styleUrl: './target-detail-activate.component.css'
 })
 export class TargetDetailActivateComponent implements AfterViewInit {
-  @Input() target: TargetModel;
+  @Input() target: Target;
   @Output() targetChanged = new EventEmitter();
   @ViewChild('audioElement', { static: false }) audioElementRef: ElementRef;
   @ViewChild('barWidthInput', { static: false }) barWidthInputRef: ElementRef;
@@ -50,7 +50,7 @@ export class TargetDetailActivateComponent implements AfterViewInit {
       barRadius: 1
     });
 
-    this.wavesurfer.load(this.target.audio_base64);
+    this.wavesurfer.load(this.target.audio);
 
     this.wavesurfer.on('play', () => {
       this.playing = true;
@@ -74,7 +74,7 @@ export class TargetDetailActivateComponent implements AfterViewInit {
       this.SetDefaultWidth();
 
       this.audioElement = this.audioElementRef.nativeElement;
-      this.audioElement.src = this.target.audio_base64;
+      this.audioElement.src = this.target.audio;
       this.audioElement.setAttribute('class', 'm-audio');
     });
   }
@@ -88,9 +88,9 @@ export class TargetDetailActivateComponent implements AfterViewInit {
   async activate() {
     if (this.wavesurfer) {
       var id = this.route.snapshot.paramMap.get("id");
-      var model = new TargetActivateRequest();
-      model.png_base64 = (await this.wavesurfer.exportImage("image/png", 1, "dataURL"))[0];
-      model.hex_color = this.wavesurfer.options.waveColor;
+      var model = new ActivateTargetRequest();
+      model.image = (await this.wavesurfer.exportImage("image/png", 1, "dataURL"))[0];
+      model.color = this.wavesurfer.options.waveColor;
       this.service.activate(id, model).subscribe(_ => {
         this.target$ = this.service.get(id);
         this.target$.subscribe(item => {

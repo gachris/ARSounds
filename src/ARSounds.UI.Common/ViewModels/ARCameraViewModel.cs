@@ -82,7 +82,7 @@ public partial class ARCameraViewModel : ObservableObject, IViewModelAware
         }
 
         var targetMatchResult = e.TargetMatchResults.First();
-        var target = Targets?.FirstOrDefault(x => x.VisionTargetId?.ToString() == targetMatchResult.Id);
+        var target = Targets?.FirstOrDefault(x => x.OpenVisionId?.ToString() == targetMatchResult.Id);
 
         if (target == null)
         {
@@ -92,9 +92,9 @@ public partial class ARCameraViewModel : ObservableObject, IViewModelAware
         if (Target is null || !target.Id.Equals(Target.Id))
         {
             Target = target;
-            WaveformImage = ARCameraHelper.DecodeBase64(Target.ImageBase64!);
+            WaveformImage = ARCameraHelper.DecodeBase64(Target.Image!);
 
-            var audioBase64 = Regex.Replace(Target.AudioBase64, "^data:audio/[^;]+;base64,", "");
+            var audioBase64 = Regex.Replace(Target.Audio, "^data:audio/[^;]+;base64,", "");
             var audioBytes = Convert.FromBase64String(audioBase64);
 
             PlayAudio(audioBytes);
@@ -112,7 +112,7 @@ public partial class ARCameraViewModel : ObservableObject, IViewModelAware
             e.Frame,
             targetMatchResult,
             audioProgress,
-            Target.HexColor!);
+            Target.Color!);
     }
 
     [RelayCommand]

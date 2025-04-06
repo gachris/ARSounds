@@ -8,7 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace ARSounds.Web.Api.EntityFramework.PostgreSQL.Migrations
+namespace ARSounds.EntityFramework.PostgreSQL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -18,102 +18,31 @@ namespace ARSounds.Web.Api.EntityFramework.PostgreSQL.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "9.0.3")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("ARSounds.Web.Api.EntityFramework.Entities.Audio", b =>
+            modelBuilder.Entity("ARSounds.EntityFramework.Entities.AudioAsset", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<byte[]>("AudioBytes")
+                    b.Property<byte[]>("Audio")
                         .IsRequired()
                         .HasColumnType("bytea");
 
-                    b.Property<string>("AudioType")
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("FileExtension")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Filename")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("Updated")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Audio");
-                });
-
-            modelBuilder.Entity("ARSounds.Web.Api.EntityFramework.Entities.Image", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<byte[]>("Buffer")
-                        .IsRequired()
-                        .HasColumnType("bytea");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int?>("Rate")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("Updated")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("VisionTargetId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Image");
-                });
-
-            modelBuilder.Entity("ARSounds.Web.Api.EntityFramework.Entities.Target", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("AudioId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("HexColor")
-                        .HasColumnType("text");
-
-                    b.Property<Guid?>("ImageId")
-                        .HasColumnType("uuid");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsTrackable")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Metadata")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("Updated")
+                    b.Property<DateTimeOffset>("Updated")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("UserId")
@@ -122,42 +51,64 @@ namespace ARSounds.Web.Api.EntityFramework.PostgreSQL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AudioId")
-                        .IsUnique();
-
-                    b.HasIndex("ImageId")
-                        .IsUnique();
-
-                    b.ToTable("Target");
+                    b.ToTable("AudioAssets");
                 });
 
-            modelBuilder.Entity("ARSounds.Web.Api.EntityFramework.Entities.Target", b =>
+            modelBuilder.Entity("ARSounds.EntityFramework.Entities.ImageAsset", b =>
                 {
-                    b.HasOne("ARSounds.Web.Api.EntityFramework.Entities.Audio", "Audio")
-                        .WithOne("Target")
-                        .HasForeignKey("ARSounds.Web.Api.EntityFramework.Entities.Target", "AudioId")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AudioAssetId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<byte[]>("Image")
+                        .IsRequired()
+                        .HasColumnType("bytea");
+
+                    b.Property<bool>("IsTrackable")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("OpenVisionId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Rate")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTimeOffset>("Updated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AudioAssetId")
+                        .IsUnique();
+
+                    b.ToTable("ImageAssets");
+                });
+
+            modelBuilder.Entity("ARSounds.EntityFramework.Entities.ImageAsset", b =>
+                {
+                    b.HasOne("ARSounds.EntityFramework.Entities.AudioAsset", "AudioAsset")
+                        .WithOne("ImageAsset")
+                        .HasForeignKey("ARSounds.EntityFramework.Entities.ImageAsset", "AudioAssetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ARSounds.Web.Api.EntityFramework.Entities.Image", "Image")
-                        .WithOne("Target")
-                        .HasForeignKey("ARSounds.Web.Api.EntityFramework.Entities.Target", "ImageId");
-
-                    b.Navigation("Audio");
-
-                    b.Navigation("Image");
+                    b.Navigation("AudioAsset");
                 });
 
-            modelBuilder.Entity("ARSounds.Web.Api.EntityFramework.Entities.Audio", b =>
+            modelBuilder.Entity("ARSounds.EntityFramework.Entities.AudioAsset", b =>
                 {
-                    b.Navigation("Target")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ARSounds.Web.Api.EntityFramework.Entities.Image", b =>
-                {
-                    b.Navigation("Target")
-                        .IsRequired();
+                    b.Navigation("ImageAsset");
                 });
 #pragma warning restore 612, 618
         }

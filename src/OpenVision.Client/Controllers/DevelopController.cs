@@ -1,11 +1,11 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using OpenVision.Shared;
-using OpenVision.Shared.Requests;
 using OpenVision.Client.Core.Controllers;
 using OpenVision.Client.Core.Services;
 using OpenVision.Client.Core.ViewModels;
+using OpenVision.Shared;
+using OpenVision.Shared.Requests;
 using OpenVision.Web.Core.Filters;
 using ResponseStatusCode = OpenVision.Shared.StatusCode;
 

@@ -10,9 +10,15 @@
 
 	<ItemGroup>
 		<PackageReference Include="AutoMapper" />
+		<PackageReference Include="HotChocolate.AspNetCore" />
+		<PackageReference Include="HotChocolate.AspNetCore.Authorization" />
+		<PackageReference Include="HotChocolate.Data" />
+		<PackageReference Include="HotChocolate.Data.EntityFramework" />
 		<PackageReference Include="IdentityServer4.AccessTokenValidation" />
+		<PackageReference Include="MediatR" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" />
 		<PackageReference Include="Swashbuckle.AspNetCore" />
 		<PackageReference Include="OpenVision.Core" />
 		<PackageReference Include="OpenVision.Api.Target" />
@@ -22,21 +28,6 @@
 		<ProjectReference Include="..\ARSounds.EntityFramework.MySql\ARSounds.EntityFramework.MySql.csproj" />
 		<ProjectReference Include="..\ARSounds.EntityFramework.PostgreSQL\ARSounds.EntityFramework.PostgreSQL.csproj" />
 		<ProjectReference Include="..\ARSounds.EntityFramework.SqlServer\ARSounds.EntityFramework.SqlServer.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Compile Update="Properties\ErrorMessages.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>ErrorMessages.resx</DependentUpon>
-		</Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-		<EmbeddedResource Update="Properties\ErrorMessages.resx">
-			<Generator>ResXFileCodeGenerator</Generator>
-			<LastGenOutput>ErrorMessages.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
 	</ItemGroup>
 
 </Project>

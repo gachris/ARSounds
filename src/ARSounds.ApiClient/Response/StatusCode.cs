@@ -1,11 +1,17 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+﻿namespace ARSounds.ApiClient.Response;
 
-namespace ARSounds.ApiClient.Response;
-
-[JsonConverter(typeof(StringEnumConverter))]
+/// <summary>
+/// Represents the status code for an API operation.
+/// </summary>
 public enum StatusCode
 {
+    /// <summary>
+    /// The operation was successful.
+    /// </summary>
     Success,
+
+    /// <summary>
+    /// The operation failed.
+    /// </summary>
     Failed
 }

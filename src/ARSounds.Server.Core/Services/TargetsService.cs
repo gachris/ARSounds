@@ -1,419 +1,84 @@
-﻿using System.Collections.ObjectModel;
-using System.Data;
-using System.Security.Claims;
+﻿using ARSounds.Server.Core.Commands;
 using ARSounds.Server.Core.Contracts;
-using ARSounds.Server.Core.Properties;
-using ARSounds.Server.Core.Requests;
-using ARSounds.Server.Core.Utils;
-using ARSounds.EntityFramework.DbContexts;
-using ARSounds.EntityFramework.Entities;
-using AutoMapper;
-using Emgu.CV;
-using Emgu.CV.CvEnum;
-using Emgu.CV.Structure;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using OpenVision.Api.Target.Resources;
-using OpenVision.Shared;
-using OpenVision.Shared.Requests;
-using OpenVision.Shared.Responses;
-using TargetResponse = ARSounds.Server.Core.Responses.TargetResponse;
-using UpdateTargetRequest = ARSounds.Server.Core.Requests.UpdateTargetRequest;
+using ARSounds.Server.Core.Dtos;
+using ARSounds.Server.Core.Queries;
+using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace ARSounds.Server.Core.Services;
 
+/// <summary>
+/// Provides implementation for target management including creation, retrieval, editing, activation, deactivation, and deletion.
+/// </summary>
 public class TargetsService : ITargetsService
 {
     #region Fields/Consts
 
-    private readonly ApplicationDbContext _applicationContext;
-    private readonly IUriService _uriService;
-    private readonly IMapper _mapper;
-    private readonly HttpContext _httpContext;
-    private readonly TargetListResource _resource;
+    private readonly IMediator _mediator;
+    private readonly ILogger<TargetsService> _logger;
 
     #endregion
 
-    public TargetsService(
-        ApplicationDbContext applicationContext,
-        IHttpContextAccessor httpContextAccessor,
-        IUriService uriService,
-        IMapper mapper,
-        IOpenVisionResources openVisionResourceFactory)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="TargetsService"/> class.
+    /// </summary>
+    /// <param name="mediator">The mediator instance for sending commands and queries.</param>
+    /// <param name="logger">The logger instance for logging information and errors.</param>
+    public TargetsService(IMediator mediator, ILogger<TargetsService> logger)
     {
-        _applicationContext = applicationContext;
-        _httpContext = httpContextAccessor.HttpContext ?? throw new ArgumentNullException(nameof(httpContextAccessor));
-        _uriService = uriService;
-        _mapper = mapper;
-
-        _resource = openVisionResourceFactory.GetTargetListResource();
+        _mediator = mediator;
+        _logger = logger;
     }
 
     #region Methods
 
-    public async Task<IPagedResponse<IEnumerable<TargetResponse>>> GetAsync(TargetBrowserQuery query, CancellationToken cancellationToken)
+    /// <inheritdoc/>
+    public async Task<IQueryable<TargetDto>> GetAsync(CancellationToken cancellationToken)
     {
-        var userId = _httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        userId.ThrowIfNullOrEmpty(ResultCode.InvalidRequest, ErrorMessages.UserNotFound);
-
-        var route = _httpContext.Request.Path.Value;
-        route.ThrowIfNullOrEmpty(ResultCode.InvalidRequest, ErrorMessages.RouteNotFound);
-
-        var validFilter = new BrowserQuery(query.Page, query.Size);
-        var take = validFilter.Size;
-        var skip = validFilter.Page - 1;
-
-        var targets = await _applicationContext.Target.Where(x => x.UserId == userId && (string.IsNullOrEmpty(query.Description) || x.Description.Contains(query.Description)))
-            .Include(a => a.Audio)
-            .Include(a => a.Image)
-            .OrderBy(x => x.Created)
-            .Skip(skip * take)
-            .Take(take)
-            .ToListAsync(cancellationToken);
-
-        var totalRecords = await _applicationContext.Target.CountAsync(cancellationToken);
-        var result = targets.Select(_mapper.Map<TargetResponse>);
-
-        var totalPages = totalRecords / (double)validFilter.Size;
-        var roundedTotalPages = Convert.ToInt32(Math.Ceiling(totalPages));
-        var nextPage =
-            validFilter.Page >= 1 && validFilter.Page < roundedTotalPages
-            ? _uriService.GetPageUri(new BrowserQuery(validFilter.Page + 1, validFilter.Size), route)
-            : null;
-        var previousPage =
-            validFilter.Page - 1 >= 1 && validFilter.Page <= roundedTotalPages
-            ? _uriService.GetPageUri(new BrowserQuery(validFilter.Page - 1, validFilter.Size), route)
-            : null;
-        var firstPage = _uriService.GetPageUri(new BrowserQuery(1, validFilter.Size), route);
-        var lastPage = _uriService.GetPageUri(new BrowserQuery(roundedTotalPages, validFilter.Size), route);
-
-        var response = new PagedResponse<IEnumerable<TargetResponse>>(
-            validFilter.Page,
-            validFilter.Size,
-            firstPage,
-            lastPage,
-            roundedTotalPages,
-            totalRecords,
-            nextPage,
-            previousPage,
-            new ResponseDoc<IEnumerable<TargetResponse>>(result),
-            Guid.NewGuid(),
-            StatusCode.Success,
-            new ReadOnlyCollection<Error>([]));
-
-        return response;
+        _logger.LogInformation("Dispatching GetTargetsQuery");
+        return await _mediator.Send(new GetTargetsQuery(), cancellationToken);
     }
 
-    public async Task<IResponseMessage<TargetResponse>> GetAsync(Guid id, CancellationToken cancellationToken)
+    /// <inheritdoc/>
+    public async Task<TargetDto?> GetAsync(Guid id, CancellationToken cancellationToken)
     {
-        var userId = _httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        userId.ThrowIfNullOrEmpty(ResultCode.InvalidRequest, ErrorMessages.UserNotFound);
-
-        var target = await _applicationContext.Target.Where(x => x.Id == id && x.UserId == userId)
-                                                     .SingleOrDefaultAsync(cancellationToken);
-
-        target.ThrowIfNull(ResultCode.RecordNotFound, ErrorMessages.TargetNotFound);
-
-        await _applicationContext.Entry(target)
-                                 .Reference(x => x.Audio)
-                                 .LoadAsync(cancellationToken);
-
-        target.Audio.ThrowIfNull(ResultCode.RecordNotFound, ErrorMessages.AudioNotFound);
-
-        await _applicationContext.Entry(target)
-                                 .Reference(x => x.Image)
-                                 .LoadAsync(cancellationToken);
-
-        var targetResponse = _mapper.Map<TargetResponse>(target);
-
-        return Success(targetResponse);
+        _logger.LogInformation("Dispatching GetTargetByIdQuery for target {TargetId}", id);
+        return await _mediator.Send(new GetTargetByIdQuery(id), cancellationToken);
     }
 
-    public async Task<IResponseMessage<Guid>> CreateAsync(CreateTargetRequest body, CancellationToken cancellationToken)
+    /// <inheritdoc/>
+    public async Task<TargetDto> CreateAsync(CreateTargetDto createTargetDto, CancellationToken cancellationToken)
     {
-        var audioId = Guid.NewGuid();
-        var targetId = Guid.NewGuid();
-
-        var userId = _httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        userId.ThrowIfNullOrEmpty(ResultCode.InvalidRequest, ErrorMessages.UserNotFound);
-
-        var target = new Target
-        {
-            Id = targetId,
-            Description = body.Description,
-            UserId = userId,
-            HexColor = "#000000",
-            Metadata = "",
-            AudioId = audioId,
-            Created = DateTime.Now,
-            Updated = DateTime.Now
-        };
-
-        var audio = new Audio
-        {
-            Id = audioId,
-            Filename = body.Filename,
-            AudioType = body.AudioType,
-            FileExtension = Path.GetExtension(body.Filename),
-            AudioBytes = body.AudioBase64.Base64ToByteArray(body.AudioType),
-            Created = DateTime.Now,
-            Updated = DateTime.Now
-        };
-
-        target.Audio = audio;
-
-        await _applicationContext.Target.AddAsync(target, cancellationToken);
-        await _applicationContext.SaveChangesAsync(cancellationToken);
-
-        return Success(targetId);
+        _logger.LogInformation("Dispatching CreateTargetCommand");
+        return await _mediator.Send(new CreateTargetCommand(createTargetDto), cancellationToken);
     }
 
-    public async Task<IResponseMessage> EditAsync(Guid id, UpdateTargetRequest body, CancellationToken cancellationToken)
+    /// <inheritdoc/>
+    public async Task<TargetDto> EditAsync(Guid id, UpdateTargetDto updateTargetDto, CancellationToken cancellationToken)
     {
-        var userId = _httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        userId.ThrowIfNullOrEmpty(ResultCode.InvalidRequest, ErrorMessages.UserNotFound);
-
-        var target = await _applicationContext.Target.Where(x => x.Id == id && x.UserId == userId)
-                                                     .SingleOrDefaultAsync(cancellationToken);
-
-        target.ThrowIfNull(ResultCode.RecordNotFound, ErrorMessages.TargetNotFound);
-
-        await _applicationContext.Entry(target)
-                                 .Reference(x => x.Image)
-                                 .LoadAsync(cancellationToken);
-
-        target.Image.ThrowIfNull(ResultCode.RecordNotFound, ErrorMessages.ImageNotFound);
-
-        var route = _httpContext.Request.Path.Value;
-
-        target.Description = body.Description ?? target.Description;
-        target.HexColor = body.HexColor ?? target.HexColor;
-
-        if (target.IsActive && target.IsTrackable != body.IsTrackable)
-        {
-            target.IsTrackable = body.IsTrackable ?? false;
-
-            var updateTrackableRequest = new UpdateTrackableRequest
-            {
-                ActiveFlag = target.IsTrackable ? ActiveFlag.True : ActiveFlag.False,
-            };
-
-            target.Image.VisionTargetId.ThrowIfNull(ResultCode.RecordNotFound, ErrorMessages.ImageNotFound);
-
-            var updateTrackableResponse = await _resource.Update(updateTrackableRequest, target.Image.VisionTargetId.ToString()!).ExecuteAsync(cancellationToken);
-
-            if (updateTrackableResponse.StatusCode is StatusCode.Failed)
-            {
-                return new ResponseMessage(Guid.NewGuid(), StatusCode.Failed, updateTrackableResponse.Errors);
-            }
-        }
-
-        await _applicationContext.SaveChangesAsync(cancellationToken);
-
-        return Success();
+        _logger.LogInformation("Dispatching UpdateTargetCommand for target {TargetId}", id);
+        return await _mediator.Send(new UpdateTargetCommand(id, updateTargetDto), cancellationToken);
     }
 
-    public async Task<IResponseMessage> ActivateAsync(Guid id, ActivateTargetRequest body, CancellationToken cancellationToken)
+    /// <inheritdoc/>
+    public async Task<TargetDto> ActivateAsync(Guid id, ActivateTargetDto activateTargetDto, CancellationToken cancellationToken)
     {
-        var userId = _httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        userId.ThrowIfNullOrEmpty(ResultCode.InvalidRequest, ErrorMessages.UserNotFound);
-
-        var target = await _applicationContext.Target.Where(x => x.Id == id && x.UserId == userId).SingleOrDefaultAsync(cancellationToken);
-        target.ThrowIfNull(ResultCode.RecordNotFound, ErrorMessages.TargetNotFound);
-        target.IsActive.ThrowIfTrue(ResultCode.InvalidRequest, ErrorMessages.TargetAlreadyActive);
-
-        var imageId = Guid.NewGuid();
-        var route = _httpContext.Request.Path.Value;
-
-        target.ImageId = imageId;
-        target.Image = new Image()
-        {
-            Id = imageId,
-            Created = DateTime.Now,
-            Updated = DateTime.Now
-        };
-
-        var imageBytes = body.PngBase64!.Base64ToByteArray("image/png");
-
-        // Decode the original PNG with alpha
-        var matImage = new Mat();
-        CvInvoke.Imdecode(imageBytes, ImreadModes.Unchanged, matImage);
-
-        // ----------- JPG and PNG without alpha ------------
-        var matModelImage = new Mat(matImage.Size, DepthType.Cv8U, 3);
-        matModelImage.SetTo(new MCvScalar(255, 255, 255));
-
-        // Get alpha channel
-        var alpha = new Mat();
-        CvInvoke.ExtractChannel(matImage, alpha, 3);
-
-        // Create binary mask from alpha
-        var mask = new Mat();
-        CvInvoke.Threshold(alpha, mask, 0, 255, ThresholdType.Binary);
-
-        // Apply black background on the masked area
-        matModelImage.SetTo(new MCvScalar(0, 0, 0), mask);
-
-        // JPG output (no alpha)
-        var bufferWithoutAlphaPng = CvInvoke.Imencode(".png", matModelImage);
-        var pngBase64WithoutAlpha = Convert.ToBase64String(bufferWithoutAlphaPng);
-
-        // Decode the JPEG into a Mat (3 channels, no alpha)
-        var matJpeg = new Mat();
-        CvInvoke.Imdecode(bufferWithoutAlphaPng, ImreadModes.Color, matJpeg); // color only
-
-        // Create mask: detect near-white pixels (tweak the threshold if needed)
-        var lowerWhite = new ScalarArray(new MCvScalar(240, 240, 240));
-        var upperWhite = new ScalarArray(new MCvScalar(255, 255, 255));
-        var whiteMask = new Mat();
-        CvInvoke.InRange(matJpeg, lowerWhite, upperWhite, whiteMask);
-
-        // Invert mask to get non-white as opaque
-        var alphaMask = new Mat();
-        CvInvoke.BitwiseNot(whiteMask, alphaMask);
-
-        // Add alpha channel to original JPEG Mat
-        var matWithAlpha = new Mat();
-        CvInvoke.CvtColor(matJpeg, matWithAlpha, ColorConversion.Bgr2Bgra);
-
-        // Replace alpha channel with our generated mask
-        CvInvoke.InsertChannel(alphaMask, matWithAlpha, 3); // 3 = alpha channel index
-
-        // Encode to PNG with new alpha
-        var bufferPngWithAlpha = CvInvoke.Imencode(".png", matWithAlpha);
-        var descriptionBase64 = string.Concat(target.Description, DateTime.Now.ToString("yyyyMMddHHmmssfff")).Base64Encode();
-        var metadataBase64 = string.Concat(descriptionBase64, "|", DateTime.Now.ToString()).Base64Encode();
-
-        target.Image.Buffer = bufferPngWithAlpha; // With alpha
-        target.Metadata = metadataBase64;
-        target.HexColor = body.HexColor!;
-
-        await _applicationContext.Image.AddAsync(target.Image, cancellationToken);
-
-        target.IsActive = true;
-        target.IsTrackable = true;
-
-        var postTrackableRequest = new PostTrackableRequest
-        {
-            Name = descriptionBase64,
-            Image = pngBase64WithoutAlpha,
-            Width = 1,
-            ActiveFlag = target.IsTrackable ? ActiveFlag.True : ActiveFlag.False,
-            Metadata = metadataBase64
-        };
-
-        var visionPostResponse = await _resource.Insert(postTrackableRequest).ExecuteAsync(cancellationToken);
-
-        if (visionPostResponse.StatusCode is StatusCode.Failed)
-        {
-            return new ResponseMessage(Guid.NewGuid(), StatusCode.Failed, visionPostResponse.Errors);
-        }
-
-        target.Image.VisionTargetId = visionPostResponse.Response.Result;
-
-        await _applicationContext.SaveChangesAsync(cancellationToken);
-
-        return Success();
+        _logger.LogInformation("Dispatching ActivateTargetCommand for target {TargetId}", id);
+        return await _mediator.Send(new ActivateTargetCommand(id, activateTargetDto), cancellationToken);
     }
 
-    public async Task<IResponseMessage> DeactivateAsync(Guid id, CancellationToken cancellationToken)
+    /// <inheritdoc/>
+    public async Task<TargetDto> DeactivateAsync(Guid id, CancellationToken cancellationToken)
     {
-        var userId = _httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        userId.ThrowIfNullOrEmpty(ResultCode.InvalidRequest, ErrorMessages.UserNotFound);
-
-        var target = await _applicationContext.Target.Where(x => x.Id == id && x.UserId == userId).SingleOrDefaultAsync(cancellationToken);
-        target.ThrowIfNull(ResultCode.RecordNotFound, ErrorMessages.TargetNotFound);
-        target.IsActive.ThrowIfFalse(ResultCode.InvalidRequest, ErrorMessages.TargetIsNotActive);
-
-        await _applicationContext.Entry(target).Reference(x => x.Image).LoadAsync(cancellationToken);
-        target.Image.ThrowIfNull(ResultCode.RecordNotFound, ErrorMessages.ImageNotFound);
-
-        var route = _httpContext.Request.Path.Value;
-
-        target.IsTrackable = false;
-        target.IsActive = false;
-
-        target.Image.VisionTargetId.ThrowIfNull(ResultCode.RecordNotFound, ErrorMessages.ImageNotFound);
-
-        var deleteResponse = await _resource.Delete(target.Image.VisionTargetId.ToString()!).ExecuteAsync(cancellationToken);
-
-        if (deleteResponse.StatusCode is StatusCode.Failed)
-        {
-            return new ResponseMessage(Guid.NewGuid(), StatusCode.Failed, deleteResponse.Errors);
-        }
-
-        _applicationContext.Image.Remove(target.Image);
-        await _applicationContext.SaveChangesAsync(cancellationToken);
-
-        return Success();
+        _logger.LogInformation("Dispatching DeactivateTargetCommand for target {TargetId}", id);
+        return await _mediator.Send(new DeactivateTargetCommand(id), cancellationToken);
     }
 
-    public async Task<IResponseMessage> DeleteAsync(Guid id, CancellationToken cancellationToken)
+    /// <inheritdoc/>
+    public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        var userId = _httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        userId.ThrowIfNullOrEmpty(ResultCode.InvalidRequest, ErrorMessages.UserNotFound);
-
-        var target = await _applicationContext.Target.Where(x => x.Id == id && x.UserId == userId)
-                                                     .SingleOrDefaultAsync(cancellationToken);
-
-        target.ThrowIfNull(ResultCode.RecordNotFound, ErrorMessages.TargetNotFound);
-
-        await _applicationContext.Entry(target)
-                                 .Reference(x => x.Audio)
-                                 .LoadAsync(cancellationToken);
-
-        target.Audio.ThrowIfNull(ResultCode.RecordNotFound, ErrorMessages.AudioNotFound);
-
-        if (target.IsActive)
-        {
-            target.Image.ThrowIfNull(ResultCode.RecordNotFound, ErrorMessages.ImageNotFound);
-            target.Image.VisionTargetId.ThrowIfNull(ResultCode.RecordNotFound, ErrorMessages.ImageNotFound);
-
-            await _applicationContext.Entry(target)
-                                     .Reference(x => x.Image)
-                                     .LoadAsync(cancellationToken);
-
-            var deleteResponse = await _resource.Delete(target.Image.VisionTargetId.ToString()!)
-                .ExecuteAsync(cancellationToken);
-
-            if (deleteResponse.StatusCode is StatusCode.Failed)
-            {
-                return new ResponseMessage(Guid.NewGuid(), StatusCode.Failed, deleteResponse.Errors);
-            }
-
-            _applicationContext.Image.Remove(target.Image);
-        }
-
-        _applicationContext.Audio.Remove(target.Audio);
-        _applicationContext.Target.Remove(target);
-
-        await _applicationContext.SaveChangesAsync(cancellationToken);
-
-        return Success();
-    }
-
-    #endregion
-
-    #region Helpers
-
-    /// <summary>
-    /// Creates a success response message with no result.
-    /// </summary>
-    /// <returns>A success response message with no result.</returns>
-    protected static IResponseMessage Success()
-    {
-        return new ResponseMessage(Guid.NewGuid(), StatusCode.Success, new ReadOnlyCollection<Error>([]));
-    }
-
-    /// <summary>
-    /// Creates a success response message with a result.
-    /// </summary>
-    /// <typeparam name="TResult">The type of the result.</typeparam>
-    /// <param name="result">The result.</param>
-    /// <returns>A success response message with the specified result.</returns>
-    protected static IResponseMessage<TResult> Success<TResult>(TResult result)
-    {
-        return new ResponseMessage<TResult>(new ResponseDoc<TResult>(result), Guid.NewGuid(), StatusCode.Success, new ReadOnlyCollection<Error>([]));
+        _logger.LogInformation("Dispatching DeleteTargetCommand for target {TargetId}", id);
+        return await _mediator.Send(new DeleteTargetCommand(id), cancellationToken);
     }
 
     #endregion

@@ -8,5 +8,5 @@ public class DockerConfiguration
     /// <summary>
     /// Gets or sets a value indicating whether the CA certificate should be updated.
     /// </summary>
-    public bool UpdateCaCertificate { get; set; }
+    public virtual bool UpdateCaCertificate { get; set; }
 }

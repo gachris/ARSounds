@@ -1,17 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
-using Serilog;
 
-namespace ARSounds.ServiceDefaults;
+namespace Microsoft.Extensions.Hosting;
 
 /// <summary>
 /// Extension methods for configuring ASP.NET Core applications using Microsoft.Extensions.Hosting.
@@ -21,7 +17,7 @@ public static class Extensions
     /// <summary>
     /// Adds service defaults including OpenTelemetry, health checks, service discovery, and HTTP client configurations.
     /// </summary>
-    public static IHostApplicationBuilder AddServiceDefaults(this IHostApplicationBuilder builder)
+    public static TBuilder AddServiceDefaults<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
         builder.ConfigureOpenTelemetry();
 
@@ -50,7 +46,7 @@ public static class Extensions
     /// <summary>
     /// Configures OpenTelemetry for logging, metrics, and tracing.
     /// </summary>
-    public static IHostApplicationBuilder ConfigureOpenTelemetry(this IHostApplicationBuilder builder)
+    public static TBuilder ConfigureOpenTelemetry<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
         builder.Logging.AddOpenTelemetry(logging =>
         {
@@ -67,7 +63,8 @@ public static class Extensions
             })
             .WithTracing(tracing =>
             {
-                tracing.AddAspNetCoreInstrumentation()
+                tracing.AddSource(builder.Environment.ApplicationName)
+                    .AddAspNetCoreInstrumentation()
                     // Uncomment the following line to enable gRPC instrumentation (requires the OpenTelemetry.Instrumentation.GrpcNetClient package)
                     //.AddGrpcClientInstrumentation()
                     .AddHttpClientInstrumentation();
@@ -81,7 +78,7 @@ public static class Extensions
     /// <summary>
     /// Adds OpenTelemetry exporters based on configuration.
     /// </summary>
-    private static IHostApplicationBuilder AddOpenTelemetryExporters(this IHostApplicationBuilder builder)
+    private static TBuilder AddOpenTelemetryExporters<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
         var useOtlpExporter = !string.IsNullOrWhiteSpace(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
 
@@ -103,7 +100,7 @@ public static class Extensions
     /// <summary>
     /// Adds default health checks to the application.
     /// </summary>
-    public static IHostApplicationBuilder AddDefaultHealthChecks(this IHostApplicationBuilder builder)
+    public static TBuilder AddDefaultHealthChecks<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
         builder.Services.AddHealthChecks()
             // Add a default liveness check to ensure app is responsive
@@ -132,35 +129,5 @@ public static class Extensions
         }
 
         return app;
-    }
-
-    /// <summary>
-    /// Configures the host builder for the application.
-    /// </summary>
-    public static void ConfigureHostBuilder<T>(this WebApplicationBuilder builder, string[] args) where T : class
-    {
-        builder.Configuration.AddJsonFile("serilog.json", optional: true, reloadOnChange: true);
-        var env = builder.Environment;
-
-        builder.Configuration.AddJsonFile($"serilog.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
-
-        if (env.IsDevelopment())
-        {
-            builder.Configuration.AddUserSecrets<T>(optional: true);
-        }
-
-        //builder.Configuration.AddAzureKeyVaultConfiguration(builder.Configuration);
-
-        builder.Configuration.AddEnvironmentVariables();
-        builder.Configuration.AddCommandLine(args);
-
-        builder.WebHost.ConfigureKestrel(options => options.AddServerHeader = false);
-
-        builder.Host.UseSerilog((hostContext, loggerConfig) =>
-        {
-            loggerConfig
-                .ReadFrom.Configuration(hostContext.Configuration)
-                .Enrich.WithProperty("ApplicationName", hostContext.HostingEnvironment.ApplicationName);
-        });
     }
 }

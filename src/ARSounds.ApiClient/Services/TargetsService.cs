@@ -1,4 +1,6 @@
 ﻿using System.Net.Http.Json;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 using ARSounds.ApiClient.Contracts;
 using ARSounds.ApiClient.Data;
 using ARSounds.ApiClient.Dtos;
@@ -13,6 +15,13 @@ public class TargetsService : ITargetsService
     #region Fields/Consts
 
     private readonly HttpClient _httpClient;
+
+    private static readonly JsonSerializerOptions JsonSerializerOptions = new()
+    {
+        PropertyNameCaseInsensitive = true,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+    };
 
     #endregion
 
@@ -39,7 +48,7 @@ public class TargetsService : ITargetsService
             throw new HttpRequestException($"Failed to fetch targets: {response.StatusCode}");
         }
 
-        var responseMessage = await response.Content.ReadFromJsonAsync<ResponseMessage<IEnumerable<TargetDto>>>(cancellationToken);
+        var responseMessage = await response.Content.ReadFromJsonAsync<ResponseMessage<IEnumerable<TargetDto>>>(JsonSerializerOptions, cancellationToken);
 
         ArgumentNullException.ThrowIfNull(responseMessage, "Failed to deserialize response from targets API.");
 
@@ -57,7 +66,7 @@ public class TargetsService : ITargetsService
             throw new HttpRequestException($"Failed to fetch target {id}: {response.StatusCode}");
         }
 
-        var responseMessage = await response.Content.ReadFromJsonAsync<ResponseMessage<TargetDto>>(cancellationToken);
+        var responseMessage = await response.Content.ReadFromJsonAsync<ResponseMessage<TargetDto>>(JsonSerializerOptions, cancellationToken);
 
         ArgumentNullException.ThrowIfNull(responseMessage, "Failed to deserialize response from targets API.");
 

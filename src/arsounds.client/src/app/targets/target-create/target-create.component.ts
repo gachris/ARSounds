@@ -30,17 +30,14 @@ export class TargetCreateComponent {
 
   onSubmit() {
     if (!this.submitted) {
-      this.submitted = true;
-
       const model = new CreateTargetRequest();
-      model.audio_type = this.target.file.type;
-      model.filename = this.target.file.name;
-      model.description = this.target.description;
       let reader = new FileReader();
+      this.submitted = true;
       reader.onload = () => {
-        model.audio_base64 = reader.result.toString();
+        model.name = this.target.name;
+        model.audio = reader.result.toString();
         this.service.create(model).subscribe(item => {
-          this.modal.close(item.response.result);
+          this.modal.close(item.response.result.id);
           var alert: Alert = {
             type: 'success',
             message: "Target created successful!"

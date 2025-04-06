@@ -1,38 +1,22 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace ARSounds.Server.Core.Requests;
 
 /// <summary>
 /// Represents a request to create a new target with the required details.
+/// This request includes a target name and the audio data encoded in base64 format.
 /// </summary>
 public class CreateTargetRequest
 {
     /// <summary>
-    /// Gets or sets the description of the target.
+    /// Gets or sets the name of the target.
     /// </summary>
-    [JsonPropertyName("description")]
-    [Required(ErrorMessage = "description required.")]
-    public required string Description { get; set; }
+    [Required(ErrorMessage = "The target name is required.")]
+    public virtual required string Name { get; set; }
 
     /// <summary>
-    /// Gets or sets the filename associated with the target's audio.
+    /// Gets or sets the base64-encoded audio data for the target.
     /// </summary>
-    [JsonPropertyName("filename")]
-    [Required(ErrorMessage = "filename required.")]
-    public required string Filename { get; set; }
-
-    /// <summary>
-    /// Gets or sets the base64-encoded audio data.
-    /// </summary>
-    [JsonPropertyName("audio_base64")]
-    [Required(ErrorMessage = "audio_base64 required.")]
-    public required string AudioBase64 { get; set; }
-
-    /// <summary>
-    /// Gets or sets the type of the audio (e.g., mp3, wav).
-    /// </summary>
-    [JsonPropertyName("audio_type")]
-    [Required(ErrorMessage = "audio_type required.")]
-    public required string AudioType { get; set; }
+    [Required(ErrorMessage = "The audio data is required and must be provided in base64 format.")]
+    public virtual required string Audio { get; set; }
 }

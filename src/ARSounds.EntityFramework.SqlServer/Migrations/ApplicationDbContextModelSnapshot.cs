@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace ARSounds.Web.Api.EntityFramework.SqlServer.Migrations
+namespace ARSounds.EntityFramework.SqlServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -18,103 +18,32 @@ namespace ARSounds.Web.Api.EntityFramework.SqlServer.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "9.0.3")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ARSounds.Web.Api.EntityFramework.Entities.Audio", b =>
+            modelBuilder.Entity("ARSounds.EntityFramework.Entities.AudioAsset", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<byte[]>("AudioBytes")
+                    b.Property<byte[]>("Audio")
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("AudioType")
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FileExtension")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Filename")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Audio");
-                });
-
-            modelBuilder.Entity("ARSounds.Web.Api.EntityFramework.Entities.Image", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<byte[]>("Buffer")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("Rate")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Updated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("VisionTargetId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Image");
-                });
-
-            modelBuilder.Entity("ARSounds.Web.Api.EntityFramework.Entities.Target", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("AudioId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HexColor")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("ImageId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsTrackable")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Metadata")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("Updated")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -122,43 +51,64 @@ namespace ARSounds.Web.Api.EntityFramework.SqlServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AudioId")
-                        .IsUnique();
-
-                    b.HasIndex("ImageId")
-                        .IsUnique()
-                        .HasFilter("[ImageId] IS NOT NULL");
-
-                    b.ToTable("Target");
+                    b.ToTable("AudioAssets");
                 });
 
-            modelBuilder.Entity("ARSounds.Web.Api.EntityFramework.Entities.Target", b =>
+            modelBuilder.Entity("ARSounds.EntityFramework.Entities.ImageAsset", b =>
                 {
-                    b.HasOne("ARSounds.Web.Api.EntityFramework.Entities.Audio", "Audio")
-                        .WithOne("Target")
-                        .HasForeignKey("ARSounds.Web.Api.EntityFramework.Entities.Target", "AudioId")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AudioAssetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<byte[]>("Image")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<bool>("IsTrackable")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("OpenVisionId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rate")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset>("Updated")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AudioAssetId")
+                        .IsUnique();
+
+                    b.ToTable("ImageAssets");
+                });
+
+            modelBuilder.Entity("ARSounds.EntityFramework.Entities.ImageAsset", b =>
+                {
+                    b.HasOne("ARSounds.EntityFramework.Entities.AudioAsset", "AudioAsset")
+                        .WithOne("ImageAsset")
+                        .HasForeignKey("ARSounds.EntityFramework.Entities.ImageAsset", "AudioAssetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ARSounds.Web.Api.EntityFramework.Entities.Image", "Image")
-                        .WithOne("Target")
-                        .HasForeignKey("ARSounds.Web.Api.EntityFramework.Entities.Target", "ImageId");
-
-                    b.Navigation("Audio");
-
-                    b.Navigation("Image");
+                    b.Navigation("AudioAsset");
                 });
 
-            modelBuilder.Entity("ARSounds.Web.Api.EntityFramework.Entities.Audio", b =>
+            modelBuilder.Entity("ARSounds.EntityFramework.Entities.AudioAsset", b =>
                 {
-                    b.Navigation("Target")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ARSounds.Web.Api.EntityFramework.Entities.Image", b =>
-                {
-                    b.Navigation("Target")
-                        .IsRequired();
+                    b.Navigation("ImageAsset");
                 });
 #pragma warning restore 612, 618
         }

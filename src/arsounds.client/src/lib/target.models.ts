@@ -1,21 +1,50 @@
-export interface Error {
-  result_code: string;
+export class Target {
+  id: any;
+  name: string;
+  audio: string
+  isActive: boolean;
+  image?: string;
+  openVisiontId?: string;
+  isTrackable?: boolean;
+  color?: string;
+  rate?: number;
+  created: Date;
+  updated: Date;
+}
+
+export class BrowserQuery {
+  page: number;
+  size: number;
+}
+
+export class TargetBrowserQuery extends BrowserQuery {
+  name: string;
+}
+
+export class CreateTargetRequest {
+  name: string;
+  audio: string;
+}
+
+export class UpdateTargetRequest {
+  name: string;
+  isTrackable: boolean;
+  color: string;
+}
+
+export class ActivateTargetRequest {
+  image: string;
+  color: string;
+}
+
+export class Error {
+  resultCode: string;
   message: any;
 }
 
-export interface IResponseMessage {
-  transaction_id: any;
-  status_code: any;
-  errors: Error[];
-}
-
-export interface IResponseMessageGeneric<TResult> extends IResponseMessage {
-  response: ResponseDoc<TResult>;
-}
-
-export class ResponseMessage implements IResponseMessage {
-  transaction_id: any;
-  status_code: any;
+export class ResponseMessage {
+  transactionId: any;
+  statusCode: any;
   errors: Error[];
 }
 
@@ -23,7 +52,7 @@ export class ResponseDoc<TResult> {
   result: TResult;
 }
 
-export class ResponseMessageGeneric<TResult> extends ResponseMessage implements IResponseMessageGeneric<TResult> {
+export class ResponseMessageGeneric<TResult> extends ResponseMessage {
   response: ResponseDoc<TResult>;
   constructor(obj: any) {
     super();
@@ -34,77 +63,29 @@ export class ResponseMessageGeneric<TResult> extends ResponseMessage implements 
 export class PagedResponse<TResult> extends ResponseMessageGeneric<TResult> {
   page: number;
   size: number;
-  first_page: any
-  last_page: any
-  total_pages: number;
-  total_records: number;
-  next_page: any
-  previous_page: any
+  firstPage: any
+  lastPage: any
+  totalPages: number;
+  totalRecords: number;
+  nextPage: any
+  previousPage: any
 }
 
-export class BrowserTargetResponse extends PagedResponse<TargetModel[]> {
+export class BrowserTargetResponse extends PagedResponse<Target[]> {
   constructor(obj: any) {
     super(obj);
-    this.response = obj as ResponseDoc<TargetModel[]>;
+    this.response = obj as ResponseDoc<Target[]>;
   }
 }
 
-export class TargetResponse extends ResponseMessageGeneric<TargetModel> {
+export class TargetResponse extends ResponseMessageGeneric<Target> {
   constructor(obj: any) {
     super(obj);
-    this.response = obj as ResponseDoc<TargetModel>;
+    this.response = obj as ResponseDoc<Target>;
   }
-}
-
-export class TargetModel {
-  id: any;
-  description: string;
-  title: string;
-  audio_type: string;
-  audio_base64: string
-  jpeg_base64: string;
-  image_base64: string;
-  is_active: boolean;
-  is_trackable: boolean;
-  hex_color: string;
-  rate?: number;
-  created: Date;
-  updated: Date;
 }
 
 export class TargetBindingCreateModel {
-  description: string;
+  name: string;
   file: File | null;
-}
-
-export class CreateTargetRequest {
-  description: string;
-  filename: string;
-  audio_base64: string;
-  audio_type: string;
-}
-
-export class UpdateTargetRequest {
-  description: string;
-  is_trackable: boolean;
-  hex_color: string;
-}
-
-export class TargetActivateRequest {
-  png_base64: string;
-  hex_color: string;
-}
-
-export class PaginationFilter {
-  page: number;
-  size: number;
-}
-
-export class BrowserQuery extends PaginationFilter {
-  search_text: string;
-}
-
-export class TargetBrowserQuery extends BrowserQuery {
-  description: string;
-  created: Date;
 }

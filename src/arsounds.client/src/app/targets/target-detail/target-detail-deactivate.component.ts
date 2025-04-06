@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TargetService } from '../../../lib/target.service';
-import { TargetResponse, TargetModel } from '../../../lib/target.models';
+import { TargetResponse, Target } from '../../../lib/target.models';
 import { Alert } from '../../notification/notification.component';
 import { NotificationService } from '../../../lib/notification.service';
 import { Observable } from 'rxjs';
@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
 })
 export class TargetDetailDeactivateComponent implements AfterViewInit {
   @ViewChild('audioElement', { static: false }) audioElementRef: ElementRef;
-  @Input() target: TargetModel = new TargetModel();
+  @Input() target: Target = new Target();
   @Output() targetChanged = new EventEmitter();
   audioElement: HTMLAudioElement;
   playing = false;
@@ -28,7 +28,7 @@ export class TargetDetailDeactivateComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.audioElement = this.audioElementRef.nativeElement;
-    this.audioElement.src = this.target.audio_base64;
+    this.audioElement.src = this.target.audio;
     this.audioElement.setAttribute('class', 'm-audio');
   }
 

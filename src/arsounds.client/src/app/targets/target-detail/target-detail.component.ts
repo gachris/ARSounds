@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { TargetService } from '../../../lib/target.service';
-import { TargetResponse, TargetModel } from '../../../lib/target.models';
+import { TargetResponse, Target } from '../../../lib/target.models';
 
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
@@ -15,7 +15,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class TargetDetailComponent implements OnInit {
   target$: Observable<TargetResponse>;
-  target: TargetModel = null;
+  target: Target = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -45,10 +45,10 @@ export class TargetDetailComponent implements OnInit {
 
 @Injectable({ providedIn: 'root' })
 export class TargetUpdateService {
-  private targetUpdateSubject = new BehaviorSubject<TargetModel>(null);
+  private targetUpdateSubject = new BehaviorSubject<Target>(null);
   targetUpdate$ = this.targetUpdateSubject.asObservable();
 
-  updateTarget(target: TargetModel) {
+  updateTarget(target: Target) {
     this.targetUpdateSubject.next(target);
   }
 }

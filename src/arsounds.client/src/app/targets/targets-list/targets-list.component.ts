@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { TargetModel } from '../../../lib/target.models';
+import { Target } from '../../../lib/target.models';
 
 @Component({
   selector: 'app-targets-list',
@@ -9,7 +9,7 @@ import { TargetModel } from '../../../lib/target.models';
 })
 export class TargetsListComponent {
   @Output() scrollingFinished = new EventEmitter<void>();
-  @Input() targets: Array<TargetModel> = [];
+  @Input() targets: Array<Target> = [];
 
   constructor() { }
 

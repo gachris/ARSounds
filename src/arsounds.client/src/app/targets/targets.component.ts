@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { TargetService } from '../../lib/target.service';
-import { TargetBrowserQuery, TargetModel } from '../../lib/target.models';
+import { TargetBrowserQuery, Target } from '../../lib/target.models';
 
 @Component({
   selector: 'app-targets',
@@ -11,9 +11,9 @@ import { TargetBrowserQuery, TargetModel } from '../../lib/target.models';
 })
 
 export class TargetsComponent implements OnInit {
-  private targetsSubject = new BehaviorSubject<Array<TargetModel>>([]);
+  private targetsSubject = new BehaviorSubject<Array<Target>>([]);
   targets$ = this.targetsSubject.asObservable();
-  targets: Array<TargetModel> = [];
+  targets: Array<Target> = [];
   pageSize: number = 9;
   currentPageNumber: number = 1;
   totalPage: number = 1;
@@ -41,12 +41,12 @@ export class TargetsComponent implements OnInit {
     if (!this.processing) {
       this.processing = true;
       const query = new TargetBrowserQuery();
-      query.description = this.searchText;
+      query.name = this.searchText;
       query.page = this.currentPageNumber;
       query.size = this.pageSize;
       this.service.getAll(query).subscribe(response => {
         const array = response.response.result;
-        this.totalPage = response.total_pages;
+        this.totalPage = response.totalPages;
         this.getnext = this.totalPage >= this.currentPageNumber;
         if (this.getnext) {
           this.currentPageNumber++;

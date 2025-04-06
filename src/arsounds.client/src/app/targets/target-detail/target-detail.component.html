@@ -1,4 +1,4 @@
-<div *ngIf="target && target.is_active; then deactivate else activate"></div>
+<div *ngIf="target && target.isActive; then deactivate else activate"></div>
 <ng-template #deactivate>
   <app-target-detail-deactivate *ngIf="target"
                                 [target]="target"

@@ -1,12 +1,21 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using ARSounds.Aspire.AppHost.Configuration;
+using Microsoft.Extensions.Configuration;
 
 var builder = DistributedApplication.CreateBuilder(args);
-var databaseProvider = builder.Configuration.GetSection("Parameters").GetValue<string>("databaseProvider")!;
 
 IResourceBuilder<IResourceWithConnectionString> visionResourceBuilder;
 IResourceBuilder<IResourceWithConnectionString> arsoundsResourceBuilder;
 
-if (databaseProvider == "SqlServer")
+var parameters = builder.Configuration
+    .GetSection("Parameters");
+
+var databaseProviderType = parameters
+    .GetValue<DatabaseProviderType>(nameof(DatabaseProviderType));
+
+var arsoundsDbConnectionName = parameters
+    .GetValue<string>("ARSoundsDbConnectionName");
+
+if (databaseProviderType == DatabaseProviderType.SqlServer)
 {
     var resource = builder.AddSqlServer("sqlserver")
         .WithDataVolume("ARSounds.Aspire.AppHost-sqlserver-data");
@@ -14,7 +23,7 @@ if (databaseProvider == "SqlServer")
     visionResourceBuilder = resource.AddDatabase("vision");
     arsoundsResourceBuilder = resource.AddDatabase("arsounds");
 }
-else if (databaseProvider == "MySql")
+else if (databaseProviderType == DatabaseProviderType.MySql)
 {
     var resource = builder.AddMySql("mysql")
         .WithDataVolume("ARSounds.Aspire.AppHost-mysql-data");
@@ -31,15 +40,18 @@ else
     arsoundsResourceBuilder = resource.AddDatabase("arsounds");
 }
 
-var databaseProviderParameter = builder.AddParameter("databaseProvider");
+var databaseProviderTypeParameter = builder.AddParameter("DatabaseProviderType");
+var usePooledDbContextParameter = builder.AddParameter("UsePooledDbContext");
 
 builder.AddProject<Projects.OpenVision_Client>("openvision-client");
 builder.AddProject<Projects.OpenVision_Server>("openvision-server")
-       .WithEnvironment("DatabaseProvider", databaseProviderParameter)
+       .WithEnvironment("DatabaseConfiguration:ProviderType", databaseProviderTypeParameter)
+       .WithEnvironment("DatabaseConfiguration:UsePooledDbContext", usePooledDbContextParameter)
        .WithReference(visionResourceBuilder);
 
 builder.AddProject<Projects.ARSounds_Server>("arsounds-server")
-       .WithEnvironment("DatabaseProvider", databaseProviderParameter)
+       .WithEnvironment("DatabaseConfiguration:ProviderType", databaseProviderTypeParameter)
+       .WithEnvironment("DatabaseConfiguration:UsePooledDbContext", usePooledDbContextParameter)
        .WithReference(arsoundsResourceBuilder);
 
 builder.Build().Run();

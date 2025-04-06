@@ -12,10 +12,7 @@
         </div>
         <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
           <label class="mb-1 bg-primary-3" style="display:table; font-size:13px; color: #CCCCCC; background: #271B1F; padding: 4px;">
-            {{ target.description }}
-          </label>
-          <label class="form-group bg-primary-3" style="background: #271B1F; color: #ffffff; padding: 4px;">
-            {{ target.title }}
+            {{ target.name }}
           </label>
         </div>
       </div>
@@ -28,7 +25,7 @@
       </div>
     </div>
     <div class="mt-4">
-      <img src="{{ target.image_base64 }}" />
+      <img src="{{ target.image }}" />
     </div>
   </div>
   <div class="col-xl-4 col-md-4 col-sm-12 col-12 order-lg-2 pl-lg-3 pt-mdl-3" id="outer_div">
@@ -49,16 +46,16 @@
         <div class="input-group">
           <label class="text-primary-3">Color Code: </label>
           <label class="ml-1 text-body">
-            {{ target.hex_color }}
+            {{ target.color }}
           </label>
-          <div class="input-group-prepend ml-2" [style.background-color]="target.hex_color" style="height: 19px; width: 19px;">
+          <div class="input-group-prepend ml-2" [style.background-color]="target.color" style="height: 19px; width: 19px;">
           </div>
         </div>
       </div>
       <div class="form-group m-0">
         <label class="text-primary-3">Status:</label>
         <label class="ml-1 text-body">
-          {{ target.is_trackable ? 'Active' : 'Inactive' }}
+          {{ target.isTrackable ? 'Active' : 'Inactive' }}
         </label>
       </div>
       <div class="form-group m-0">

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Text.Json.Serialization;
 
 namespace ARSounds.Server.Core.Requests;
 
@@ -9,9 +8,8 @@ namespace ARSounds.Server.Core.Requests;
 public class TargetBrowserQuery : BrowserQuery, IBrowserQuery
 {
     /// <summary>
-    /// Gets or sets an optional description filter for the targets.
+    /// Gets or sets an optional name filter for the targets.
     /// </summary>
-    [FromQuery(Name = "description")]
-    [JsonPropertyName("description")]
-    public virtual string? Description { get; set; }
+    [FromQuery(Name = "name")]
+    public virtual string? Name { get; set; }
 }
