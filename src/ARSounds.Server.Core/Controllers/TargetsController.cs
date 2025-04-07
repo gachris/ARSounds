@@ -21,7 +21,6 @@ public class TargetsController : ApiControllerBase
 
     private readonly ITargetsService _targetsService;
     private readonly IMapper _mapper;
-    private new readonly ILogger<TargetsController> _logger;
 
     #endregion
 
@@ -38,7 +37,6 @@ public class TargetsController : ApiControllerBase
     {
         _targetsService = targetsService;
         _mapper = mapper;
-        _logger = logger;
     }
 
     #region Methods
