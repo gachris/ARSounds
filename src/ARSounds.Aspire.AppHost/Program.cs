@@ -12,32 +12,32 @@ var parameters = builder.Configuration
 var databaseProviderType = parameters
     .GetValue<DatabaseProviderType>(nameof(DatabaseProviderType));
 
-var arsoundsDbConnectionName = parameters
-    .GetValue<string>("ARSoundsDbConnectionName");
-
-if (databaseProviderType == DatabaseProviderType.SqlServer)
+switch (databaseProviderType)
 {
-    var resource = builder.AddSqlServer("sqlserver")
-        .WithDataVolume("ARSounds.Aspire.AppHost-sqlserver-data");
-
-    visionResourceBuilder = resource.AddDatabase("vision");
-    arsoundsResourceBuilder = resource.AddDatabase("arsounds");
-}
-else if (databaseProviderType == DatabaseProviderType.MySql)
-{
-    var resource = builder.AddMySql("mysql")
-        .WithDataVolume("ARSounds.Aspire.AppHost-mysql-data");
-
-    visionResourceBuilder = resource.AddDatabase("vision");
-    arsoundsResourceBuilder = resource.AddDatabase("arsounds");
-}
-else
-{
-    var resource = builder.AddPostgres("postgresql")
-        .WithDataVolume("ARSounds.Aspire.AppHost-postgresql-data");
-
-    visionResourceBuilder = resource.AddDatabase("vision");
-    arsoundsResourceBuilder = resource.AddDatabase("arsounds");
+    case DatabaseProviderType.MySql:
+        {
+            var resource = builder.AddMySql("mysql")
+                .WithDataVolume("ARSounds.Aspire.AppHost-mysql-data");
+            visionResourceBuilder = resource.AddDatabase("vision");
+            arsoundsResourceBuilder = resource.AddDatabase("arsounds");
+            break;
+        }
+    case DatabaseProviderType.PostgreSQL:
+        {
+            var resource = builder.AddPostgres("postgresql")
+                .WithDataVolume("ARSounds.Aspire.AppHost-postgresql-data");
+            visionResourceBuilder = resource.AddDatabase("vision");
+            arsoundsResourceBuilder = resource.AddDatabase("arsounds");
+            break;
+        }
+    default:
+        {
+            var resource = builder.AddSqlServer("sqlserver")
+                .WithDataVolume("ARSounds.Aspire.AppHost-sqlserver-data");
+            visionResourceBuilder = resource.AddDatabase("vision");
+            arsoundsResourceBuilder = resource.AddDatabase("arsounds");
+            break;
+        }
 }
 
 var databaseProviderTypeParameter = builder.AddParameter("DatabaseProviderType");

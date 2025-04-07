@@ -4,7 +4,7 @@ using ARSounds.Server.Core.Middlewares;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
-namespace ARSounds.Server;
+namespace Microsoft.Extensions.Hosting;
 
 internal static class ProgramHelper
 {
@@ -109,10 +109,10 @@ internal static class ProgramHelper
         // Register OpenAPI/Swagger
         builder.Services.AddOpenApi();
 
-        // Register AutoMapper, repositories, and target services
+        // Register AutoMapper, repositories, and core services
         builder.Services.AddAutoMapperConfiguration();
         builder.Services.AddRepositories();
-        builder.Services.AddTargetsService();
+        builder.Services.AddARSoundsCoreServices();
         builder.Services.AddCurrentUserService();
 
         // Register DbContext based on pooling preference
@@ -148,7 +148,7 @@ internal static class ProgramHelper
 
         // Register authorization
         builder.Services.AddAuthorizationBuilder()
-            .AddDefaultAddPolicy(oidcConfiguration);
+            .AddDefaultPolicy(oidcConfiguration);
 
         // Register CORS
         builder.Services.AddDefaultCors(corsConfiguration);
@@ -186,9 +186,6 @@ internal static class ProgramHelper
         // Forward headers (e.g., for proxy scenarios)
         app.UseDefaultsForwardHeaders();
 
-        // Configure global exception handling
-        app.ConfigureExceptionHandler();
-
         // Configure development environment (e.g., developer exception page, OpenAPI mapping)
         if (app.Environment.IsDevelopment())
         {
@@ -199,17 +196,22 @@ internal static class ProgramHelper
             app.MapOpenApi();
         }
 
+        // Configure global exception handling
+        app.ConfigureExceptionHandler();
+
+        // Enable CORS
+        app.UseCors();
+
         // Enforce HTTPS redirection
         app.UseHttpsRedirection();
 
         // Set up routing
         app.UseRouting();
 
-        // Enable CORS
-        app.UseCors();
-
-        // Apply authentication and custom challenge middleware
+        // Use authentication middleware
         app.UseAuthentication();
+
+        // Use custom challenge middleware
         app.UseMiddleware<ChallengeMiddleware>();
 
         // Apply authorization

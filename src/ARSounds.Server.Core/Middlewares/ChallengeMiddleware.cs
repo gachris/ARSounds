@@ -81,17 +81,14 @@ public class ChallengeMiddleware
     private static async Task WriteErrorAsync(HttpContext context, ResultCode resultCode, string message)
     {
         var errorCollection = new List<Error>();
-
         var error = new Error(resultCode, message);
 
         errorCollection.Add(error);
 
         var response = new ResponseMessage(Guid.NewGuid(), StatusCode.Failed, errorCollection);
-
         var result = JsonSerializer.Serialize(response, JsonSerializerOptions);
 
         context.Response.ContentType = ContentType;
-
         await context.Response.WriteAsync(result);
     }
 

@@ -1,4 +1,3 @@
-using ARSounds.Server;
 using ARSounds.Server.Core.Helpers;
 using Serilog;
 
@@ -17,9 +16,7 @@ try
     builder.ConfigureARSoundsServices();
 
     var app = builder.Build();
-
     app.ConfigureARSoundsPipeline();
-
     app.Run();
 }
 catch (Exception ex)

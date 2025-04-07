@@ -49,7 +49,6 @@ public static class Extensions
         ArgumentNullException.ThrowIfNull(services);
 
         services.AddMediatR((configuration) => configuration.RegisterServicesFromAssembly(typeof(Extensions).Assembly));
-
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPostProcessorBehavior<,>));
 
@@ -114,11 +113,11 @@ public static class Extensions
     }
 
     /// <summary>
-    /// Registers the targets service for dependency injection.
+    /// Registers application-level transient services for dependency injection.
     /// </summary>
-    /// <param name="services">The service collection.</param>
-    /// <returns>The updated service collection.</returns>
-    public static IServiceCollection AddTargetsService(this IServiceCollection services)
+    /// <param name="services">The IServiceCollection instance.</param>
+    /// <returns>The IServiceCollection instance with application services registered.</returns>
+    public static IServiceCollection AddARSoundsCoreServices(this IServiceCollection services)
     {
         ArgumentNullException.ThrowIfNull(services);
         services.AddTransient<ITargetsService, TargetsService>();
@@ -153,9 +152,8 @@ public static class Extensions
         Action<DbContextOptionsBuilder>? optionsAction = null)
     {
         ArgumentNullException.ThrowIfNull(services);
-
-        // Migrations assembly is determined based on the provider.
-        var migrationAssembly = MigrationAssemblyHelper.GetMigrationAssemblyByProvider(databaseProviderConfiguration);
+        ArgumentException.ThrowIfNullOrEmpty(connectionString);
+        ArgumentNullException.ThrowIfNull(databaseProviderConfiguration);
 
         services.AddARSoundsDbContext(options =>
         {
@@ -182,8 +180,8 @@ public static class Extensions
         Action<DbContextOptionsBuilder>? optionsAction = null)
     {
         ArgumentNullException.ThrowIfNull(services);
-
-        var migrationAssembly = MigrationAssemblyHelper.GetMigrationAssemblyByProvider(databaseProviderConfiguration);
+        ArgumentException.ThrowIfNullOrEmpty(connectionString);
+        ArgumentNullException.ThrowIfNull(databaseProviderConfiguration);
 
         services.AddARSoundsPooledDbContextFactory(options =>
         {
@@ -206,6 +204,10 @@ public static class Extensions
         string connectionString,
         DatabaseConfiguration databaseProviderConfiguration)
     {
+        ArgumentNullException.ThrowIfNull(options);
+        ArgumentException.ThrowIfNullOrEmpty(connectionString);
+        ArgumentNullException.ThrowIfNull(databaseProviderConfiguration);
+
         var migrationAssembly = MigrationAssemblyHelper.GetMigrationAssemblyByProvider(databaseProviderConfiguration);
 
         switch (databaseProviderConfiguration.ProviderType)
@@ -285,6 +287,7 @@ public static class Extensions
     public static AuthenticationBuilder AddDefaultJwtBearer(this AuthenticationBuilder authenticationBuilder, OidcConfiguration oidcConfiguration)
     {
         ArgumentNullException.ThrowIfNull(authenticationBuilder);
+        ArgumentNullException.ThrowIfNull(oidcConfiguration);
 
         authenticationBuilder.AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
         {
@@ -302,9 +305,10 @@ public static class Extensions
     /// <param name="authorizationBuilder">The AuthorizationBuilder instance.</param>
     /// <param name="oidcConfiguration">The OIDC configuration.</param>
     /// <returns>The updated AuthorizationBuilder.</returns>
-    public static AuthorizationBuilder AddDefaultAddPolicy(this AuthorizationBuilder authorizationBuilder, OidcConfiguration oidcConfiguration)
+    public static AuthorizationBuilder AddDefaultPolicy(this AuthorizationBuilder authorizationBuilder, OidcConfiguration oidcConfiguration)
     {
         ArgumentNullException.ThrowIfNull(authorizationBuilder);
+        ArgumentNullException.ThrowIfNull(oidcConfiguration);
 
         authorizationBuilder.AddPolicy(AuthorizationConsts.BearerPolicy, policy =>
         {
@@ -529,7 +533,7 @@ public static class Extensions
     /// Applies pending migrations to the database.
     /// </summary>
     /// <param name="app">The <see cref="WebApplication"/> instance.</param>
-    /// <param name="databaseConfiguration">The database configuration settings.</param>
+    /// <param name="usePooledDbContext">Indicates whether a pooled DbContext factory should be used.</param>
     /// <returns>The updated <see cref="WebApplication"/> instance.</returns>
     public static IApplicationBuilder MigrateDatabase(this WebApplication app, bool usePooledDbContext)
     {
