@@ -18,7 +18,7 @@ switch (databaseProviderType)
         {
             var resource = builder.AddMySql("mysql")
                 .WithDataVolume("ARSounds.Aspire.AppHost-mysql-data");
-            visionResourceBuilder = resource.AddDatabase("vision");
+            visionResourceBuilder = resource.AddDatabase("openvision");
             arsoundsResourceBuilder = resource.AddDatabase("arsounds");
             break;
         }
@@ -26,7 +26,7 @@ switch (databaseProviderType)
         {
             var resource = builder.AddPostgres("postgresql")
                 .WithDataVolume("ARSounds.Aspire.AppHost-postgresql-data");
-            visionResourceBuilder = resource.AddDatabase("vision");
+            visionResourceBuilder = resource.AddDatabase("openvision");
             arsoundsResourceBuilder = resource.AddDatabase("arsounds");
             break;
         }
@@ -34,7 +34,7 @@ switch (databaseProviderType)
         {
             var resource = builder.AddSqlServer("sqlserver")
                 .WithDataVolume("ARSounds.Aspire.AppHost-sqlserver-data");
-            visionResourceBuilder = resource.AddDatabase("vision");
+            visionResourceBuilder = resource.AddDatabase("openvision");
             arsoundsResourceBuilder = resource.AddDatabase("arsounds");
             break;
         }

@@ -5,8 +5,8 @@
       "Default": "Debug",
       "Override": {
         "Microsoft": "Information",
-        "OpenVision": "Error",
-        "ARSounds": "Information"
+        "System": "Error",
+        "OpenVision": "Information"
       }
     },
     "WriteTo": [

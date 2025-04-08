@@ -2,6 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>net9.0</TargetFramework>
+		<AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
 		<UserSecretsId>656788e4-214a-40dc-9e99-7e8cfa07725d</UserSecretsId>
 		<DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
@@ -10,7 +11,6 @@
 
 	<ItemGroup>
 		<PackageReference Include="OpenVision.Client.Core" />
-		<PackageReference Include="OpenVision.Web.ServiceDefaults" />
 		<PackageReference Include="Serilog" />
 		<PackageReference Include="Serilog.Enrichers.Environment" />
 		<PackageReference Include="Serilog.Enrichers.Thread" />
@@ -18,6 +18,10 @@
 		<PackageReference Include="Serilog.Settings.Configuration" />
 		<PackageReference Include="Serilog.Sinks.Console" />
 		<PackageReference Include="Serilog.Sinks.File" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\ARSounds.ServiceDefaults\ARSounds.ServiceDefaults.csproj" />
 	</ItemGroup>
 
 </Project>

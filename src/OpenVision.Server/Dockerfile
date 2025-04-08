@@ -6,6 +6,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 COPY ["src/OpenVision.Server/OpenVision.Server.csproj", "src/OpenVision.Server/"]
+COPY ["src/ARSounds.ServiceDefaults/ARSounds.ServiceDefaults.csproj", "src/ARSounds.ServiceDefaults/"]
 
 RUN dotnet restore "src/OpenVision.Server/OpenVision.Server.csproj"
 COPY . .
