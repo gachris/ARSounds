@@ -1,6 +1,6 @@
 ﻿using ARSounds.Server.Core.Contracts;
+using ARSounds.Server.Core.Repositories.Specifications;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using OpenVision.Api.Target.Resources;
 
@@ -52,22 +52,22 @@ public class DeleteTargetCommandHandler : IRequestHandler<DeleteTargetCommand, b
         var userId = _currentUserService.UserId;
         _logger.LogInformation("Deleting target {TargetId} for user {UserId}", request.TargetId, userId);
 
-        var audioAssetsQueryable = await _audioAssetsRepository.GetAsync();
+        var audioAssetForUserSpecification = new AudioAssetForUserSpecification(request.TargetId, userId)
+        {
+            Includes = { target => target.ImageAsset }
+        };
+        var audioAssets = await _audioAssetsRepository.GetBySpecificationAsync(audioAssetForUserSpecification, cancellationToken);
+        var audioAsset = audioAssets.SingleOrDefault();
 
-        var target = await audioAssetsQueryable
-            .Where(x => x.Id == request.TargetId && x.UserId == userId)
-            .Include(a => a.ImageAsset)
-            .SingleOrDefaultAsync(cancellationToken);
-
-        if (target is null)
+        if (audioAsset is null)
         {
             _logger.LogWarning("Target {TargetId} not found for user {UserId}", request.TargetId, userId);
             return false;
         }
 
-        if (target.ImageAsset is not null)
+        if (audioAsset.ImageAsset is not null)
         {
-            var deleteResponse = await _targetListResource.Delete(target.ImageAsset.OpenVisionId)
+            var deleteResponse = await _targetListResource.Delete(audioAsset.ImageAsset.OpenVisionId)
                 .ExecuteAsync(cancellationToken);
 
             if (deleteResponse.StatusCode is OpenVision.Shared.StatusCode.Failed)
@@ -80,7 +80,7 @@ public class DeleteTargetCommandHandler : IRequestHandler<DeleteTargetCommand, b
             }
         }
 
-        var result = await _audioAssetsRepository.RemoveAsync(target, cancellationToken);
+        var result = await _audioAssetsRepository.RemoveAsync(audioAsset, cancellationToken);
         _logger.LogInformation("Deleted target {TargetId} for user {UserId}", request.TargetId, userId);
 
         return result;

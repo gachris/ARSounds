@@ -2,37 +2,39 @@
 using ARSounds.Server.Core.Dtos;
 using ARSounds.Server.Core.Repositories.Specifications;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace ARSounds.Server.Core.Queries;
 
 /// <summary>
-/// Handles the GetTargetsQuery and returns the list of target DTOs.
+/// Handles the GetTargetsQueryableQuery and returns the list of target DTOs.
 /// </summary>
-public class GetTargetsQueryHandler : IRequestHandler<GetTargetsQuery, IEnumerable<TargetDto>>
+public class GetQueryableTargetQueryHandler : IRequestHandler<GetQueryableTargetQuery, IQueryable<TargetDto>>
 {
     #region Fields/Consts
 
     private readonly IAudioAssetsRepository _audioAssetsRepository;
     private readonly ICurrentUserService _currentUserService;
     private readonly IMapper _mapper;
-    private readonly ILogger<GetTargetsQueryHandler> _logger;
+    private readonly ILogger<GetQueryableTargetQueryHandler> _logger;
 
     #endregion
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="GetTargetsQueryHandler"/> class.
+    /// Initializes a new instance of the <see cref="GetQueryableTargetQueryHandler"/> class.
     /// </summary>
     /// <param name="audioAssetsRepository">The repository for accessing audio assets.</param>
     /// <param name="currentUserService">The current user service to obtain the current user's identifier.</param>
     /// <param name="mapper">The AutoMapper instance used for mapping entities to DTOs.</param>
     /// <param name="logger">The logger for logging informational messages and errors.</param>
-    public GetTargetsQueryHandler(
+    public GetQueryableTargetQueryHandler(
         IAudioAssetsRepository audioAssetsRepository,
         ICurrentUserService currentUserService,
         IMapper mapper,
-        ILogger<GetTargetsQueryHandler> logger)
+        ILogger<GetQueryableTargetQueryHandler> logger)
     {
         _audioAssetsRepository = audioAssetsRepository;
         _currentUserService = currentUserService;
@@ -43,7 +45,7 @@ public class GetTargetsQueryHandler : IRequestHandler<GetTargetsQuery, IEnumerab
     #region Methods
 
     /// <summary>
-    /// Handles the GetTargetsQuery request.
+    /// Handles the GetTargetsQueryableQuery request.
     /// Retrieves audio assets for the current user, includes associated image assets,
     /// and projects the results to a collection of <see cref="TargetDto"/> objects.
     /// </summary>
@@ -52,22 +54,19 @@ public class GetTargetsQueryHandler : IRequestHandler<GetTargetsQuery, IEnumerab
     /// <returns>
     /// An <see cref="IEnumerable{TargetDto}"/> containing the list of target DTOs.
     /// </returns>
-    public async Task<IEnumerable<TargetDto>> Handle(GetTargetsQuery request, CancellationToken cancellationToken)
+    public async Task<IQueryable<TargetDto>> Handle(GetQueryableTargetQuery request, CancellationToken cancellationToken)
     {
         var userId = _currentUserService.UserId;
 
         _logger.LogInformation("Getting targets for user {UserId}", userId);
 
-        var audioAssetForUserSpecification = new AudioAssetForUserSpecification(userId)
-        {
-            Includes = { target => target.ImageAsset }
-        };
-        var audioAssets = await _audioAssetsRepository.GetBySpecificationAsync(audioAssetForUserSpecification, cancellationToken);
-        var targetDtos = _mapper.Map<IEnumerable<TargetDto>>(audioAssets);
+        var audioAssetForUserSpecification = new AudioAssetForUserSpecification(userId);
+        var audioAssetsQueryable = _audioAssetsRepository.GetQueryableBySpecification(audioAssetForUserSpecification);
+        var targetDtoQueryable = audioAssetsQueryable.ProjectTo<TargetDto>(_mapper.ConfigurationProvider);
 
-        _logger.LogInformation("Retrieved {Count} targets for user {UserId}", targetDtos.Count(), userId);
+        _logger.LogInformation("Retrieved {Count} targets for user {UserId}", await targetDtoQueryable.CountAsync(cancellationToken), userId);
 
-        return targetDtos;
+        return targetDtoQueryable;
     }
 
     #endregion

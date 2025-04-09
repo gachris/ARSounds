@@ -16,7 +16,7 @@ public static class Extensions
     /// <returns>The updated IServiceCollection instance.</returns>
     public static IServiceCollection AddARSoundsDbContext(this IServiceCollection services, Action<DbContextOptionsBuilder> optionsAction)
     {
-        services.AddDbContext<ApplicationDbContext>(optionsAction);
+        services.AddDbContext<ApplicationDbContext>(optionsAction, ServiceLifetime.Transient);
         return services;
     }
 

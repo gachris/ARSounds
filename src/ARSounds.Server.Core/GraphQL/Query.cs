@@ -2,7 +2,7 @@
 using ARSounds.Server.Core.GraphQL.Types;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace ARSounds.Server.Core.GraphQL;
@@ -22,7 +22,6 @@ public partial class Query
     /// <summary>
     /// Initializes a new instance of the <see cref="Query"/> class.
     /// </summary>
-    /// <param name="httpContextAccessor">The HTTP context accessor.</param>
     /// <param name="mapper">The AutoMapper instance.</param>
     /// <param name="logger">The logger instance.</param>
     public Query(
@@ -43,19 +42,19 @@ public partial class Query
     /// <returns>An <see cref="IQueryable{Target}"/> representing the target entities.</returns>
     [GraphQLDescription("Retrieves a paginated, filtered, and sorted list of target entities.")]
     [UsePaging]
+    [UseProjection]
     [UseFiltering]
     [UseSorting]
     public virtual async Task<IQueryable<Target>> GetTargets(
-        ITargetsService targetsService,
-        IHttpContextAccessor httpContextAccessor,
+        [Service] ITargetsService targetsService,
         CancellationToken cancellationToken = default)
     {
         return await ExecuteAsync(async () =>
         {
             _logger.LogInformation("GetTargets called.");
-            var targetDtos = await targetsService.GetAsync(cancellationToken);
-            _logger.LogInformation("Retrieved {Count} target(s)", targetDtos.Count());
-            return targetDtos.ProjectTo<Target>(_mapper.ConfigurationProvider);
+            var targetDtoQuery = await targetsService.GetQueryableAsync(cancellationToken);
+            _logger.LogInformation("Retrieved {Count} target(s)", await targetDtoQuery.CountAsync(cancellationToken));
+            return targetDtoQuery.ProjectTo<Target>(_mapper.ConfigurationProvider);
         });
     }
 
@@ -65,14 +64,12 @@ public partial class Query
     /// </summary>
     /// <param name="id">The unique identifier of the target.</param>
     /// <param name="targetsService">The targets service to retrieve target data.</param>
-    /// <param name="resolverContext">The resolver context for filtering.</param>
     /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
     /// <returns>The matching <see cref="Target"/> entity if found; otherwise, <c>null</c>.</returns>
     [GraphQLDescription("Retrieves a specific target entity by its unique identifier.")]
     public virtual async Task<Target?> GetTarget(
         Guid id,
-        ITargetsService targetsService,
-        IHttpContextAccessor httpContextAccessor,
+        [Service] ITargetsService targetsService,
         CancellationToken cancellationToken = default)
     {
         return await ExecuteAsync(async () =>

@@ -33,7 +33,14 @@ public class TargetsService : ITargetsService
     #region Methods
 
     /// <inheritdoc/>
-    public async Task<IQueryable<TargetDto>> GetAsync(CancellationToken cancellationToken)
+    public async Task<IQueryable<TargetDto>> GetQueryableAsync(CancellationToken cancellationToken)
+    {
+        _logger.LogInformation("Dispatching GetQueryableTargetQuery");
+        return await _mediator.Send(new GetQueryableTargetQuery(), cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<IEnumerable<TargetDto>> GetAsync(CancellationToken cancellationToken)
     {
         _logger.LogInformation("Dispatching GetTargetsQuery");
         return await _mediator.Send(new GetTargetsQuery(), cancellationToken);

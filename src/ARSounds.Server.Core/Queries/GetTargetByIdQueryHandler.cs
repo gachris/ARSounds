@@ -1,8 +1,8 @@
 ﻿using ARSounds.Server.Core.Contracts;
 using ARSounds.Server.Core.Dtos;
+using ARSounds.Server.Core.Repositories.Specifications;
 using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace ARSounds.Server.Core.Queries;
@@ -58,12 +58,12 @@ public class GetTargetByIdQueryHandler : IRequestHandler<GetTargetByIdQuery, Tar
 
         _logger.LogInformation("Getting target {TargetId} for user {UserId}", request.TargetId, userId);
 
-        var audioAssetsQueryable = await _audioAssetsRepository.GetAsync();
-
-        var audioAsset = await audioAssetsQueryable
-            .Where(x => x.Id == request.TargetId && x.UserId == userId)
-            .Include(a => a.ImageAsset)
-            .SingleOrDefaultAsync(cancellationToken);
+        var audioAssetForUserSpecification = new AudioAssetForUserSpecification(request.TargetId, userId)
+        {
+            Includes = { target => target.ImageAsset }
+        };
+        var audioAssets = await _audioAssetsRepository.GetBySpecificationAsync(audioAssetForUserSpecification, cancellationToken);
+        var audioAsset = audioAssets.SingleOrDefault();
 
         if (audioAsset is null)
         {
