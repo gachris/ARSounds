@@ -1,0 +1,79 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:loc="clr-namespace:ARSounds.Localization.Properties;assembly=ARSounds.Localization"
+    xmlns:media="clr-namespace:ARSounds.UI.Common.Media;assembly=ARSounds.UI.Common"
+    xmlns:viewModels="clr-namespace:ARSounds.UI.Common.ViewModels;assembly=ARSounds.UI.Common">
+
+    <DataTemplate DataType="{x:Type viewModels:SettingsViewModel}">
+        <ScrollViewer
+            Focusable="False"
+            HorizontalScrollBarVisibility="Disabled"
+            VerticalScrollBarVisibility="Auto">
+            <StackPanel
+                Margin="32,12"
+                SnapsToDevicePixels="True"
+                UseLayoutRounding="True">
+                <StackPanel Margin="0,0,0,14">
+                    <TextBlock
+                        Grid.Row="0"
+                        FontSize="{DynamicResource FontSize22}"
+                        Text="{x:Static loc:Resources.Settings}" />
+                    <TextBlock
+                        Margin="0,14"
+                        FontSize="{DynamicResource FontSize22}"
+                        Text="{x:Static loc:Resources.Personalization}" />
+                    <TextBlock
+                        Margin="0,0,0,14"
+                        VerticalAlignment="Center"
+                        FontSize="{DynamicResource FontSize14}"
+                        Text="{x:Static loc:Resources.Theme}" />
+                    <RadioButton
+                        Margin="0,5"
+                        HorizontalAlignment="Left"
+                        VerticalContentAlignment="Center"
+                        Command="{Binding SwitchThemeCommand}"
+                        CommandParameter="{x:Static media:Theme.Light}"
+                        IsChecked="{Binding Path=Theme, Mode=OneWay, Converter={StaticResource EnumBooleanConverter}, ConverterParameter='Light'}">
+                        <TextBlock FontSize="{DynamicResource FontSize16}" Text="{x:Static loc:Resources.Light}" />
+                    </RadioButton>
+                    <RadioButton
+                        Margin="0,5"
+                        HorizontalAlignment="Left"
+                        VerticalContentAlignment="Center"
+                        Command="{Binding SwitchThemeCommand}"
+                        CommandParameter="{x:Static media:Theme.Dark}"
+                        IsChecked="{Binding Path=Theme, Mode=OneWay, Converter={StaticResource EnumBooleanConverter}, ConverterParameter='Dark'}">
+                        <TextBlock FontSize="{DynamicResource FontSize16}" Text="{x:Static loc:Resources.Dark}" />
+                    </RadioButton>
+                    <RadioButton
+                        Margin="0,6"
+                        HorizontalAlignment="Left"
+                        VerticalContentAlignment="Center"
+                        Command="{Binding SwitchThemeCommand}"
+                        CommandParameter="{x:Static media:Theme.Default}"
+                        IsChecked="{Binding Path=Theme, Mode=OneWay, Converter={StaticResource EnumBooleanConverter}, ConverterParameter='Default'}">
+                        <TextBlock FontSize="{DynamicResource FontSize16}" Text="{x:Static loc:Resources.Windows_default}" />
+                    </RadioButton>
+                </StackPanel>
+                <StackPanel Margin="0,0,0,14">
+                    <TextBlock
+                        Grid.Row="0"
+                        Margin="0,0,0,14"
+                        FontSize="{DynamicResource FontSize22}"
+                        Text="{x:Static loc:Resources.About_application}" />
+                    <TextBlock
+                        Margin="0,0,0,5"
+                        FontSize="{DynamicResource FontSize16}"
+                        Text="{Binding VersionDescription}" />
+                    <TextBlock
+                        Margin="0,5"
+                        FontSize="{DynamicResource FontSize16}"
+                        Text="{x:Static loc:Resources.About_application_description}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </DataTemplate>
+
+</ResourceDictionary>

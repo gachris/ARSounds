@@ -1,0 +1,80 @@
+<div class="row justify-content-center">
+  <div class="col-xl-8 col-md-8 col-sm-12 col-12 order-lg-1 md-border-right sm-border-bottom m-0 pb-mdl-3">
+    <div class="row">
+      <div class="col col-xl-8 order-xl-1 col-lg-8 order-lg-1 col-md-8 order-md-1 col-sm-8 col-8 p-0 pt-1">
+        <div class="play-pause mr-1">
+          <div class="float-left" data-toggle="tooltip" data-original-title="Play" data-placement="left">
+            <button type="button" id="btn-player-wave"
+                    (click)="playPause()"
+                    [ngClass]="playing ? 'btn-pause' : 'btn-play'"
+                    class="btn btn-round btn-outline-primary-2 mx-1" style="height: 3.5rem;width:3.5rem;"></button>
+          </div>
+        </div>
+        <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+          <label class="mb-1 bg-primary-3" style="display:table; font-size:13px; color: #CCCCCC; background: #271B1F; padding: 4px;">
+            {{ target.name }}
+          </label>
+        </div>
+      </div>
+      <div class="col col-xl-4 order-xl-2 col-lg-4 order-lg-2 col-md-4 order-md-4 col-sm-2 col-4 p-0">
+        <div class="text-right m-1 font-weight-bold">
+          <label class="text-primary-3 text-nowrap">
+            {{ target.created | date: 'medium' }}
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4">
+      <div (window:resize)="onResize()" #wavesurfer></div>
+    </div>
+  </div>
+  <div class="col-xl-4 col-md-4 col-sm-12 col-12 order-lg-2 pl-lg-3 pt-mdl-3" id="outer_div">
+    <div class="row mb-3" style="justify-content: flex-end !important;">
+      <div class="float-left">
+        <a class="btn p-1 pl-2 pr-2" [routerLink]="['delete']">
+          <i class='fas fa-trash'></i>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div class="form-group">
+        <label for="widthInput" class="text-primary-3">Width</label>
+        <input type="range" #widthInput class="custom-range">
+        <div class="custom-range-labels">
+          <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+          <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="heightInput" class="text-primary-3">Height</label>
+        <input type="range" #heightInput class="custom-range">
+        <div class="custom-range-labels">
+          <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+          <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="barWidthInput" class="text-primary-3">Bar Width</label>
+        <input type="range" #barWidthInput class="custom-range">
+        <div class="custom-range-labels">
+          <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+          <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-right" id="inner_div">
+      <button (click)="activate();" class="btn badge bg-primary-alt text-primary p-1 pl-2 pr-2" type="submit" data-backdrop="false" id="activate-target-btn">Activate</button>
+    </div>
+  </div>
+</div>
+
+<div class="p-0 m-0 bg-primary-alt border-top border-primary-1 section-bottom-sticky">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="custom-audio-size">
+        <audio #audioElement controls preload="auto"></audio>
+      </div>
+    </div>
+  </div>
+</div>

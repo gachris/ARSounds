@@ -1,0 +1,91 @@
+﻿@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = @Localizer["Home"];
+}
+
+@section styles {
+    <style>
+        /* Overall Page Styles */
+        body {
+            background-color: #f8f9fa;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Hero Section Styles */
+        .hero-section {
+            background: linear-gradient(135deg, #ffffff 0%, #e9eff5 100%);
+            padding: 6rem 1.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+            .hero-section h1 {
+                font-size: 3.5rem;
+                font-weight: 700;
+                margin-bottom: 1rem;
+                color: #343a40;
+            }
+
+            .hero-section p {
+                font-size: 1.2rem;
+                line-height: 1.6;
+                margin-bottom: 1.5rem;
+                max-width: 800px;
+                margin-left: auto;
+                margin-right: auto;
+                color: #495057;
+            }
+
+            .hero-section .btn {
+                padding: 0.75rem 1.75rem;
+                font-size: 1.1rem;
+                border-radius: 0.3rem;
+            }
+
+        /* Content Section Styles */
+        .content-section {
+            padding: 3rem 1.5rem;
+        }
+
+            .content-section h2 {
+                font-size: 2.5rem;
+                margin-bottom: 1.5rem;
+                color: #343a40;
+            }
+
+            .content-section p {
+                font-size: 1.1rem;
+                line-height: 1.6;
+                margin-bottom: 1.5rem;
+                color: #495057;
+            }
+    </style>
+}
+
+<section class="hero-section">
+    <div class="container">
+        <h1 class="mb-3">@Localizer["Hero_Title"]</h1>
+        <p class="lead">
+            @Localizer["Hero_Description"]
+        </p>
+        <a href="@Url.Action("support", "home")" class="btn btn-primary">
+            @Localizer["Hero_GetStarted"]
+        </a>
+    </div>
+</section>
+
+<section class="content-section">
+    <div class="container">
+        <h2>@Localizer["Content_Title"]</h2>
+        <p>
+            @Localizer["Content_Paragraph1"]
+        </p>
+        <p>
+            @Localizer["Content_Paragraph2"]
+        </p>
+        <p>
+            @Localizer["Content_Paragraph3"]
+        </p>
+    </div>
+</section>

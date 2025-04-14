@@ -1,0 +1,22 @@
+﻿@inject IViewLocalizer Localizer
+@inject AppConfiguration AppConfiguration
+
+<footer class="footer-clean bg-dark">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-sm-6 col-md-6 item mt-3">
+                <h4 class="text-primary">@AppConfiguration.ApplicationName</h4>
+                <a asp-controller="Home" asp-action="Support" class="text-decoration-none text-white">@Localizer["Support"]</a>
+                <span class="mx-2">•</span>
+                <a asp-controller="Home" asp-action="Contact" class="text-decoration-none text-white">@Localizer["Contact"]</a>
+                <p class="small text-secondary mt-2">@Localizer["Tagline"]</p>
+            </div>
+            <div class="col-sm-6 col-md-6 item social">
+                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                <p class="copyright">@AppConfiguration.ApplicationName © 2025</p>
+            </div>
+        </div>
+    </div>
+</footer>

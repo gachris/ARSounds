@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    x:Class="ARSounds.UI.WinUI.DataTemplates.ARCameraView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:ARSounds.UI.Wpf.Behaviors"
+    xmlns:openVision="using:OpenVision.WinUI.Controls"
+    xmlns:viewModels="using:ARSounds.UI.Common.ViewModels">
+
+    <DataTemplate x:Key="ARCameraTemplate" x:DataType="viewModels:ARCameraViewModel">
+        <openVision:ARCamera>
+            <b:Interaction.Behaviors>
+                <behaviors:ARCameraBehavior
+                    ClientApiKey="{Binding ClientApiKey}"
+                    TrackFoundCommand="{Binding TrackFoundCommand}"
+                    TrackLostCommand="{Binding TrackLostCommand}" />
+            </b:Interaction.Behaviors>
+        </openVision:ARCamera>
+    </DataTemplate>
+
+</ResourceDictionary>

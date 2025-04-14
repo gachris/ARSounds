@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ARSounds.UI.Maui.Views.BackgroundPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:ARSounds.UI.Maui.Controls"
+    xmlns:loc="clr-namespace:ARSounds.UI.Maui.Localization"
+    xmlns:viewModels="clr-namespace:ARSounds.UI.Common.ViewModels;assembly=ARSounds.UI.Common"
+    x:DataType="{x:Type viewModels:BackgroundViewModel}"
+    NavigationPage.HasBackButton="False"
+    NavigationPage.HasNavigationBar="False">
+    <ContentPage.BackgroundImageSource>
+        <OnPlatform x:TypeArguments="FileImageSource">
+            <On Platform="Android, iOS" Value="bg_prim.png" />
+            <On Platform="WinUI, MacCatalyst, Tizen" Value="welcome_bg_lg.jpg" />
+        </OnPlatform>
+    </ContentPage.BackgroundImageSource>
+    <Grid RowDefinitions="*,Auto">
+        <VerticalStackLayout
+            Padding="45,30"
+            HorizontalOptions="Start"
+            Spacing="20"
+            VerticalOptions="Center">
+            <Border
+                Padding="0"
+                BackgroundColor="{DynamicResource White}"
+                HeightRequest="80"
+                HorizontalOptions="Start"
+                Stroke="{DynamicResource White}"
+                StrokeShape="{RoundRectangle CornerRadius=18}"
+                StrokeThickness="0"
+                WidthRequest="80">
+                <controls:RoundedCornerImage
+                    BackgroundColor="{DynamicResource White}"
+                    HeightRequest="60"
+                    HorizontalOptions="Center"
+                    Source="logo.png"
+                    Stroke="Transparent"
+                    StrokeShape="{RoundRectangle CornerRadius=50}"
+                    VerticalOptions="Center"
+                    WidthRequest="60" />
+            </Border>
+            <Label
+                Margin="0,15,0,0"
+                FontAttributes="Bold"
+                FontSize="22"
+                HorizontalTextAlignment="Start"
+                Text="{loc:LocalizationResource Welcome_title}"
+                TextColor="{DynamicResource White}" />
+            <Label
+                HorizontalTextAlignment="Start"
+                Text="{loc:LocalizationResource Welcome_subtitle}"
+                TextColor="{DynamicResource White}" />
+            <Border
+                Padding="15,5"
+                HorizontalOptions="Start"
+                Stroke="Transparent"
+                StrokeShape="RoundRectangle 8">
+                <Label
+                    HorizontalOptions="Center"
+                    Text="Version 2.0"
+                    TextColor="{DynamicResource White}"
+                    VerticalOptions="Center" />
+            </Border>
+        </VerticalStackLayout>
+        <VerticalStackLayout
+            Grid.Row="1"
+            Padding="30,0,30,50"
+            HorizontalOptions="Fill"
+            Spacing="15"
+            VerticalOptions="End">
+            <Button
+                BackgroundColor="Transparent"
+                BorderColor="{DynamicResource White}"
+                BorderWidth="1"
+                Command="{Binding TakeTourCommand}"
+                CornerRadius="14"
+                FontAttributes="Bold"
+                HeightRequest="50"
+                Text="{loc:LocalizationResource Take_tour}"
+                TextColor="{StaticResource White}" />
+            <Button
+                Command="{Binding SkipCommand}"
+                CornerRadius="14"
+                HeightRequest="50"
+                Text="{loc:LocalizationResource Skip}"
+                TextColor="{DynamicResource White}" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

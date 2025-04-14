@@ -1,0 +1,15 @@
+<div *ngIf="target && target.isActive; then deactivate else activate"></div>
+<ng-template #deactivate>
+  <app-target-detail-deactivate *ngIf="target"
+                                [target]="target"
+                                (targetChanged)="targetChangedCallback($event)">
+  </app-target-detail-deactivate>
+</ng-template>
+<ng-template #activate>
+  <app-target-detail-activate *ngIf="target"
+                              [target]="target"
+                              (targetChanged)="targetChangedCallback($event)">
+  </app-target-detail-activate>
+</ng-template>
+
+<router-outlet></router-outlet>

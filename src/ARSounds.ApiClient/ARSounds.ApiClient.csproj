@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="IdentityModel.OidcClient" />
+		<PackageReference Include="Microsoft.Extensions.Options" />
+		<PackageReference Include="Newtonsoft.Json" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" />
+	</ItemGroup>
+
+	<PropertyGroup Label="Sign Assembly">
+		<SignAssembly>true</SignAssembly>
+	</PropertyGroup>
+
+</Project>

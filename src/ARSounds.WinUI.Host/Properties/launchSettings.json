@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ARSounds.WinUI.Host (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "ARSounds.WinUI.Host (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

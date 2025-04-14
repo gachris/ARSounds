@@ -1,0 +1,166 @@
+﻿@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["Support"];
+}
+
+@section styles {
+    <style>
+        /* Overall Page Styles */
+        body {
+            background-color: #f8f9fa;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Hero Section Styles */
+        .support-hero {
+            background: linear-gradient(135deg, #ffffff 0%, #e9eff5 100%);
+            padding: 4rem 1.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+            .support-hero h1 {
+                font-size: 3rem;
+                font-weight: 700;
+                color: #343a40;
+                margin-bottom: 1rem;
+            }
+
+            .support-hero p {
+                font-size: 1.2rem;
+                line-height: 1.6;
+                max-width: 800px;
+                margin: auto;
+                color: #495057;
+            }
+
+            .support-hero .btn {
+                padding: 0.75rem 1.75rem;
+                font-size: 1.1rem;
+                border-radius: 0.3rem;
+            }
+
+        /* FAQ Section Styles */
+        .faq-section {
+            padding: 2rem 1.5rem;
+        }
+
+            .faq-section h2 {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+                color: #343a40;
+            }
+
+            .faq-section h3 {
+                font-size: 1.5rem;
+                margin-top: 1.5rem;
+                color: #343a40;
+            }
+
+            .faq-section p {
+                font-size: 1.1rem;
+                line-height: 1.6;
+                margin-bottom: 1rem;
+                color: #495057;
+            }
+
+        /* NuGet Packages Section Styles */
+        .packages-section {
+            padding: 2rem 1.5rem;
+            background-color: #ffffff;
+            border-top: 1px solid #dee2e6;
+        }
+
+            .packages-section h2 {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+                color: #343a40;
+            }
+
+            .packages-section ul {
+                list-style-type: none;
+                padding-left: 0;
+            }
+
+            .packages-section li {
+                font-size: 1.1rem;
+                margin-bottom: 0.75rem;
+                color: #495057;
+            }
+
+            .packages-section a {
+                color: #007bff;
+                text-decoration: none;
+            }
+
+                .packages-section a:hover {
+                    text-decoration: underline;
+                }
+    </style>
+}
+
+<section class="support-hero">
+    <div class="container">
+        <h1>@Localizer["SupportFAQ_Title"]</h1>
+        <p>
+            @Localizer["SupportFAQ_Description"]
+        </p>
+    </div>
+</section>
+
+<section class="faq-section">
+    <div class="container">
+        <h2>@Localizer["FAQ_Title"]</h2>
+        <h3>@Localizer["FAQ_Question1"]</h3>
+        <p>
+            @Localizer["FAQ_Answer1"]
+        </p>
+        <h3>@Localizer["FAQ_Question2"]</h3>
+        <p>
+            @Localizer["FAQ_Answer2"]
+        </p>
+        <h3>@Localizer["FAQ_Question3"]</h3>
+        <p>
+            @Localizer["FAQ_Answer3"]
+        </p>
+    </div>
+</section>
+
+<section class="packages-section">
+    <div class="container">
+        <h2>@Localizer["Packages_Title"]</h2>
+        <p>
+            @Localizer["Packages_Intro"]
+        </p>
+        <ul>
+            <li>
+                <strong>
+                    <a href="https://www.nuget.org/packages/OpenVision.Maui" target="_blank">
+                        @Localizer["NuGet_OpenVision_MauiTitle"]
+                    </a>
+                </strong> – @Localizer["NuGet_OpenVision_MauiDescription"]
+            </li>
+            <li>
+                <strong>
+                    <a href="https://www.nuget.org/packages/OpenVision.WinUi" target="_blank">
+                        @Localizer["NuGet_OpenVision_WinUiTitle"]
+                    </a>
+                </strong> – @Localizer["NuGet_OpenVision_WinUiDescription"]
+            </li>
+            <li>
+                <strong>
+                    <a href="https://www.nuget.org/packages/OpenVision.Wpf" target="_blank">
+                        @Localizer["NuGet_OpenVision_WpfTitle"]
+                    </a>
+                </strong> – @Localizer["NuGet_OpenVision_WpfDescription"]
+            </li>
+        </ul>
+        <p>
+            @Localizer["Packages_NuGet_Summary"]
+            <a href="https://www.nuget.org/packages?q=OpenVision" target="_blank">
+                @Localizer["Packages_NuGet_LinkText"]
+            </a>.
+        </p>
+    </div>
+</section>

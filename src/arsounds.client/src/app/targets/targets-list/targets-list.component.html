@@ -1,0 +1,22 @@
+<div scrollTracker (scrollingFinished)="onScrollingFinished()">
+  <div class="row">
+    <div *ngFor="let target of targets; let idx=index" class="col-md-6 col-lg-4 d-flex" data-aos="fade-up" data-aos-delay="200">
+      <a [routerLink]="['/targets',target.id]" class="card card-body pl-3 pr-3 pt-2 pb-3">
+        <h5 class="text-primary">
+          {{ target.name }}
+        </h5>
+        <div *ngIf="target.isActive; then image_template else waveform_template"></div>
+        <ng-template #image_template>
+          <img height="220" src="{{ target.image }}" />
+        </ng-template>
+        <ng-template #waveform_template>
+          <ng-waveform src="{{ target.audio }}"
+                       [useRegion]="false"
+                       [height]="220"
+                       waveColor="#000000">
+          </ng-waveform>
+        </ng-template>
+      </a>
+    </div>
+  </div>
+</div>

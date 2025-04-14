@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" />
+		<PackageReference Include="HotChocolate.AspNetCore" />
+		<PackageReference Include="HotChocolate.AspNetCore.Authorization" />
+		<PackageReference Include="HotChocolate.Data" />
+		<PackageReference Include="HotChocolate.Data.EntityFramework" />
+		<PackageReference Include="IdentityServer4.AccessTokenValidation" />
+		<PackageReference Include="MediatR" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" />
+		<PackageReference Include="Swashbuckle.AspNetCore" />
+		<PackageReference Include="OpenVision.Core" />
+		<PackageReference Include="OpenVision.Api.Target" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\ARSounds.EntityFramework.MySql\ARSounds.EntityFramework.MySql.csproj" />
+		<ProjectReference Include="..\ARSounds.EntityFramework.PostgreSQL\ARSounds.EntityFramework.PostgreSQL.csproj" />
+		<ProjectReference Include="..\ARSounds.EntityFramework.SqlServer\ARSounds.EntityFramework.SqlServer.csproj" />
+	</ItemGroup>
+
+</Project>

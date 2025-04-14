@@ -1,0 +1,103 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8DFA4399-E99E-45CF-AED3-71FDF178798D}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
+		Directory.Packages.props = Directory.Packages.props
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.Application", "src\ARSounds.Application\ARSounds.Application.csproj", "{D1F06179-02C3-44A7-AB10-4AFF95538513}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.Core", "src\ARSounds.Core\ARSounds.Core.csproj", "{95FECDEC-EF55-4A98-A48B-E51E05FEE1E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.Localization", "src\ARSounds.Localization\ARSounds.Localization.csproj", "{5A103F4D-9607-4AFE-8CC4-8A2CE927A2D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.Wpf.Host", "src\ARSounds.Wpf.Host\ARSounds.Wpf.Host.csproj", "{BF7828A8-A21F-4F68-A724-546C4F133207}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.WinUI.Host", "src\ARSounds.WinUI.Host\ARSounds.WinUI.Host.csproj", "{B4B34C9E-E23C-4916-B85B-18A9DE09B3DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.Maui.Host", "src\ARSounds.Maui.Host\ARSounds.Maui.Host.csproj", "{A2208E1D-2F63-4316-8414-45D812254D9C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.ApplicationFlow", "src\ARSounds.ApplicationFlow\ARSounds.ApplicationFlow.csproj", "{A53D32AF-F963-465A-86A3-4A63DF747131}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.UI.Maui", "src\ARSounds.UI.Maui\ARSounds.UI.Maui.csproj", "{EE0533AE-84FA-4FB6-B257-0A0EF05F1915}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.UI.Wpf", "src\ARSounds.UI.Wpf\ARSounds.UI.Wpf.csproj", "{652338F2-18DF-46B1-B5C0-4D8B47434780}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.UI.WinUI", "src\ARSounds.UI.WinUI\ARSounds.UI.WinUI.csproj", "{D07FA07C-1C82-4CBE-AB34-807B3613F057}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.UI.Common", "src\ARSounds.UI.Common\ARSounds.UI.Common.csproj", "{9DD237F6-EDB4-4320-BDE8-014869E25B8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.ApiClient", "src\ARSounds.ApiClient\ARSounds.ApiClient.csproj", "{0A5F87BE-54D7-4281-802D-4FD7522D6860}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D1F06179-02C3-44A7-AB10-4AFF95538513}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1F06179-02C3-44A7-AB10-4AFF95538513}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1F06179-02C3-44A7-AB10-4AFF95538513}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1F06179-02C3-44A7-AB10-4AFF95538513}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95FECDEC-EF55-4A98-A48B-E51E05FEE1E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95FECDEC-EF55-4A98-A48B-E51E05FEE1E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95FECDEC-EF55-4A98-A48B-E51E05FEE1E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95FECDEC-EF55-4A98-A48B-E51E05FEE1E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A103F4D-9607-4AFE-8CC4-8A2CE927A2D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A103F4D-9607-4AFE-8CC4-8A2CE927A2D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A103F4D-9607-4AFE-8CC4-8A2CE927A2D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A103F4D-9607-4AFE-8CC4-8A2CE927A2D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF7828A8-A21F-4F68-A724-546C4F133207}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF7828A8-A21F-4F68-A724-546C4F133207}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF7828A8-A21F-4F68-A724-546C4F133207}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF7828A8-A21F-4F68-A724-546C4F133207}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4B34C9E-E23C-4916-B85B-18A9DE09B3DA}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{B4B34C9E-E23C-4916-B85B-18A9DE09B3DA}.Debug|Any CPU.Build.0 = Debug|x64
+		{B4B34C9E-E23C-4916-B85B-18A9DE09B3DA}.Debug|Any CPU.Deploy.0 = Debug|x64
+		{B4B34C9E-E23C-4916-B85B-18A9DE09B3DA}.Release|Any CPU.ActiveCfg = Release|x64
+		{B4B34C9E-E23C-4916-B85B-18A9DE09B3DA}.Release|Any CPU.Build.0 = Release|x64
+		{B4B34C9E-E23C-4916-B85B-18A9DE09B3DA}.Release|Any CPU.Deploy.0 = Release|x64
+		{A2208E1D-2F63-4316-8414-45D812254D9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2208E1D-2F63-4316-8414-45D812254D9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2208E1D-2F63-4316-8414-45D812254D9C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{A2208E1D-2F63-4316-8414-45D812254D9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2208E1D-2F63-4316-8414-45D812254D9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2208E1D-2F63-4316-8414-45D812254D9C}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{A53D32AF-F963-465A-86A3-4A63DF747131}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A53D32AF-F963-465A-86A3-4A63DF747131}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A53D32AF-F963-465A-86A3-4A63DF747131}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A53D32AF-F963-465A-86A3-4A63DF747131}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE0533AE-84FA-4FB6-B257-0A0EF05F1915}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE0533AE-84FA-4FB6-B257-0A0EF05F1915}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE0533AE-84FA-4FB6-B257-0A0EF05F1915}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE0533AE-84FA-4FB6-B257-0A0EF05F1915}.Release|Any CPU.Build.0 = Release|Any CPU
+		{652338F2-18DF-46B1-B5C0-4D8B47434780}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{652338F2-18DF-46B1-B5C0-4D8B47434780}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{652338F2-18DF-46B1-B5C0-4D8B47434780}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{652338F2-18DF-46B1-B5C0-4D8B47434780}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D07FA07C-1C82-4CBE-AB34-807B3613F057}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D07FA07C-1C82-4CBE-AB34-807B3613F057}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D07FA07C-1C82-4CBE-AB34-807B3613F057}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D07FA07C-1C82-4CBE-AB34-807B3613F057}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DD237F6-EDB4-4320-BDE8-014869E25B8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DD237F6-EDB4-4320-BDE8-014869E25B8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DD237F6-EDB4-4320-BDE8-014869E25B8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DD237F6-EDB4-4320-BDE8-014869E25B8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A5F87BE-54D7-4281-802D-4FD7522D6860}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A5F87BE-54D7-4281-802D-4FD7522D6860}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A5F87BE-54D7-4281-802D-4FD7522D6860}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A5F87BE-54D7-4281-802D-4FD7522D6860}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {75828022-2EA1-4FF7-A854-415715677230}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,62 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<UserSecretsId>8fe260ca-ef4c-4fa3-9364-029146f8d339</UserSecretsId>
+		<DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerfileContext>..\..</DockerfileContext>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Aspire.Microsoft.Data.SqlClient" />
+		<PackageReference Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" />
+		<PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" />
+		<PackageReference Include="Aspire.Pomelo.EntityFrameworkCore.MySql" />
+		<PackageReference Include="AspNetCore.HealthChecks.UI" />
+		<PackageReference Include="AutoMapper" />
+		<PackageReference Include="Duende.IdentityServer.EntityFramework" />
+		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" />
+		<PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" />
+		<PackageReference Include="Microsoft.Extensions.Options" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets"/>
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
+		<PackageReference Include="Serilog" />
+		<PackageReference Include="Serilog.Enrichers.Environment" />
+		<PackageReference Include="Serilog.Enrichers.Thread" />
+		<PackageReference Include="Serilog.Extensions.Hosting" />
+		<PackageReference Include="Serilog.Settings.Configuration" />
+		<PackageReference Include="Serilog.Sinks.Console" />
+		<PackageReference Include="Serilog.Sinks.File" />
+		<PackageReference Include="Serilog.Sinks.MSSqlServer" />
+		<PackageReference Include="Serilog.Sinks.Seq" />
+		<PackageReference Include="Skoruba.Duende.IdentityServer.Admin.BusinessLogic" />
+		<PackageReference Include="Skoruba.Duende.IdentityServer.Admin.BusinessLogic.Identity" />
+		<PackageReference Include="Skoruba.Duende.IdentityServer.Admin.UI" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\OpenVision.IdentityServer.Admin.EntityFramework.MySql\OpenVision.IdentityServer.Admin.EntityFramework.MySql.csproj" />
+		<ProjectReference Include="..\OpenVision.IdentityServer.Admin.EntityFramework.PostgreSQL\OpenVision.IdentityServer.Admin.EntityFramework.PostgreSQL.csproj" />
+		<ProjectReference Include="..\OpenVision.IdentityServer.Admin.EntityFramework.SqlServer\OpenVision.IdentityServer.Admin.EntityFramework.SqlServer.csproj" />
+		<ProjectReference Include="..\OpenVision.IdentityServer.Shared\OpenVision.IdentityServer.Shared.csproj" />
+		<ProjectReference Include="..\OpenVision.ServiceDefaults\OpenVision.ServiceDefaults.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Helpers\" />
+	</ItemGroup>
+
+</Project>

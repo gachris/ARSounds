@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="ARSounds.UI.Maui.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="clr-namespace:ARSounds.UI.Maui.Behavior"
+    xmlns:converters="clr-namespace:ARSounds.UI.Maui.Converters"
+    xmlns:loc="clr-namespace:ARSounds.UI.Maui.Localization"
+    xmlns:media="clr-namespace:ARSounds.UI.Common.Media;assembly=ARSounds.UI.Common"
+    xmlns:viewModels="clr-namespace:ARSounds.UI.Common.ViewModels;assembly=ARSounds.UI.Common"
+    x:DataType="{x:Type viewModels:SettingsViewModel}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView>
+        <VerticalStackLayout Padding="22,0">
+            <Label
+                FontAttributes="Bold"
+                FontSize="22"
+                Text="{loc:LocalizationResource Text=Personalization}" />
+            <VerticalStackLayout Margin="0,12,0,12">
+                <Label FontSize="16" Text="{loc:LocalizationResource Text=Theme}" />
+                <VerticalStackLayout Margin="0,8,0,0">
+                    <RadioButton
+                        behaviors:RadioButtonCommandBehavior.Command="{Binding SwitchThemeCommand}"
+                        behaviors:RadioButtonCommandBehavior.CommandParameter="{x:Static media:Theme.Light}"
+                        Content="{loc:LocalizationResource Text=Light}"
+                        FontSize="15"
+                        GroupName="AppTheme"
+                        IsChecked="{Binding Theme, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light}" />
+                    <RadioButton
+                        behaviors:RadioButtonCommandBehavior.Command="{Binding SwitchThemeCommand}"
+                        behaviors:RadioButtonCommandBehavior.CommandParameter="{x:Static media:Theme.Dark}"
+                        Content="{loc:LocalizationResource Text=Dark}"
+                        FontSize="15"
+                        GroupName="AppTheme"
+                        IsChecked="{Binding Theme, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark}" />
+                    <RadioButton
+                        behaviors:RadioButtonCommandBehavior.Command="{Binding SwitchThemeCommand}"
+                        behaviors:RadioButtonCommandBehavior.CommandParameter="{x:Static media:Theme.Default}"
+                        Content="{loc:LocalizationResource Text=System_theme}"
+                        FontSize="15"
+                        GroupName="AppTheme"
+                        IsChecked="{Binding Theme, Mode=OneWay, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Default}" />
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+            <Label FontSize="22" Text="{loc:LocalizationResource Text=About_application}" />
+            <VerticalStackLayout>
+                <Label FontSize="16" Text="{Binding VersionDescription}" />
+                <Label
+                    Margin="0,8,0,0"
+                    FontSize="16"
+                    Text="{loc:LocalizationResource Text=About_application_description}" />
+                <Button
+                    Margin="0,10,0,0"
+                    FontSize="14"
+                    Text="{loc:LocalizationResource Text=Privacy_terms_link}" />
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

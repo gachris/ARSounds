@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    x:Class="ARSounds.UI.WinUI.DataTemplates.AccountView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:loc="using:ARSounds.UI.WinUI.Localization"
+    xmlns:viewModels="using:ARSounds.UI.Common.ViewModels">
+
+    <DataTemplate x:Key="AccountContentTemplate" x:DataType="viewModels:AccountViewModel">
+        <Grid>
+            <FontIcon
+                FontFamily="Segoe MDL2 Assets"
+                FontSize="16"
+                Glyph="&#xE77B;"
+                Visibility="{Binding IsAuthenticated, Converter={StaticResource FlipBoolToVisibilityConverter}}" />
+            <Border
+                Width="24"
+                Height="24"
+                Background="{ThemeResource Avatar.Background}"
+                CornerRadius="100"
+                Visibility="{Binding IsAuthenticated, Converter={StaticResource BoolToVisibilityConverter}}">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="12"
+                    Foreground="{ThemeResource Avatar.Foreground}"
+                    Text="{Binding Initials, UpdateSourceTrigger=PropertyChanged}" />
+            </Border>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="AccountFlyoutContentTemplate" x:DataType="viewModels:AccountViewModel">
+        <Grid Width="320">
+            <StackPanel Margin="4" Visibility="{Binding IsAuthenticated, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="{loc:LocalizationResource Text=ARSounds_account}" />
+                    <Button
+                        Grid.Column="1"
+                        Margin="0"
+                        HorizontalAlignment="Left"
+                        Background="Transparent"
+                        BorderThickness="0">
+                        <Button.Content>
+                            <FontIcon
+                                FontFamily="Segoe MDL2 Assets"
+                                FontSize="16"
+                                Glyph="&#xE712;" />
+                        </Button.Content>
+                        <Button.Flyout>
+                            <MenuFlyout Placement="BottomEdgeAlignedRight">
+                                <MenuFlyoutItem Command="{Binding SignOutCommand}" Text="{loc:LocalizationResource Text=Sign_out}" />
+                            </MenuFlyout>
+                        </Button.Flyout>
+                    </Button>
+                </Grid>
+                <StackPanel Margin="0,16,0,6" Orientation="Horizontal">
+                    <Border
+                        Width="86"
+                        Height="86"
+                        Background="{ThemeResource Avatar.Background}"
+                        CornerRadius="100">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="36"
+                            Foreground="{ThemeResource Avatar.Foreground}"
+                            Text="{Binding Initials, UpdateSourceTrigger=PropertyChanged}" />
+                    </Border>
+                    <StackPanel Margin="16,0,0,0">
+                        <TextBlock
+                            FontSize="16"
+                            FontWeight="SemiBold"
+                            Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                </StackPanel>
+                <Button
+                    Margin="0,6,0,0"
+                    HorizontalAlignment="Left"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Content="{loc:LocalizationResource Text=Account_settings}"
+                    FontSize="12" />
+            </StackPanel>
+            <Button
+                Width="320"
+                Margin="0"
+                Padding="16,8"
+                HorizontalContentAlignment="Left"
+                BorderThickness="0"
+                Command="{Binding SignInCommand}"
+                Visibility="{Binding IsAuthenticated, Converter={StaticResource FlipBoolToVisibilityConverter}}">
+                <StackPanel Orientation="Horizontal">
+                    <Border
+                        Padding="8"
+                        BorderThickness="1"
+                        CornerRadius="100">
+                        <FontIcon
+                            FontFamily="Segoe MDL2 Assets"
+                            FontSize="16"
+                            Glyph="&#xE77B;" />
+                    </Border>
+                    <TextBlock
+                        Margin="12,0,0,0"
+                        VerticalAlignment="Center"
+                        FontSize="12"
+                        Text="{loc:LocalizationResource Text=Add_account}" />
+                </StackPanel>
+            </Button>
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>

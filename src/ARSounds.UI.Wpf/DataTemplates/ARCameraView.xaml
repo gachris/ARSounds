@@ -1,0 +1,21 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:behaviors="clr-namespace:ARSounds.UI.Wpf.Behaviors"
+    xmlns:loc="clr-namespace:ARSounds.Localization.Properties;assembly=ARSounds.Localization"
+    xmlns:openVision="http://openVision/winfx/2021/xaml/presentation"
+    xmlns:viewModels="clr-namespace:ARSounds.UI.Common.ViewModels;assembly=ARSounds.UI.Common">
+
+    <DataTemplate DataType="{x:Type viewModels:ARCameraViewModel}">
+        <openVision:ARCamera>
+            <b:Interaction.Behaviors>
+                <behaviors:ARCameraBehavior
+                    ClientApiKey="{Binding ClientApiKey}"
+                    TrackFoundCommand="{Binding TrackFoundCommand}"
+                    TrackLostCommand="{Binding TrackLostCommand}" />
+            </b:Interaction.Behaviors>
+        </openVision:ARCamera>
+    </DataTemplate>
+
+</ResourceDictionary>

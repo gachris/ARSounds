@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    x:Class="ARSounds.UI.Maui.ControlTemplates.AccountTemplate"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:loc="clr-namespace:ARSounds.UI.Maui.Localization"
+    xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Converters;assembly=CommunityToolkit.Maui"
+    xmlns:viewModels="clr-namespace:ARSounds.UI.Common.ViewModels;assembly=ARSounds.UI.Common">
+
+    <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+
+    <ControlTemplate x:Key="AccountHeaderTemplate" x:DataType="viewModels:AccountViewModel">
+        <Grid IsVisible="{Binding IsAuthenticated}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" ColumnSpacing="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Label
+                    Margin="12,0,0,0"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    Text="{loc:LocalizationResource Text=Application_title}"
+                    VerticalOptions="Center" />
+                <ImageButton
+                    Grid.Column="1"
+                    BackgroundColor="Transparent"
+                    Command="{Binding SignOutCommand}">
+                    <ImageButton.Source>
+                        <FontImageSource
+                            FontFamily="MaterialIconsOutlined"
+                            Glyph="&#xe9ba;"
+                            Size="16" />
+                    </ImageButton.Source>
+                </ImageButton>
+            </Grid>
+            <StackLayout
+                Grid.Row="1"
+                Margin="12,6,0,0"
+                Orientation="Horizontal"
+                Spacing="16">
+                <Border
+                    Padding="0"
+                    BackgroundColor="{DynamicResource MidnightBlue}"
+                    HeightRequest="56"
+                    HorizontalOptions="Start"
+                    StrokeShape="RoundRectangle 40"
+                    VerticalOptions="Start"
+                    WidthRequest="56">
+                    <Label
+                        FontSize="22"
+                        HorizontalOptions="Center"
+                        Text="{Binding Initials}"
+                        TextColor="{DynamicResource White}"
+                        VerticalOptions="Center" />
+                </Border>
+                <StackLayout VerticalOptions="Center">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        Text="{Binding Name}" />
+                    <Label
+                        FontSize="13"
+                        Text="{Binding Email}"
+                        TextColor="{DynamicResource Gray500Brush}" />
+                </StackLayout>
+            </StackLayout>
+            <Button
+                Grid.Row="2"
+                BackgroundColor="Transparent"
+                FontSize="12"
+                HorizontalOptions="Start"
+                Text="{loc:LocalizationResource Text=Account_settings}" />
+        </Grid>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="AccountFooterTemplate" x:DataType="viewModels:AccountViewModel">
+        <Button
+            Grid.Column="1"
+            Margin="4"
+            Command="{Binding SignInCommand}"
+            HeightRequest="34"
+            IsVisible="{Binding IsAuthenticated, Converter={StaticResource InvertedBoolConverter}}"
+            Text="{loc:LocalizationResource Text=Add_account}">
+            <Button.ImageSource>
+                <FontImageSource
+                    FontFamily="MaterialIconsOutlined"
+                    Glyph="&#xe7fe;"
+                    Size="22"
+                    Color="{DynamicResource White}" />
+            </Button.ImageSource>
+        </Button>
+    </ControlTemplate>
+
+</ResourceDictionary>

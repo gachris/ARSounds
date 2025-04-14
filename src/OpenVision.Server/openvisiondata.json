@@ -1,0 +1,32 @@
+﻿{
+  "OpenVisionData": {
+    "Databases": [
+      {
+        "Id": "645e8a2d-b1f2-4142-bab4-52535f2636a6",
+        "UserId": "671dbb93-7585-44fa-8ce2-c31b990b0d11",
+        "Name": "ARSounds-db",
+        "Type": "Cloud",
+        "Created": "2025-04-13T12:00:00Z",
+        "Updated": "2025-04-13T12:00:00Z",
+        "ApiKeys": [
+          {
+            "Id": "390f66f1-7eb8-405c-b94e-1b4bdb489a2b",
+            "DatabaseId": "645e8a2d-b1f2-4142-bab4-52535f2636a6",
+            "Key": "PVkI4EoX4iTRQEd5OmYKRD6lafdZgg61xMzO0yqnJYw=",
+            "Type": "Client",
+            "Created": "2025-04-13T12:00:00Z",
+            "Updated": "2025-04-13T12:00:00Z"
+          },
+          {
+            "Id": "8f285ba8-fd8a-43d7-9692-513c50f18a61",
+            "DatabaseId": "645e8a2d-b1f2-4142-bab4-52535f2636a6",
+            "Key": "canJyh1AUy3RXV0TA56cNlXXKWa+Bqa6dq78irKlI+s=",
+            "Type": "Server",
+            "Created": "2025-04-13T12:00:00Z",
+            "Updated": "2025-04-13T12:00:00Z"
+          }
+        ]
+      }
+    ]
+  }
+}

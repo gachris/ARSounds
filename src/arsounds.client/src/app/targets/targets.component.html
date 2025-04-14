@@ -1,0 +1,32 @@
+<div class="row pt-4 pb-4">
+  <div class="col col-xl-8 order-xl-1 col-lg-8 order-lg-1 col-md-8 order-md-1 col-sm-12 col-12 p-0 pt-1">
+    <div class="text-left">
+      <span class="badge bg-primary-alt text-primary p-2">
+        <a [routerLink]="['create']">Add Target</a>
+      </span>
+    </div>
+  </div>
+  <div class="col col-xl-4 order-xl-2 col-lg-4 order-lg-2 col-md-4 order-md-2 col-sm-12 col-12 p-0 pt-1">
+    <div class="text-right">
+      <div class="input-group">
+        <input class="form-control"
+               style="height:33.5px;"
+               aria-label="Search"
+               placeholder="Search"
+               [(ngModel)]="searchText" />
+        <div class="input-group-append">
+          <span class="input-group-text p-0" id="basic-addon-1">
+            <button class="btn btn-sm" (click)="search()">
+              <i class="fa fa-search" aria-hidden="true"></i>
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-targets-list class="pt-0" [targets]="targets$ | async" (scrollingFinished)="onScrollingFinished()">
+</app-targets-list>
+
+<router-outlet></router-outlet>

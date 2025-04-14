@@ -1,0 +1,15 @@
+<form (ngSubmit)="onSubmit()" #targetForm="ngForm">
+  <div class="modal-header border-0">
+    <h5 class="modal-title">Delete</h5>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">&times;</button>
+  </div>
+  <div class="modal-body">
+      <div class="text-dark">
+        Are you sure you want to delete the target?
+      </div>
+  </div>
+  <div class="modal-footer border-0">
+    <button type="button" class="btn btn-outline-primary" (click)="modal.dismiss('Cancel')">Cancel</button>
+    <button type="submit" class="btn btn-primary">Delete</button>
+  </div>
+</form>

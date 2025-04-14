@@ -1,0 +1,50 @@
+<form (ngSubmit)="onSubmit();" #targetForm="ngForm">
+  <div class="modal-header border-0">
+    <h5 class="modal-title">Add Target</h5>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">&times;</button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <div class="custom-file">
+        <label for="file" id="custom-file-label" class="custom-file-label">
+          File
+        </label>
+        <input type="file"
+               accept="audio/wav,audio/mp3,audio/ogg,audio/h264,audio/mpeg4"
+               class="custom-file-input"
+               id="file"
+               required
+               [(ngModel)]="target.file"
+               name="file"
+               #file="ngModel"
+               onchange="updateFileName()"
+               observeFiles>
+        <small [hidden]="file.valid || file.pristine" class="text-danger">
+          File is required
+        </small>
+        <small class="text-dark">
+          Supported files : wav, mp3, ogg, h264, ή mpeg4.
+        </small>
+      </div>
+    </div>
+    <div class="form-group mb-0">
+      <label for="name">
+        Name
+      </label>
+      <input type="text"
+             class="form-control"
+             id="name"
+             required
+             [(ngModel)]="target.name"
+             name="name"
+             #name="ngModel">
+      <small [hidden]="name.valid || name.pristine" class="text-danger">
+        Name is required
+      </small>
+    </div>
+  </div>
+  <div class="modal-footer border-0">
+    <button type="button" class="btn btn-outline-primary" (click)="modal.dismiss('Cancel')">Cancel</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!targetForm.form.valid || submitted">Add</button>
+  </div>
+</form>

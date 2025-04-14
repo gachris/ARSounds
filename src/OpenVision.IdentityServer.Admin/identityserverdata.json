@@ -1,0 +1,303 @@
+﻿{
+  "IdentityServerData": {
+    "IdentityResources": [
+      {
+        "Name": "roles",
+        "Enabled": true,
+        "DisplayName": "Roles",
+        "UserClaims": [
+          "role"
+        ]
+      },
+      {
+        "Name": "openid",
+        "Enabled": true,
+        "Required": true,
+        "DisplayName": "Your user identifier",
+        "UserClaims": [
+          "sub"
+        ]
+      },
+      {
+        "Name": "profile",
+        "Enabled": true,
+        "DisplayName": "User profile",
+        "Description": "Your user profile information (first name, last name, etc.)",
+        "Emphasize": true,
+        "UserClaims": [
+          "name",
+          "family_name",
+          "given_name",
+          "middle_name",
+          "nickname",
+          "preferred_username",
+          "profile",
+          "picture",
+          "website",
+          "gender",
+          "birthdate",
+          "zoneinfo",
+          "locale",
+          "updated_at"
+        ]
+      },
+      {
+        "Name": "email",
+        "Enabled": true,
+        "DisplayName": "Your email address",
+        "Emphasize": true,
+        "UserClaims": [
+          "email",
+          "email_verified"
+        ]
+      },
+      {
+        "Name": "address",
+        "Enabled": true,
+        "DisplayName": "Your address",
+        "Emphasize": true,
+        "UserClaims": [
+          "address"
+        ]
+      }
+    ],
+    "ApiScopes": [
+      {
+        "Name": "openvision.identityserver.admin.api",
+        "DisplayName": "OpenVision.IdentityServer.Admin.Api",
+        "Required": true,
+        "UserClaims": [
+          "role",
+          "name"
+        ]
+      },
+      {
+        "Name": "openvision.write",
+        "DisplayName": "OpenVision.Write",
+        "Description": "Allow to write resources on OpenVision",
+        "Required": true,
+        "UserClaims": [
+          "role",
+          "name"
+        ]
+      },
+      {
+        "Name": "openvision.read",
+        "DisplayName": "OpenVision.Read",
+        "Description": "Allow to read resources on OpenVision",
+        "Required": true,
+        "UserClaims": [
+          "role",
+          "name"
+        ]
+      },
+      {
+        "Name": "arsounds.write",
+        "DisplayName": "ARSounds.Write",
+        "Description": "Allow to write resources on ARSounds",
+        "Required": true,
+        "UserClaims": [
+          "role",
+          "name"
+        ]
+      },
+      {
+        "Name": "arsounds.read",
+        "DisplayName": "ARSounds.Read",
+        "Description": "Allow to read resources on ARSounds",
+        "Required": true,
+        "UserClaims": [
+          "role",
+          "name"
+        ]
+      }
+    ],
+    "ApiResources": [
+      {
+        "Name": "openvision.identityserver.admin.api",
+        "DisplayName": "OpenVision.IdentityServer.Admin.Api",
+        "Scopes": [
+          "openvision.identityserver.admin.api"
+        ]
+      },
+      {
+        "Name": "openvision.api",
+        "DisplayName": "OpenVision.Api",
+        "Description": "The audience value for OpenVision.Api",
+        "Scopes": [
+          "openvision.read",
+          "openvision.write"
+        ]
+      },
+      {
+        "Name": "arsounds.api",
+        "DisplayName": "ARSounds.Api",
+        "Description": "The audience value for ARSounds.Api",
+        "Scopes": [
+          "arsounds.read",
+          "arsounds.write"
+        ]
+      }
+    ],
+    "Clients": [
+      {
+        "ClientId": "6b1e2f46-c94d-4fad-96b6-f776c4113992",
+        "ClientName": "OpenVision.IdentityServer.Admin",
+        "ClientUri": "https://localhost:44303",
+        "AllowedGrantTypes": [
+          "authorization_code"
+        ],
+        "RequirePkce": true,
+        "ClientSecrets": [
+          {
+            "Value": "f9903dde-82fb-4a8f-8bb3-3a3fc6101acd"
+          }
+        ],
+        "RedirectUris": [
+          "https://localhost:44303/signin-oidc"
+        ],
+        "FrontChannelLogoutUri": "https://localhost:44303/signout-oidc",
+        "PostLogoutRedirectUris": [
+          "https://localhost:44303/signout-callback-oidc"
+        ],
+        "AllowedCorsOrigins": [
+          "https://localhost:44303"
+        ],
+        "AllowedScopes": [
+          "openid",
+          "email",
+          "profile",
+          "roles"
+        ]
+      },
+      {
+        "ClientId": "77dff4e2-3964-48d5-91fc-0b401731b4ee",
+        "ClientName": "OpenVision.IdentityServer.Admin.API.SwaggerUI",
+        "AllowedGrantTypes": [
+          "authorization_code"
+        ],
+        "RequireClientSecret": false,
+        "RequirePkce": true,
+        "RedirectUris": [
+          "https://localhost:44302/swagger/oauth2-redirect.html"
+        ],
+        "AllowedScopes": [
+          "openvision.identityserver.admin.api"
+        ],
+        "AllowedCorsOrigins": [
+          "https://localhost:44302"
+        ]
+      },
+      {
+        "ClientId": "e5ba6bac-b7e3-4992-9cc2-b7b377d92105",
+        "ClientName": "OpenVision.Client",
+        "ClientUri": "https://localhost:44333",
+        "AllowedGrantTypes": [
+          "authorization_code"
+        ],
+        "RequirePkce": true,
+        "AllowOfflineAccess": true,
+        "ClientSecrets": [
+          {
+            "Value": "8aa6983d-5ed5-bcff-ece2-16c4c301cb7b"
+          }
+        ],
+        "RedirectUris": [
+          "https://localhost:44333/signin-oidc"
+        ],
+        "FrontChannelLogoutUri": "https://localhost:44333/signout-oidc",
+        "PostLogoutRedirectUris": [
+          "https://localhost:44333/signout-callback-oidc"
+        ],
+        "AllowedCorsOrigins": [
+          "https://localhost:44333"
+        ],
+        "AllowedScopes": [
+          "openid",
+          "email",
+          "profile",
+          "roles",
+          "openvision.read",
+          "openvision.write"
+        ]
+      },
+      {
+        "ClientId": "c5309598-4231-4cc3-bddc-e374ad5509fc",
+        "ClientName": "OpenVision.API.SwaggerUI",
+        "AllowedGrantTypes": [
+          "authorization_code"
+        ],
+        "RequireClientSecret": false,
+        "RequirePkce": true,
+        "AllowOfflineAccess": true,
+        "RedirectUris": [
+          "https://localhost:44320/swagger/oauth2-redirect.html"
+        ],
+        "AllowedScopes": [
+          "openid",
+          "email",
+          "profile",
+          "roles",
+          "openvision.read",
+          "openvision.write"
+        ],
+        "AllowedCorsOrigins": [
+          "https://localhost:44320"
+        ]
+      },
+      {
+        "ClientId": "16c8fb9b-daec-4ffb-a91c-b78eec0ef07c",
+        "ClientName": "ARSounds.Client",
+        "ClientUri": "https://localhost:44439",
+        "AllowedGrantTypes": [
+          "authorization_code"
+        ],
+        "RequireClientSecret": false,
+        "RequirePkce": true,
+        "AllowOfflineAccess": true,
+        "RedirectUris": [
+          "https://localhost:44439/signin-callback-oidc"
+        ],
+        "FrontChannelLogoutUri": "https://localhost:44439/silent-callback-oidc",
+        "PostLogoutRedirectUris": [
+          "https://localhost:44439/signout-callback-oidc"
+        ],
+        "AllowedCorsOrigins": [
+          "https://localhost:44439"
+        ],
+        "AllowedScopes": [
+          "openid",
+          "email",
+          "profile",
+          "roles",
+          "arsounds.read",
+          "arsounds.write"
+        ]
+      },
+      {
+        "ClientId": "b8ea2285-7692-45fe-a0dd-cdf715706737",
+        "ClientName": "ARSounds.Api.SwaggerUI",
+        "AllowedGrantTypes": [
+          "authorization_code"
+        ],
+        "RequireClientSecret": false,
+        "RequirePkce": true,
+        "AllowOfflineAccess": true,
+        "RedirectUris": [
+          "https://localhost:7266/swagger/oauth2-redirect.html"
+        ],
+        "AllowedScopes": [
+          "openid",
+          "email",
+          "profile",
+          "roles",
+          "arsounds.read",
+          "arsounds.write"
+        ],
+        "AllowedCorsOrigins": [
+          "https://localhost:7266"
+        ]
+      }
+    ]
+  }
+}

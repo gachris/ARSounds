@@ -1,0 +1,35 @@
+﻿@using System.Text.Json
+@using System.Text.Json.Serialization
+
+@if (ViewBag.Notifications != null)
+{
+	var jsonSerializerOptions = new JsonSerializerOptions
+	{
+		PropertyNameCaseInsensitive = true,
+		PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+		Converters =
+		{
+			new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)
+		}
+	};
+	var obj = JsonSerializer.Deserialize<List<NotificationHelpers.Alert>>(ViewBag.Notifications, jsonSerializerOptions);
+
+	foreach (NotificationHelpers.Alert notification in obj)
+	{
+		switch (notification.Type)
+		{
+			case NotificationHelpers.AlertType.Success:
+				<script type="text/javascript">toastr.options.closeButton = true; toastr.success('@notification.Message', '@notification.Title');</script>
+				break;
+			case NotificationHelpers.AlertType.Error:
+				<script type="text/javascript">toastr.error('@notification.Message', '@notification.Title');</script>
+				break;
+			case NotificationHelpers.AlertType.Info:
+				<script type="text/javascript">toastr.options.closeButton = true; toastr.info('@notification.Message', '@notification.Title');</script>
+				break;
+			case NotificationHelpers.AlertType.Warning:
+				<script type="text/javascript">toastr.options.closeButton = true; toastr.warning('@notification.Message', '@notification.Title');</script>
+				break;
+		}
+	}
+}

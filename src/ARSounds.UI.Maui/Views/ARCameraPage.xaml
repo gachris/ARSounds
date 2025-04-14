@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ARSounds.UI.Maui.Views.ARCameraPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="clr-namespace:ARSounds.UI.Maui.Behaviors"
+    xmlns:controls="clr-namespace:ARSounds.UI.Maui.Controls"
+    xmlns:openVision="http://openVision/winfx/2021/xaml/presentation"
+    xmlns:viewModels="clr-namespace:ARSounds.UI.Common.ViewModels;assembly=ARSounds.UI.Common"
+    x:DataType="{x:Type viewModels:ARCameraViewModel}"
+    Shell.NavBarIsVisible="False">
+    <Grid>
+        <openVision:ARCamera>
+            <openVision:ARCamera.Behaviors>
+                <behaviors:ARCameraBehavior
+                    ClientApiKey="{Binding ClientApiKey}"
+                    TrackFoundCommand="{Binding TrackFoundCommand}"
+                    TrackLostCommand="{Binding TrackLostCommand}" />
+            </openVision:ARCamera.Behaviors>
+        </openVision:ARCamera>
+        <ImageButton
+            x:Name="FlyoutToggleButton"
+            Margin="6,4,0,0"
+            Padding="10"
+            BackgroundColor="Transparent"
+            Clicked="OnFlyoutToggleClicked"
+            HorizontalOptions="Start"
+            VerticalOptions="Start">
+            <ImageButton.IsVisible>
+                <OnPlatform x:TypeArguments="x:Boolean">
+                    <On Platform="WinUI" Value="False" />
+                    <On Platform="Android, iOS, MacCatalyst, Tizen" Value="True" />
+                </OnPlatform>
+            </ImageButton.IsVisible>
+            <ImageButton.Source>
+                <FontImageSource
+                    FontFamily="MaterialIconsOutlined"
+                    Glyph="&#xe5d2;"
+                    Size="16" />
+            </ImageButton.Source>
+        </ImageButton>
+        <controls:LoadingIndicator
+            HorizontalOptions="Center"
+            IsBusy="{Binding IsBusy}"
+            VerticalOptions="Center" />
+    </Grid>
+</ContentPage>

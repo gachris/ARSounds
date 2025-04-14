@@ -1,0 +1,65 @@
+﻿@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["Page_title"];
+}
+
+<style>
+    .error-heading {
+        font-weight: 500;
+        margin-bottom: 1rem;
+    }
+</style>
+
+<section class="content">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="text-center py-5">
+                    <h1 class="display-4 text-danger error-heading">@Localizer["Error_heading"]</h1>
+                    <h2 class="mb-4">@Localizer["Error_subtitle"]</h2>
+
+                    <p class="lead">
+                        @Localizer["Error_description"]
+                    </p>
+
+                    @if (ViewBag.StatusCode != null)
+                    {
+                        <p class="text-muted mb-1">
+                            @Localizer["Error_code_label"] <strong>@ViewBag.StatusCode</strong>
+                        </p>
+                    }
+
+                    @if (ViewBag.ExceptionMessage != null)
+                    {
+                        <div class="alert alert-warning mt-3" role="alert">
+                            <strong>@Localizer["Exception_details_label"]</strong> @ViewBag.ExceptionMessage
+                            @if (ViewBag.ExceptionPath != null)
+                            {
+                                <br />
+                                <small>On: @ViewBag.ExceptionPath</small>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">@ViewBag.ErrorMessage</p>
+                    }
+
+                    <hr class="my-4" />
+
+                    <p>
+                        @Localizer["Contact_support_instruction"]
+                        <a href="/contact" class="text-decoration-none font-weight-bold">
+                            @Localizer["Support_team"]
+                        </a>.
+                    </p>
+                    <a href="~/" class="btn btn-primary btn-lg mt-3">
+                        @Localizer["Return_homepage_button_text"]
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ARSounds.UI.Maui.Views.WalkthroughPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:data="clr-namespace:ARSounds.UI.Common.Data;assembly=ARSounds.UI.Common"
+    xmlns:loc="clr-namespace:ARSounds.UI.Maui.Localization"
+    xmlns:viewModels="clr-namespace:ARSounds.UI.Common.ViewModels;assembly=ARSounds.UI.Common"
+    x:DataType="{x:Type viewModels:WalkthroughViewModel}"
+    NavigationPage.HasBackButton="False"
+    NavigationPage.HasNavigationBar="False">
+    <Grid RowDefinitions="*, Auto">
+        <CarouselView
+            FlowDirection="LeftToRight"
+            IndicatorView="IndicatorView"
+            IsSwipeEnabled="False"
+            ItemsSource="{Binding Boardings}"
+            Position="{Binding Position, Mode=TwoWay}">
+            <CarouselView.ItemsLayout>
+                <LinearItemsLayout
+                    Orientation="Horizontal"
+                    SnapPointsAlignment="Center"
+                    SnapPointsType="MandatorySingle" />
+            </CarouselView.ItemsLayout>
+            <CarouselView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type data:WalkthroughBoarding}">
+                    <Grid RowDefinitions="*,Auto">
+                        <Image
+                            Grid.RowSpan="2"
+                            Aspect="AspectFill"
+                            Opacity="0.9"
+                            Source="{Binding ImagePath}" />
+                        <Border
+                            Grid.Row="1"
+                            Margin="-3"
+                            VerticalOptions="End">
+                            <Border.Shadow>
+                                <Shadow Opacity="0.3" />
+                            </Border.Shadow>
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="30,30,0,0" />
+                            </Border.StrokeShape>
+                            <StackLayout Margin="30,20" Spacing="15">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="24"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{Binding Title}"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    FontSize="16"
+                                    HorizontalOptions="CenterAndExpand"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{Binding Subtitle}" />
+                            </StackLayout>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+        <StackLayout Grid.Row="1" Spacing="10">
+            <IndicatorView
+                x:Name="IndicatorView"
+                Margin="0"
+                HorizontalOptions="Center"
+                IndicatorsShape="Circle"
+                SelectedIndicatorColor="{DynamicResource Primary}" />
+            <Button
+                Margin="30,20"
+                Command="{Binding NextCommand}"
+                CornerRadius="12"
+                FontAttributes="Bold"
+                HeightRequest="50"
+                Text="FINISH">
+                <Button.Triggers>
+                    <DataTrigger
+                        Binding="{Binding IsSkipButtonVisible}"
+                        TargetType="Button"
+                        Value="True">
+                        <Setter Property="Text" Value="NEXT" />
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+        </StackLayout>
+        <Button
+            Margin="20"
+            Padding="10,5"
+            Command="{Binding SkipCommand}"
+            FontSize="12"
+            HeightRequest="26"
+            HorizontalOptions="End"
+            IsVisible="{Binding IsSkipButtonVisible, Mode=TwoWay}"
+            Text="{loc:LocalizationResource Skip}"
+            VerticalOptions="StartAndExpand" />
+    </Grid>
+</ContentPage>

@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<Sdk Name="Aspire.AppHost.Sdk" Version="9.2.0" />
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<IsAspireHost>true</IsAspireHost>
+		<LangVersion>latest</LangVersion>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<UserSecretsId>1381abaf-baf9-41a9-99d0-a086bc15f45e</UserSecretsId>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Aspire.Hosting.AppHost" />
+		<PackageReference Include="Aspire.Hosting.MySql" />
+		<PackageReference Include="Aspire.Hosting.PostgreSQL" />
+		<PackageReference Include="Aspire.Hosting.SqlServer" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\ARSounds.Server\ARSounds.Server.csproj" />
+		<ProjectReference Include="..\OpenVision.Client\OpenVision.Client.csproj" />
+		<ProjectReference Include="..\OpenVision.IdentityServer.Admin.Api\OpenVision.IdentityServer.Admin.Api.csproj" />
+		<ProjectReference Include="..\OpenVision.IdentityServer.Admin\OpenVision.IdentityServer.Admin.csproj" />
+		<ProjectReference Include="..\OpenVision.IdentityServer.STS.Identity\OpenVision.IdentityServer.STS.Identity.csproj" />
+		<ProjectReference Include="..\OpenVision.Server\OpenVision.Server.csproj" />
+	</ItemGroup>
+
+</Project>
