@@ -72,8 +72,8 @@ public class NavigationService : INavigationService
     {
         if (_frame is not null)
         {
-            _frame.Navigating -= Frame_Navigating;
-            _frame.Navigated -= Frame_Navigated;
+            _frame.Navigating += Frame_Navigating;
+            _frame.Navigated += Frame_Navigated;
         }
     }
 
@@ -81,8 +81,8 @@ public class NavigationService : INavigationService
     {
         if (_frame is not null)
         {
-            _frame.Navigating += Frame_Navigating;
-            _frame.Navigated += Frame_Navigated;
+            _frame.Navigating -= Frame_Navigating;
+            _frame.Navigated -= Frame_Navigated;
         }
     }
 
