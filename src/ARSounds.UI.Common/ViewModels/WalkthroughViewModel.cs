@@ -1,13 +1,13 @@
 ﻿using System.Collections.ObjectModel;
 using ARSounds.Localization.Properties;
-using ARSounds.UI.Common.Contracts;
 using ARSounds.UI.Common.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DevToolbox.Core.Contracts;
 
 namespace ARSounds.UI.Common.ViewModels;
 
-public partial class WalkthroughViewModel : ObservableObject, IViewModelAware
+public partial class WalkthroughViewModel : ObservableObject, INavigationViewModelAware
 {
     #region Fields/Consts
 
@@ -19,6 +19,8 @@ public partial class WalkthroughViewModel : ObservableObject, IViewModelAware
     #endregion
 
     #region Properties
+
+    public bool CanGoBack => true;
 
     public ReadOnlyObservableCollection<WalkthroughBoarding> Boardings => _boardingsReadOnlyCollection;
 

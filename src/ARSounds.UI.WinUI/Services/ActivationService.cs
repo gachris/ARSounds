@@ -1,7 +1,7 @@
-﻿using ARSounds.UI.WinUI.Activation;
-using ARSounds.UI.WinUI.Contracts;
-using ARSounds.UI.WinUI.Views;
+﻿using ARSounds.UI.WinUI.Views;
 using CommonServiceLocator;
+using DevToolbox.WinUI.Activation;
+using DevToolbox.WinUI.Contracts;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;

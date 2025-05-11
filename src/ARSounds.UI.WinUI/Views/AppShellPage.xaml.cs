@@ -1,8 +1,8 @@
-﻿using ARSounds.UI.Common.Contracts;
-using ARSounds.UI.Common.ViewModels;
-using ARSounds.UI.WinUI.Contracts;
-using ARSounds.UI.WinUI.Helpers;
+﻿using ARSounds.UI.Common.ViewModels;
 using CommonServiceLocator;
+using DevToolbox.Core.Contracts;
+using DevToolbox.WinUI.Contracts;
+using DevToolbox.WinUI.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;

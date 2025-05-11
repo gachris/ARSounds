@@ -1,11 +1,13 @@
-﻿using ARSounds.UI.Common.Contracts;
-using ARSounds.UI.Common.Media;
+﻿using ARSounds.Localization.Properties;
+using System.Reflection;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DevToolbox.Core.Contracts;
+using DevToolbox.Core.Media;
 
 namespace ARSounds.UI.Common.ViewModels;
 
-public partial class SettingsViewModel : ObservableObject, IViewModelAware
+public partial class SettingsViewModel : ObservableObject, INavigationViewModelAware
 {
     #region Fields/Consts
 
@@ -16,6 +18,8 @@ public partial class SettingsViewModel : ObservableObject, IViewModelAware
     #endregion
 
     #region Properties
+
+    public bool CanGoBack => true;
 
     public string VersionDescription { get; }
 
@@ -30,7 +34,7 @@ public partial class SettingsViewModel : ObservableObject, IViewModelAware
     public SettingsViewModel(IAppUISettings appUISettings)
     {
         _appUISettings = appUISettings;
-        VersionDescription = appUISettings.GetVersionDescription();
+        VersionDescription = GetVersionDescription();
 
         Theme = appUISettings.Theme;
     }
@@ -45,12 +49,18 @@ public partial class SettingsViewModel : ObservableObject, IViewModelAware
     {
     }
 
+    private static string GetVersionDescription()
+    {
+        var version = Assembly.GetExecutingAssembly().GetName().Version!;
+        return $"{Resources.Application_title} - {version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
+    }
+
     #endregion
 
     #region Relay Commands
 
     [RelayCommand]
-    private async Task SwitchTheme(Theme theme)
+    private async Task ChangeTheme(Theme theme)
     {
         if (Theme != theme)
         {

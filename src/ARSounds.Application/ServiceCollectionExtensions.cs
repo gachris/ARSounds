@@ -10,18 +10,16 @@ namespace ARSounds.Application;
 /// <summary>
 /// Provides application-level service registrations for dependency injection.
 /// </summary>
-public static class ApplicationModule
+public static class ServiceCollectionExtensions
 {
-    #region Methods
-
     /// <summary>
     /// Registers services, pipelines, AutoMapper profiles, and logging
     /// related to the ARSounds application layer.
     /// </summary>
     /// <param name="services">The service collection to add registrations to.</param>
-    public static void AddApplication(this IServiceCollection services)
+    public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        services.AddMediatR((configuration) => configuration.RegisterServicesFromAssembly(typeof(ApplicationModule).Assembly));
+        services.AddMediatR((configuration) => configuration.RegisterServicesFromAssembly(typeof(ServiceCollectionExtensions).Assembly));
 
         services.AddSingleton<IAuthService, AuthService>();
         services.AddSingleton<ITargetsService, TargetsService>();
@@ -35,8 +33,8 @@ public static class ApplicationModule
             services.AddTransient(typeof(ILogger<>), typeof(Logger<>));
         });
 
-        services.AddAutoMapper(typeof(ApplicationModule).Assembly);
-    }
+        services.AddAutoMapper(typeof(ServiceCollectionExtensions).Assembly);
 
-    #endregion
+        return services;
+    }
 }

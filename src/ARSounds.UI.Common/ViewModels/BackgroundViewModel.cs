@@ -1,15 +1,21 @@
-﻿using ARSounds.UI.Common.Contracts;
-using ARSounds.UI.Common.Data;
+﻿using ARSounds.UI.Common.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DevToolbox.Core.Contracts;
 
 namespace ARSounds.UI.Common.ViewModels;
 
-public partial class BackgroundViewModel : ObservableObject, IViewModelAware
+public partial class BackgroundViewModel : ObservableObject, INavigationViewModelAware
 {
     #region Fields/Consts
 
     private readonly INavigationService _navigationService;
+
+    #endregion
+
+    #region Properties
+
+    public bool CanGoBack => true;
 
     #endregion
 

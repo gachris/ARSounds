@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using ARSounds.UI.Common.Contracts;
 using ARSounds.UI.Maui.Views;
 using CommonServiceLocator;
+using DevToolbox.Core.Contracts;
 
 namespace ARSounds.UI.Maui.Services;
 
@@ -12,6 +12,8 @@ public class NavigationService : INavigationService
     private readonly IPageService _pageService;
     private readonly IServiceLocator _serviceLocator;
     private Window? _frame;
+
+    public event EventHandler<DevToolbox.Core.Contracts.NavigationEventArgs>? Navigated;
 
     #endregion
 
@@ -72,6 +74,8 @@ public class NavigationService : INavigationService
         {
             _frame.Page = ServiceLocator.Current.GetInstance<AppShell>();
         }
+
+        Navigated?.Invoke(_frame, new DevToolbox.Core.Contracts.NavigationEventArgs(_frame.Page));
 
         return true;
     }

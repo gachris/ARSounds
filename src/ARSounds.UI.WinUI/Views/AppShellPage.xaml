@@ -3,7 +3,7 @@
     x:Class="ARSounds.UI.WinUI.Views.AppShellPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:behaviors="using:ARSounds.UI.WinUI.Behaviors"
+    xmlns:behaviors="using:DevToolbox.WinUI.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:loc="using:ARSounds.UI.WinUI.Localization"

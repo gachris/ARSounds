@@ -1,18 +1,21 @@
 ﻿using ARSounds.UI.Common;
-using ARSounds.UI.Common.Contracts;
 using ARSounds.UI.Common.Data;
-using ARSounds.UI.Common.Services;
 using ARSounds.UI.Common.ViewModels;
 using ARSounds.UI.WinUI.Activation;
-using ARSounds.UI.WinUI.Contracts;
 using ARSounds.UI.WinUI.Services;
 using ARSounds.UI.WinUI.Views;
+using DevToolbox.Core;
+using DevToolbox.Core.Contracts;
+using DevToolbox.Core.Services;
+using DevToolbox.WinUI.Activation;
+using DevToolbox.WinUI.Contracts;
+using DevToolbox.WinUI.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 
 namespace ARSounds.UI.WinUI;
 
-public static class UIExtensions
+public static class ServiceCollectionExtensions
 {
     #region Methods
 
@@ -27,8 +30,8 @@ public static class UIExtensions
         services.AddSingleton<INavigationService, NavigationService>();
         services.AddSingleton<IFileService, FileService>();
         services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
-        services.AddIUIServices(typeof(UIExtensions).Assembly);
-
+        services.AddIUIServices(typeof(ServiceCollectionExtensions).Assembly);
+        
         // Pages
         services.AddPageService(options =>
         {
@@ -51,7 +54,7 @@ public static class UIExtensions
         services.AddSingleton<SettingsViewModel>();
 
         // AutoMapper
-        services.AddAutoMapper(typeof(UIExtensions).Assembly);
+        services.AddAutoMapper(typeof(ServiceCollectionExtensions).Assembly);
     }
 
     #endregion

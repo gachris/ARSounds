@@ -1,7 +1,7 @@
-﻿using ARSounds.UI.Common.Contracts;
-using ARSounds.UI.Maui.Services;
+﻿using ARSounds.UI.Maui.Services;
 using ARSounds.UI.Maui.Views;
 using CommonServiceLocator;
+using DevToolbox.Core.Contracts;
 
 namespace ARSounds.Maui.Host;
 

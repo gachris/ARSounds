@@ -3,9 +3,9 @@
     x:Class="ARSounds.UI.WinUI.DataTemplates.SettingsView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:helpers="using:ARSounds.UI.WinUI.Helpers"
     xmlns:loc="using:ARSounds.UI.WinUI.Localization"
-    xmlns:media="using:ARSounds.UI.Common.Media"
+    xmlns:markups="using:DevToolbox.WinUI.Markup"
+    xmlns:media="using:DevToolbox.Core.Media"
     xmlns:viewModels="using:ARSounds.UI.Common.ViewModels">
 
     <DataTemplate x:Key="SettingsTemplate" x:DataType="viewModels:SettingsViewModel">
@@ -26,25 +26,25 @@
                             <TextBlock Text="{loc:LocalizationResource Text=Theme}" />
                             <StackPanel Margin="{StaticResource XSmallTopMargin}">
                                 <RadioButton
-                                    Command="{Binding SwitchThemeCommand}"
-                                    CommandParameter="{helpers:EnumValueExtension Type=media:Theme,
-                                                                                  Member=Light}"
+                                    Command="{Binding ChangeThemeCommand}"
+                                    CommandParameter="{markups:EnumValue Type=media:Theme,
+                                                                         Member=Light}"
                                     Content="{loc:LocalizationResource Text=Light}"
                                     FontSize="15"
                                     GroupName="AppTheme"
                                     IsChecked="{Binding Theme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}" />
                                 <RadioButton
-                                    Command="{Binding SwitchThemeCommand}"
-                                    CommandParameter="{helpers:EnumValueExtension Type=media:Theme,
-                                                                                  Member=Dark}"
+                                    Command="{Binding ChangeThemeCommand}"
+                                    CommandParameter="{markups:EnumValue Type=media:Theme,
+                                                                         Member=Dark}"
                                     Content="{loc:LocalizationResource Text=Dark}"
                                     FontSize="15"
                                     GroupName="AppTheme"
                                     IsChecked="{Binding Theme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}" />
                                 <RadioButton
-                                    Command="{Binding SwitchThemeCommand}"
-                                    CommandParameter="{helpers:EnumValueExtension Type=media:Theme,
-                                                                                  Member=Default}"
+                                    Command="{Binding ChangeThemeCommand}"
+                                    CommandParameter="{markups:EnumValue Type=media:Theme,
+                                                                         Member=Default}"
                                     Content="{loc:LocalizationResource Text=Windows_default}"
                                     FontSize="15"
                                     GroupName="AppTheme"

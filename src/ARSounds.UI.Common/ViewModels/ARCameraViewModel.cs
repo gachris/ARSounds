@@ -1,6 +1,5 @@
-﻿using ARSounds.ApplicationFlow;
+﻿using DevToolbox.Core.ApplicationFlow;
 using ARSounds.Core.Targets;
-using ARSounds.UI.Common.Contracts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ARSounds.Core.Targets.Events;
@@ -11,6 +10,8 @@ using ARSounds.UI.Common.Camera;
 using ARSounds.UI.Common.Data;
 using ARSounds.Core.ClaimsPrincipal.Events;
 using ARSounds.Application.Configuration;
+using DevToolbox.Core.Contracts;
+
 #if WINDOWS
 using Emgu.CV;
 using Emgu.CV.Structure;
@@ -21,7 +22,7 @@ using NAudio.Wave;
 
 namespace ARSounds.UI.Common.ViewModels;
 
-public partial class ARCameraViewModel : ObservableObject, IViewModelAware
+public partial class ARCameraViewModel : ObservableObject, INavigationViewModelAware
 {
     #region Fields/Consts
 
@@ -32,6 +33,8 @@ public partial class ARCameraViewModel : ObservableObject, IViewModelAware
     #endregion
 
     #region Properties
+
+    public bool CanGoBack => true;
 
     public string ClientApiKey { get; }
 

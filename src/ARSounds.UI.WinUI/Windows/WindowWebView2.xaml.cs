@@ -1,5 +1,5 @@
 using ARSounds.Localization.Properties;
-using ARSounds.UI.WinUI.Helpers;
+using DevToolbox.WinUI.Helpers;
 using Windows.UI.ViewManagement;
 using WinUIEx;
 

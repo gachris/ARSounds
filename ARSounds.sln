@@ -23,8 +23,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.WinUI.Host", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.Maui.Host", "src\ARSounds.Maui.Host\ARSounds.Maui.Host.csproj", "{A2208E1D-2F63-4316-8414-45D812254D9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.ApplicationFlow", "src\ARSounds.ApplicationFlow\ARSounds.ApplicationFlow.csproj", "{A53D32AF-F963-465A-86A3-4A63DF747131}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.UI.Maui", "src\ARSounds.UI.Maui\ARSounds.UI.Maui.csproj", "{EE0533AE-84FA-4FB6-B257-0A0EF05F1915}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARSounds.UI.Wpf", "src\ARSounds.UI.Wpf\ARSounds.UI.Wpf.csproj", "{652338F2-18DF-46B1-B5C0-4D8B47434780}"
@@ -69,10 +67,6 @@ Global
 		{A2208E1D-2F63-4316-8414-45D812254D9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2208E1D-2F63-4316-8414-45D812254D9C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A2208E1D-2F63-4316-8414-45D812254D9C}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{A53D32AF-F963-465A-86A3-4A63DF747131}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A53D32AF-F963-465A-86A3-4A63DF747131}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A53D32AF-F963-465A-86A3-4A63DF747131}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A53D32AF-F963-465A-86A3-4A63DF747131}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EE0533AE-84FA-4FB6-B257-0A0EF05F1915}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EE0533AE-84FA-4FB6-B257-0A0EF05F1915}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE0533AE-84FA-4FB6-B257-0A0EF05F1915}.Release|Any CPU.ActiveCfg = Release|Any CPU
