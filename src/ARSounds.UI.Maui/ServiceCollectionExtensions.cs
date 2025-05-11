@@ -1,26 +1,26 @@
-﻿using ARSounds.UI.Common;
-using ARSounds.UI.Common.Contracts;
+﻿using DevToolbox.Core;
 using ARSounds.UI.Common.Data;
-using ARSounds.UI.Common.Services;
 using ARSounds.UI.Common.ViewModels;
 using ARSounds.UI.Maui.Services;
 using ARSounds.UI.Maui.Views;
+using DevToolbox.Core.Contracts;
+using DevToolbox.Core.Services;
 using Microsoft.Extensions.Configuration;
 
 namespace ARSounds.UI.Maui;
 
-public static class UIExtensions
+public static class ServiceCollectionExtensions
 {
     #region Methods
 
-    public static void AddUI(this IServiceCollection services)
+    public static IServiceCollection AddUI(this IServiceCollection services)
     {
         // Services
         services.AddSingleton<IAppUISettings, AppUISettings>();
         services.AddSingleton<INavigationService, NavigationService>();
         services.AddSingleton<IFileService, FileService>();
         services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
-        services.AddIUIServices(typeof(UIExtensions).Assembly);
+        services.AddIUIServices(typeof(ServiceCollectionExtensions).Assembly);
 
         // Pages
         services.AddPageService(options =>
@@ -47,7 +47,9 @@ public static class UIExtensions
         services.AddSingleton<WalkthroughViewModel>();
 
         // AutoMapper
-        services.AddAutoMapper(typeof(UIExtensions).Assembly);
+        services.AddAutoMapper(typeof(ServiceCollectionExtensions).Assembly);
+
+        return services;
     }
 
     public static void AddMaterialIcons(this IFontCollection fonts)

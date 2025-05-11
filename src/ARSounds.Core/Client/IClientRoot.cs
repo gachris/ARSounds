@@ -1,10 +1,10 @@
-﻿using ARSounds.ApplicationFlow;
+﻿using DevToolbox.Core.ApplicationFlow;
 using ARSounds.Core.ClaimsPrincipal;
 using ARSounds.Core.Targets;
 
 namespace ARSounds.Core.Client;
 
-public interface IClientRoot : IDomainRoot
+public interface IClientRoot : IAggregateRoot
 {
     IClaimsPrincipalState ClaimsPrincipalState { get; }
 

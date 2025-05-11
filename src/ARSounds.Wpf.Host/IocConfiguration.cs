@@ -2,9 +2,11 @@
 using ARSounds.Application.Configuration;
 using ARSounds.Core;
 using ARSounds.UI.Common;
-using ARSounds.UI.Common.Services;
+using ARSounds.UI.Wpf;
 using ARSounds.UI.Wpf.Browser;
 using CommonServiceLocator;
+using DevToolbox.Core;
+using DevToolbox.Core.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

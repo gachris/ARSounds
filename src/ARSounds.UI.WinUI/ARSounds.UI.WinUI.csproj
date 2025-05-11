@@ -10,11 +10,10 @@
 	
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.WinUI.UI.Controls" />
+		<PackageReference Include="DevToolbox.WinUI" />
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" />
 		<PackageReference Include="Microsoft.WindowsAppSDK" />
-		<PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" />
 		<PackageReference Include="OpenVision.WinUI" />
-		<PackageReference Include="WinUIEx" />
 	</ItemGroup>
 
 	<ItemGroup>

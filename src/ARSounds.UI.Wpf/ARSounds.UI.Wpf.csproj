@@ -6,33 +6,14 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="Assets\error-100.png" />
-	  <None Remove="Assets\info-100.png" />
-	  <None Remove="Assets\warning-100.png" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="DevToolbox.Wpf" />
 		<PackageReference Include="Microsoft.Web.WebView2" />
 		<PackageReference Include="Microsoft.Windows.Compatibility" />
-		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" />
 		<PackageReference Include="OpenVision.Wpf" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\ARSounds.UI.Common\ARSounds.UI.Common.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Resource Include="Assets\error-100.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Resource>
-	  <Resource Include="Assets\info-100.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Resource>
-	  <Resource Include="Assets\warning-100.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Resource>
 	</ItemGroup>
 
 	<PropertyGroup Label="Sign Assembly">

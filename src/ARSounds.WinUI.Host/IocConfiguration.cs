@@ -2,11 +2,12 @@
 using ARSounds.Application.Configuration;
 using ARSounds.Core;
 using ARSounds.UI.Common;
-using ARSounds.UI.Common.Services;
 using ARSounds.UI.WinUI;
 using ARSounds.UI.WinUI.Browser;
-using ARSounds.UI.WinUI.Contracts;
 using CommonServiceLocator;
+using DevToolbox.Core;
+using DevToolbox.Core.Services;
+using DevToolbox.WinUI.Contracts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

@@ -1,7 +1,5 @@
-﻿using System.Reflection;
-using ARSounds.Localization.Properties;
-using ARSounds.UI.Common.Contracts;
-using ARSounds.UI.Common.Media;
+﻿using DevToolbox.Core.Contracts;
+using DevToolbox.Core.Media;
 
 namespace ARSounds.UI.Maui.Services;
 
@@ -38,12 +36,12 @@ public class AppUISettings : IAppUISettings
     {
         var themeName = await _localSettingsService.ReadSettingAsync<string>(SettingsKey);
 
-        if (!Enum.TryParse(themeName, out AppTheme cacheTheme))
+        if (!Enum.TryParse(themeName, out Theme cacheTheme))
         {
-            cacheTheme = AppTheme.Unspecified;
+            cacheTheme = Theme.Default;
         }
 
-        Theme = AppThemeToTheme(cacheTheme);
+        Theme = cacheTheme;
 
         if (Microsoft.Maui.Controls.Application.Current is not null)
         {
@@ -61,23 +59,6 @@ public class AppUISettings : IAppUISettings
         {
             Microsoft.Maui.Controls.Application.Current.UserAppTheme = ThemeToAppTheme(Theme);
         }
-    }
-
-    public string GetVersionDescription()
-    {
-        var version = Assembly.GetExecutingAssembly().GetName().Version!;
-        return $"{Resources.Application_title} - {version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
-    }
-
-    private static Theme AppThemeToTheme(AppTheme appTheme)
-    {
-        return appTheme switch
-        {
-            AppTheme.Unspecified => Theme.Default,
-            AppTheme.Light => Theme.Light,
-            AppTheme.Dark => Theme.Dark,
-            _ => throw new Exception(),
-        };
     }
 
     private static AppTheme ThemeToAppTheme(Theme theme)

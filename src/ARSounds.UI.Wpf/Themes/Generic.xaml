@@ -32,7 +32,7 @@
 
     <ui:ViewModelLocator x:Key="ViewModelLocator" />
 
-    <devtoolbox:EnumBooleanConverter x:Key="EnumBooleanConverter" />
+    <devtoolbox:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
 
     <devtoolbox:BoolToVisibilityConverter
         x:Key="BoolToVisibilityConverter"
