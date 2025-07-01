@@ -131,7 +131,7 @@ public partial class ARCameraViewModel : ObservableObject, INavigationViewModelA
 
     #region Methods
 
-    public virtual async void OnNavigated()
+    public virtual async void OnNavigated(object? parameter = null)
     {
         await _mediator.Send(new RetrieveTargetsQuery());
     }

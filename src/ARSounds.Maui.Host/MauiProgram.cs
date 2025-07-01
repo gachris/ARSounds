@@ -44,13 +44,17 @@ public static class MauiProgram
                 .ConfigureServices(services =>
                 {
                     var webAuthenticatorBrowser = new WebAuthenticatorBrowser();
-                    var localSettingsOptionsConfiguration = builder.Configuration.GetSection(nameof(LocalSettingsOptions));
+                    var localSettingsOptions = builder.Configuration.GetRequiredSection(nameof(LocalSettingsOptions)).Get<LocalSettingsOptions>();
                     var appConfiguration = builder.Configuration.GetRequiredSection(nameof(AppConfiguration)).Get<AppConfiguration>();
                     ArgumentNullException.ThrowIfNull(appConfiguration, nameof(appConfiguration));
 
                     var folderPath = Path.Combine(FileSystem.Current.AppDataDirectory, appConfiguration.ApplicationName);
 
-                    services.Configure<LocalSettingsOptions>(localSettingsOptionsConfiguration);
+                    if (localSettingsOptions is not null)
+                    {
+                        services.AddSingleton(t => localSettingsOptions);
+                    }
+
                     services.AddSingleton(appConfiguration);
                     services.AddSingleton(t => ServiceLocator.Current);
                     services.AddSynchronizationContext();

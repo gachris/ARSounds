@@ -53,7 +53,7 @@ public partial class WalkthroughViewModel : ObservableObject, INavigationViewMod
 
     #region Methods
 
-    public virtual void OnNavigated()
+    public virtual void OnNavigated(object? parameter = null)
     {
     }
 

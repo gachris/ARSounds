@@ -38,11 +38,15 @@ public static class IocConfiguration
                .ConfigureServices((context, services) =>
                {
                    var webAuthenticatorBrowser = new WebAuthenticatorBrowser();
-                   var localSettingsOptionsConfiguration = context.Configuration.GetSection(nameof(LocalSettingsOptions));
+                   var localSettingsOptions = context.Configuration.GetRequiredSection(nameof(LocalSettingsOptions)).Get<LocalSettingsOptions>();
                    var appConfiguration = context.Configuration.GetRequiredSection(nameof(AppConfiguration)).Get<AppConfiguration>();
                    ArgumentNullException.ThrowIfNull(appConfiguration, nameof(appConfiguration));
 
-                   services.Configure<LocalSettingsOptions>(localSettingsOptionsConfiguration);
+                   if (localSettingsOptions is not null)
+                   {
+                       services.AddSingleton(t => localSettingsOptions);
+                   }
+
                    services.AddSingleton(appConfiguration);
                    services.AddSingleton(t => ServiceLocator.Current);
                    services.AddSynchronizationContext();

@@ -35,14 +35,13 @@ public partial class SettingsViewModel : ObservableObject, INavigationViewModelA
     {
         _appUISettings = appUISettings;
         VersionDescription = GetVersionDescription();
-
-        Theme = appUISettings.Theme;
     }
 
     #region Methods
 
-    public virtual void OnNavigated()
+    public virtual void OnNavigated(object? parameter = null)
     {
+        Theme = _appUISettings.Theme;
     }
 
     public virtual void OnNavigatedAway()

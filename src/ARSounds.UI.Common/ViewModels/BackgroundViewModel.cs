@@ -26,7 +26,7 @@ public partial class BackgroundViewModel : ObservableObject, INavigationViewMode
 
     #region Methods
 
-    public virtual void OnNavigated()
+    public virtual void OnNavigated(object? parameter = null)
     {
     }
 

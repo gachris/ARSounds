@@ -24,9 +24,10 @@
     <PackageVersion Include="CommunityToolkit.Maui" Version="11.2.0" />
     <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageVersion Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
-    <PackageVersion Include="DevToolbox.Core" Version="1.0.2.1-alpha" />
-    <PackageVersion Include="DevToolbox.WinUI" Version="1.0.2.1-alpha" />
-    <PackageVersion Include="DevToolbox.Wpf" Version="1.0.2.1-alpha" />
+    <PackageVersion Include="DevToolbox.Core" Version="1.0.3.5-alpha" />
+    <PackageVersion Include="DevToolbox.Extensions.DependencyInjection" Version="1.0.3.5-alpha" />
+    <PackageVersion Include="DevToolbox.WinUI" Version="1.0.3.5-alpha" />
+    <PackageVersion Include="DevToolbox.Wpf" Version="1.0.3.5-alpha" />
     <PackageVersion Include="Duende.IdentityServer.EntityFramework" Version="7.0.7" />
     <PackageVersion Include="Duende.IdentityServer.AspNetIdentity" Version="7.0.7" />
     <PackageVersion Include="HotChocolate.AspNetCore" Version="15.1.3" />
@@ -72,8 +73,8 @@
     <PackageVersion Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
     <PackageVersion Include="Microsoft.Web.WebView2" Version="1.0.3124.44" />
     <PackageVersion Include="Microsoft.Windows.Compatibility" Version="9.0.4" />
-    <PackageVersion Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.3916" />
-    <PackageVersion Include="Microsoft.WindowsAppSDK" Version="1.7.250401001" />
+    <PackageVersion Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4188" />
+    <PackageVersion Include="Microsoft.WindowsAppSDK" Version="1.7.250606001" />
     <PackageVersion Include="MySql.EntityFrameworkCore" Version="8.0.11" />
     <PackageVersion Include="NAudio" Version="2.2.1" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
